@@ -1,6 +1,6 @@
 # General Jekyll Config
 pygments: true
-url: http://example.com
+url: http://tpolecat.github.io/
 lsi: false
 exclude: [LICENSE, CNAME, README.md, .gitignore]
 markdown: redcarpet
