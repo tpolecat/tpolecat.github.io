@@ -3,7 +3,10 @@ pygments: true
 url: http://example.com
 lsi: false
 exclude: [LICENSE, CNAME, README.md, .gitignore]
-markdown: kramdown
+markdown: redcarpet
+
+# kramdown:
+#   input: GFM
 
 # Theme customization - please change from the defaults!
 theme:
