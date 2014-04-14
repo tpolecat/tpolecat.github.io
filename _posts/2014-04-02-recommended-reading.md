@@ -1,8 +1,7 @@
 ---
 layout: post
 title: Recommended Reading
-categories:
-- theory
+tags: theory
 ---
 
 Here are some books that I have found helpful in improving my understanding of functional programming. I have approached and been defeated by most of them several times, but each time I get a bit farther and I have some confidence that I can make it through them all eventually. Some are still sitting here on my desk. I'm not an expert but these books have all been enlightening.

@@ -1,9 +1,7 @@
 ---
 layout: post
 title: Atto 0.2 Tutorial
-categories:
-- scala
-- atto
+tags: scala atto
 ---
 
 This is an intro tutorial for the [atto](https://github.com/tpolecat/atto) parser combinator library, compiled by the [tut](https://github.com/tpolecat/tut) tutorial generator.

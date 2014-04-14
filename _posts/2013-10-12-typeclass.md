@@ -1,8 +1,7 @@
 ---
 layout: post
 title: Introduction to Typeclasses in Scala
-categories:
-- scala
+tags: scala
 ---
 
 A little typeclass example, taken from original source [here](https://github.com/tpolecat/examples/blob/master/src/main/scala/eg/Typeclass.scala). The tut output is kind of 

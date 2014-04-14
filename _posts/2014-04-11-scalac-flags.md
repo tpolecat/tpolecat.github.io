@@ -1,8 +1,7 @@
 ---
 layout: post
 title: Useful Scalac Flags
-categories:
-- scala
+tags: scala
 ---
 
 So, there have been some discussions and angry tweets recently about irritating Scala "features" (like value discarding and auto-tupling) that can actually be turned off by selecting the right compiler flag in conjunction with `-Xfatal-warnings`. I *highly* recommend a set of options something like those below.
