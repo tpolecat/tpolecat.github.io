@@ -83,7 +83,7 @@ scala> many(letter).parse("abc").feed("def").done
 res9: atto.ParseResult[List[Char]] = Done(,List(a, b, c, d, e, f))
 ```
 
-`Parser` is a [functor](Functor.md).
+`Parser` is a [functor](/2014/03/21/functor.html).
 
 ```scala
 scala> many(letter).map(_.mkString).parse("abc").feed("def").done
