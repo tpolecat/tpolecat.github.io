@@ -31,6 +31,10 @@ If you're like me you may and you find that the standard library gets in the way
   "-Yno-imports"  // no automatic imports at all; all symbols must be imported explicitly
 ```
 
+... which inspired this contribution from @timperrett
+
+<center><img src="/assets/yuno.jpg"></center>
+
 I also recommend keeping an eye on [warteremover](https://github.com/puffnfresh/wartremover) which casts a wider net and disables many other unsafe features such as `null` and `return`. If you try it out and find it's hitting false positives (generally with synthetic code) please file a bug report. We're working on it!
 
 #### Postscript
