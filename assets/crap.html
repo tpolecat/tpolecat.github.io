@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+      @import url(http://fonts.googleapis.com/css?family=Droid+Serif);
+      @import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+
+      body {
+        font-family: 'Droid Serif';
+        font-size: 20px;
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+      h1 { font-size: 3em; }
+      h2 { font-size: 2em; }
+      h3 { font-size: 1.6em; }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .large { font-size: 2em; }
+      a, a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+      }
+      code {
+        -moz-border-radius: 5px;
+        -web-border-radius: 5px;
+        background: #e7e8e2;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+      #slideshow .slide .content code {
+        font-size: 0.8em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+      }
+      .inverse {
+        background: #272822;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Sweeping crap APIs under the rug.
+Rob Norris / `@tpolecat`
+
+---
+
+# The Setup
+
+##Crap API (Generalized):
+
+> An object with at least one impure method.
+> 
+> - `java.io.InputStream`
+> - `scala.util.Random`
+> - ...
+
+## Our Goal
+
+> Turn any crap API into a pure functional API.
+> - Effects &rarr; Values
+> - Prevent the user from using the crap object for evil.
+> - Isolate any remaining impurity in one place.
+
+---
+
+# State Monad
+
+```scala
+  case class State[S,A](eval: S => (S, A)) {
+    def map[B](f: A => B): State[S, B] = 
+      State { s => val (s0, a) = eval(s); (s0, f(a)) }
+    def flatMap[B](f: A => State[S, B]): State[S, B] = 
+      State { s => val (s0, a) = eval(s); f(a).eval(s0) }
+  }
+
+  def unit[S,A](a: A): State[S, A] = State(s => (s, a))
+  def gets[S,A](f: S => A): State[S, A] = State(s => (s, f(s)))
+  def put[S](s: S): State[S, Unit] = State(_ => (s, ()))
+```
+
+---
+
+# Random Actions
+
+```scala
+  object RandomWorld {
+
+    type Action[A] = State[Random, A] 
+    
+    def nextInt(max: Int): Action[Int] =
+      gets(rnd => rnd.nextInt(max))
+
+    val nextLetter: Action[Char] = 
+      nextInt('z' - 'a').map(n => ('a' + n).toChar)
+
+    def nextWord(len: Int): Action[String] =
+      if (len < 1) unit("") else 
+        for {
+          l <- nextLetter
+          w <- nextWord(len - 1)
+        } yield l + w
+
+    implicit class Ops[A](a: Action[A]) {
+      def run(seed: Long): A = a.eval(new Random(seed))._2
+    }
+
+  }
+```
+
+---
+
+# Functional Random Words
+
+```scala
+  object Main extends App {
+    import RandomWorld._
+
+    val twice: Action[(String, String)] = 
+      for {
+        a <- nextWord(5)
+        b <- nextWord(5)
+      } yield (a, b)
+
+    println(twice.run(0xF00)) // (mrwhc,vpwau)
+    println(twice.run(0xF00)) // (mrwhc,vpwau) of course
+
+  }
+```
+
+
+---
+
+# Oh Noes!
+
+```scala
+  object Main extends App {
+    import RandomWorld._
+
+    val twice: Action[(String, String)] = 
+      for {
+        a <- nextWord(5)
+        _ <- gets((r: Random) => r.setSeed(System.currentTimeMillis))
+        b <- nextWord(5)
+      } yield (a, b)
+
+    println(twice.run(0xF00)) // (mrwhc,cahrh) 
+    println(twice.run(0xF00)) // (mrwhc,dnahv)
+
+  }
+```
+
+---
+
+# Protected State Monad
+
+```scala
+  trait PS {
+
+    // Construction and eval are possible only in the 4 methods below
+    case class State[S, A] private[PS] (private[PS] eval: S => (S, A)) {
+      def map[B](f: A => B): State[S, B] = 
+        State { s => val (s0, a) = eval(s); (s0, f(a)) }
+      def flatMap[B](f: A => State[S, B]): State[S, B] = 
+        State { s => val (s0, a) = eval(s); f(a).eval(s0) }
+    }
+
+    // Methods available only to subclasses 
+    protected def unit[S,A](a: A): State[S, A] = State(s => (s, a))
+    protected def gets[S,A](f: S => A): State[S, A] = State(s => (s, f(s)))
+    protected def put[S](s: S): State[S, Unit] = State(_ => (s, ()))
+    protected def eval[S,A](s: S, a: State[S,A]): (S, A) = a.eval(s)
+
+  }
+```
+
+---
+
+# Safer Random Actions
+
+```scala
+  object RandomWorld extends PS { 
+
+    type Action[A] = State[Random, A] 
+    
+    def nextInt(max: Int): Action[Int] = ...
+    val nextLetter: Action[Char] = ...
+    def nextWord(len: Int): Action[String] = ...
+
+    implicit class Ops[A](a: Action[A]) {
+      def run(seed: Long): A = eval(new Random(seed), a)._2
+    }
+
+  }
+
+  object Main extends App {
+    import RandomWorld._
+
+    // I can only see nextInt, nextLetter, nextWord
+    
+  }
+
+```
+
+---
+
+# Even More Protected State Monad
+
+```scala
+  trait VPS {
+
+    // The passed state is knowable only to subclasses
+    protected type S
+
+    // State type S does not appear on any public part of Action
+    case class Action[A] private[VPS] (private[VPS] eval: S => (S, A)) {
+      def map[B](f: A => B): Action[B] = 
+        Action { s => val (s0, a) = eval(s); (s0, f(a)) }
+      def flatMap[B](f: A => Action[B]): Action[B] = 
+        Action { s => val (s0, a) = eval(s); f(a).eval(s0) }
+    }
+
+    protected def unit[A](a: A): Action[A] = Action(s => (s, a))
+    protected def gets[A](f: S => A): Action[A] = Action(s => (s, f(s)))
+    protected def put(s: S): Action[Unit] = Action(_ => (s, ()))
+    protected def eval[A](s: S, a: Action[A]): (S, A) = a.eval(s)
+
+  }
+```
+
+---
+
+# Yet Safer Random Actions
+
+```scala
+  object RandomWorld extends VPS { 
+
+    protected type S = Random
+    
+    def nextInt(max: Int): Action[Int] = ???
+    val nextLetter: Action[Char] = ???
+    def nextWord(len: Int): Action[String] = ???
+
+    implicit class Ops[A](a: Action[A]) {
+      def run(seed: Long): A = eval(new Random(seed), a)._2
+    }
+
+  }
+
+  object Main extends App {
+    import RandomWorld._
+
+    // As before, but Action[A] no longer aliases State[Random, A]
+    // so I now have no insight into the internals of RandomWorld
+
+  }
+```
+
+---
+
+# Abstract the World
+
+```scala
+  trait EffectWorld {
+
+    protected type S
+    type Action[A]
+
+    protected def action[A](f: S => (S, A)): Action[A]
+    protected def eval[A](s: S, a: Action[A]): (S, A)
+
+    protected def unit[A](a: A): Action[A] = action(s => (s, a))
+    protected def gets[A](f: S => A): Action[A] = action(s => (s, f(s)))
+    protected def put(s: S): Action[Unit] = action(_ => (s, ()))
+
+  }
+```
+
+---
+
+# StateWorld
+
+```scala
+  trait StateWorld extends EffectWorld {
+
+    // omitted: private[StateWorld]
+    case class Action[A](eval: S => (S, A)) {
+      def map[B](f: A => B): Action[B] = 
+        Action { s => val (s0, a) = eval(s); (s0, f(a)) }
+      def flatMap[B](f: A => Action[B]): Action[B] = 
+        Action { s => val (s0, a) = eval(s); f(a).eval(s0) }
+    }
+
+    protected def action[A](f: S => (S, A)) = Action(f)
+    protected def eval[A](s: S, a: Action[A]) = a.eval(s)
+
+  }
+```
+
+---
+
+# TrampolineWorld
+```scala
+  trait TrampolineWorld extends EffectWorld {
+
+    // omitted: protected[TrampolineWorld]
+    case class Action[A](t: S => Trampoline[(S, A)]) {
+      def map[B](f: A => B): Action[B] =
+        Action(s => t(s) map { case (s0, a) => (s0, f(a)) })
+      def flatMap[B](f: A => Action[B]): Action[B] =
+        Action(s => t(s) flatMap { case (s0, a) => f(a).t(s0) })
+    }
+
+    protected def action[A](f: S => (S, A)) = Action(s => delay(f(s)))
+    protected def eval[A](s: S, a: Action[A]) = a.t(s).run
+
+  }
+```
+---
+
+# FreeWorld
+```scala
+trait FreeWorld extends EffectWorld {
+
+  // Omited: private[FreeWorld] 
+  case class Op[+A](f: S => (S, A))
+
+  implicit val OpFunctor: Functor[Op] =  
+    new Functor[Op] {
+      def map[A, B](op: Op[A])(g: A => B) = 
+        Op(s => op.f(s).rightMap(g))
+    }
+
+  type Action[A] = Free[Op, A]
+
+  protected def action[A](f: S => (S, A)): Action[A] = 
+    Suspend(Op(f(_).rightMap(Return(_))))
+
+  protected final def eval[A](s: S, a: Action[A]): (S, A) =
+    a.resume match { 
+      case -\/(Op(f)) => 
+        val (s0, a) = f(s)
+        eval(s0, a)
+      case \/-(a) => (s, a)
+    }
+
+}
+```
+---
+
+# Final Version
+
+```scala
+  object RandomWorld extends TrampolineWorld {
+
+    protected type S = Random
+    
+    def nextInt(max: Int): Action[Int] = ...
+    val nextLetter: Action[Char] = ...
+    def nextWord(len: Int): Action[String] = ...
+
+    implicit class Ops[A](a: Action[A]) {
+      def run(seed: Long): A = eval(new Random(seed), a)._2
+    }
+
+  }
+
+  object Main extends App {
+    import RandomWorld._
+
+    val twice: Action[(String, String)] = 
+      for {
+        a <- nextWord(5)
+        b <- nextWord(5)
+      } yield (a, b)
+
+    println(twice.run(0xF00)) // (mrwhc,vpwau)
+    println(twice.run(0xF00)) // (mrwhc,vpwau) of course
+
+  }
+```
+
+---
+
+class: center, middle
+
+# Thanks! Questions?
+Rob Norris / `@tpolecat` 
+
+<small>Code will be available soon, watch the tweeter.</small>
+
+
+
+    </textarea>
+    <script src="http://gnab.github.io/remark/downloads/remark-0.6.3.min.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
