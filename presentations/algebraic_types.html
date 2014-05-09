@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+      @import url(http://fonts.googleapis.com/css?family=Droid+Serif);
+      @import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+
+      body {
+        font-family: 'Droid Serif';
+        font-size: 20px;
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+      h1 { font-size: 3em; }
+      h2 { font-size: 2em; }
+      h3 { font-size: 1.6em; }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .large { font-size: 2em; }
+      a, a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+      }
+      code {
+        -moz-border-radius: 5px;
+        -web-border-radius: 5px;
+        background: #e7e8e2;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+      #slideshow .slide .content code {
+        font-size: 0.8em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+      }
+      .inverse {
+        background: #272822;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+class: center, middle
+
+# Introduction to Algebraic Types in Scala
+Rob Norris / `@tpolecat`
+
+???
+
+- name is rob
+- interested in FP
+- like a challenge so i do it in scala
+- going to talk about algebraic types
+- please ask questions
+
+---
+
+# Goals
+
+- Understand why they're called "algebraic" types.
+- Understand some elementary isomorphisms.
+- Understand some common standard library types.
+- Understand how to write your own.
+
+???
+
+- so I may say ADT, and in the ML/Haskell/Scala world this means "algebraic data type", not to be confused with "abstract data type
+
+---
+
+# What do you mean by "algebraic?"
+
+## Let's do some counting.
+
+> How many values of type `Nothing`?
+> 
+> How many values of type `Unit`?
+> 
+> How many values of type `Boolean`?
+> 
+> How many values of type `Byte`?
+> 
+> How many values of type `String`?
+
+---
+
+# What do you mean by "algebraic?"
+
+## Let's do some counting.
+
+> How many values of type `(Byte, Boolean)`?
+> 
+> How many values of type `(Byte, Unit)`?
+> 
+> How many values of type `(Byte, Byte)`?
+> 
+> How many values of type `(Byte, Boolean, Boolean)`?
+> 
+> How many values of type `(Boolean, String, Nothing)`?
+
+???
+
+- everyone familiar with tuple types in scala?
+- so to figure out the cardinality of a tuple type like this, you multiply the cardinalities of the component types.
+- that's why they're called ...
+
+---
+
+# What do you mean by "algebraic?"
+
+## Product types! This <u>and</u> That
+
+### Tuples!
+
+```scala
+type Person = (String, Int)
+```
+
+### Classes!
+
+```scala
+class ScalaPerson(val name: String, val age: Int)
+
+class JavaPerson {
+  final String name;
+  final Int age;
+  ...
+}
+```
+
+???
+
+- And you have seen these before. 
+- Pretty much every language has product types like tuples or records or structs or classes.
+- So we all have an instinct about multiplying types. But you can also add them, which will be new for most of you.
+
+---
+# What do you mean by "algebraic?"
+
+## Let's do some more counting.
+
+> How many values of type `Byte` or `Boolean`?
+> 
+> How many values of type `Byte` or `Unit`?
+> 
+> How many values of type `(Byte, Boolean)` or `Boolean)`?
+> 
+> How many values of type `Boolean` or `(String, Nothing)`?
+
+???
+
+- So this is something you may not ever think about if you're coming from a traditional OO language.
+- What if you have a choice of one thing or another?
+- In this case we *add* the cardinalities together, which is why they're called...
+
+---
+
+# What do you mean by "algebraic?"
+
+## Sum types! This <u>or</u> That
+
+```scala
+// What have we learned?
+
+Nothing = 0
+Unit    = 1
+Boolean = 2
+Byte    = 256
+
+(Unit , Boolean) = 1 × 2 = 2 
+ Unit | Boolean  = 1 + 2 = 3 // not Scala syntax
+
+(Byte , Boolean) = 256 × 2 = 512
+ Byte | Boolean  = 256 + 2 = 258
+
+(Boolean, Boolean, Boolean, Boolean, 
+ Boolean, Boolean, Boolean, Boolean) = 256
+
+// sums all the way down
+Boolean = true | false
+Int = 1 | 2 | 3 | ...
+
+ ```
+
+
+???
+
+- so we'll get to the exact encoding of this idea in scala, but i wanted to explain this notion of multiplication and addition of types because that's where the "algebraic" comes from.
+- and we can do much more than add and multiply; function types are actually exponentials, and the derivative of a type is a structure called a one-hole context that's the key to a family of data structures called zippers. We won't talk any more about this but I'll give you a reference if you want to explore that.
+- Ok so something interested we see is that a tuple of 8 booleans has exactly the same number of inhabitants as byte. so the types are isomorphic, you can line them up 1:1 and convert between them without losing information.
+- Another interesting thing is that anything times unit is just that thing; unit is the multiplicative identity for types. The takeaway is that there is never any reason to use unit in a product type (or, for related reasons, as a function parameter).
+- So, understanding when types are equivalent is a nice skill to have.
+- Alright, moving on. How do we represent sum types in Scala?
+
+---
+
+# Sum types in Scala
+
+## Encoded by Subclassing
+
+```scala
+sealed trait Pet
+case class Cat(name: String) extends Pet
+case class Fish(name: String, color: Color) extends Pet
+case class Squid(name: String, age: Int) extends Pet
+
+val bob: Pet = Cat("Bob")
+```
+- Pro tip: in Scala when you hear ADT it means sum type.
+
+???
+
+- Ok so we have a sealed trait, which means all implementations of that trait must be in the same source file so the compiler knows about all of them. And I'll explain why that's important in a minute.
+- we don't think of this as a class hierarchy
+- we think of it as a single type, Pet, with three constructors
+- so Pet is a sum of three products.
+- so if bob is a pet, he can be a cat or a fish or a squid, which we inspect...
+
+---
+
+# Sum types in Scala
+
+## Destructured by <u>pattern matching</u>
+
+```scala
+def sayHi(p: Pet): String = 
+  p match {
+    case Cat(n)      => "Meow " + n + "!"
+    case Fish(n, _)  => "Hello fishy " + n + "."    
+    case Squid(n, _) => "Hi " + n + "."    
+  }
+
+scala> sayHi(Cat("Bob"))
+res0: String = Meow Bob!
+
+scala> sayHi(Squid("Steve", 10))
+res1: String = Hi Steve.
+```
+
+???
+
+- So we provide a match with a pattern for each constructor, and the arguments we used to construct the value are bound to variables when we do this so they're available on the right-hand side. So that's a different `n` in each case.
+- The underscore means we don't care about the value.
+- So what if we leave a case out, like we don't include a clause for `Squid`?
+
+---
+
+# Sum types in Scala
+
+## Exhaustiveness Checking
+
+```scala
+def sayHi(p: Pet): String = 
+  p match {
+    case Cat(n)      => "Meow " + n + "!"
+    case Fish(n, _)  => "Hello fishy " + n + "."    
+  }
+
+<console>:14: warning: match may not be exhaustive.
+It would fail on the following input: Squid(_, _)
+         p match {
+         ^
+```
+
+???
+
+- Well we get a compiler warning
+
+- There is another way we can encode destructuring, called a fold. We will see this when we look at some other sum types.
+
+---
+
+# Standard Library: Option
+
+## Intuition: computation that may fail to return a value
+
+```scala
+sealed trait Option[+A]
+case object None extends Option[Nothing]
+case class  Some[A](a: A) extends Option[A]
+
+```
+
+???
+
+- puzzle: what's the cardinality of Option?
+
+---
+
+# Standard Library: Either
+
+## Intuition: computation that may return this or that
+
+```scala
+sealed trait Either[+A, +B]
+case class Left[A](a: A)  extends Either[A, Nothing]
+case class Right[B](b: B) extends Either[Nothing, B]
+```
+
+### Isomorphic type provided by scalaz
+
+```scala
+sealed trait \/[+A, +B]
+case class \/-[A](a: A) extends \/[A, Nothing]
+case class -\/[B](b: B) extends \/[Nothing, B]
+```
+
+
+
+???
+
+- puzzle: what's the cardinality of Option?
+
+---
+
+# Blank Slide
+
+---
+
+# Blank Slide
+
+---
+
+# Blank Slide
+
+---
+
+class: center, middle
+
+# Thanks! Questions?
+Rob Norris / `@tpolecat` 
+
+<small>Code will be available soon, watch the tweeter.</small>
+
+???
+
+- feedback, complaints
+
+
+
+
+
+
+
+
+
+    </textarea>
+    <script src="http://gnab.github.io/remark/downloads/remark-0.6.3.min.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
