@@ -133,7 +133,7 @@ Rob Norris / `@tpolecat`
 - interested in FP
 - like a challenge so i do it in scala
 - going to talk about algebraic types
-- please ask questions
+- please ask questions. this is a *beginner* talk so if there is anything at all that doesn't make sense, raise your hand or interrupt me
 
 ---
 
@@ -141,7 +141,7 @@ Rob Norris / `@tpolecat`
 
 - Understand why they're called "algebraic" types.
 - Understand some elementary isomorphisms.
-- Understand some common standard library types.
+- Understand some common standard library types and operations.
 - Understand how to write your own.
 
 ???
@@ -170,6 +170,24 @@ Rob Norris / `@tpolecat`
 
 ## Let's do some counting.
 
+> How many values of type `Nothing`? &rarr; 0
+> 
+> How many values of type `Unit`? &rarr; 1
+> 
+> How many values of type `Boolean`? &rarr; 2
+> 
+> How many values of type `Byte`? &rarr; 256
+> 
+> How many values of type `String`? &rarr; many
+
+???
+
+---
+
+# What do you mean by "algebraic?"
+
+## Let's do some counting.
+
 > How many values of type `(Byte, Boolean)`?
 > 
 > How many values of type `(Byte, Unit)`?
@@ -183,11 +201,29 @@ Rob Norris / `@tpolecat`
 ???
 
 - everyone familiar with tuple types in scala?
+
+---
+
+# What do you mean by "algebraic?"
+
+## Let's do some counting.
+
+> How many of type `(Byte, Boolean)`? &rarr; 2 × 256 = 512
+> 
+> How many of type `(Byte, Unit)`? &rarr; 256 × 1 = 256
+> 
+> How many of type `(Byte, Byte)`? &rarr; 256 × 256 = 65536
+> 
+> How many of type `(Byte, Boolean, Boolean)`? &rarr; 256 × 2 × 2 = 1024
+> 
+> How many of type `(Boolean, String, Nothing)`? &rarr; 2 × many × 0 = 0
+
+???
+
 - so to figure out the cardinality of a tuple type like this, you multiply the cardinalities of the component types.
 - that's why they're called ...
 
 ---
-
 # What do you mean by "algebraic?"
 
 ## Product types! This <u>and</u> That
@@ -223,9 +259,9 @@ class JavaPerson {
 
 > How many values of type `Byte` or `Boolean`?
 > 
-> How many values of type `Byte` or `Unit`?
+> How many values of type `Boolean` or `Unit`?
 > 
-> How many values of type `(Byte, Boolean)` or `Boolean)`?
+> How many values of type `(Byte, Boolean)` or `Boolean`?
 > 
 > How many values of type `Boolean` or `(String, Nothing)`?
 
@@ -233,6 +269,22 @@ class JavaPerson {
 
 - So this is something you may not ever think about if you're coming from a traditional OO language.
 - What if you have a choice of one thing or another?
+
+---
+# What do you mean by "algebraic?"
+
+## Let's do some more counting.
+
+> How many of type `Byte` or `Boolean`? &rarr; 2 + 256 = 258
+> 
+> How many of type `Boolean` or `Unit`? &rarr; 2 + 1 = 3
+> 
+> How many of type `(Byte, Boolean)` or `Boolean`? &rarr; (256 × 2) + 2 = 514
+> 
+> How many of type `Boolean` or `(String, Nothing)`? &rarr; 2 + (many × 0) = 2
+
+???
+
 - In this case we *add* the cardinalities together, which is why they're called...
 
 ---
@@ -262,7 +314,7 @@ Byte    = 256
 Boolean = true | false
 Int = 1 | 2 | 3 | ...
 
- ```
+```
 
 
 ???
@@ -346,64 +398,153 @@ It would fail on the following input: Squid(_, _)
 
 ???
 
-- Well we get a compiler warning
+- Well we get a compiler warning. So this is exhaustive matching, which get if you use a sealed trait because the compiler knows that there are exactly three constructors for Pet.
 
-- There is another way we can encode destructuring, called a fold. We will see this when we look at some other sum types.
+- So you don't always need to use pattern matching because there might be methods on the parent trait that do what you want, but you can always fall back on it if you're not sure what to do.
+
+- There is another more general way we can encode destructuring, called a fold. We will see this in a minute.
+
+- Everyone ok so far? 
+
+- Ok let's look at some of the ADTs that come in stdlib
 
 ---
 
 # Standard Library: Option
 
-## Intuition: computation that may fail to return a value
+## Intuition: computations that may fail to return a value
 
 ```scala
-sealed trait Option[+A]
+sealed trait Option[+A] 
 case object None extends Option[Nothing]
 case class  Some[A](a: A) extends Option[A]
 
 ```
 
+## Example
+
+```scala
+def safeDiv(a: Int, b: Int): Option[Int] =
+  if (b != 0) Some(a / b) else None
+
+scala> val x = safeDiv(10, 2)
+x: Option[Int] = Some(5)
+
+scala> val y = safeDiv(10, 0)
+y: Option[Int] = None
+```
+
 ???
 
+- do you understand everthing here? type param, covariant, Nothing
 - puzzle: what's the cardinality of Option?
+
+- so this is what we do instead of using null in scala
+- code: pattern match, fold (cata), map, getOrElse, not talking about flatMap
+- show dash
 
 ---
 
 # Standard Library: Either
 
-## Intuition: computation that may return this or that
+## Intuition: computations that may return this or that
 
 ```scala
-sealed trait Either[+A, +B]
+sealed trait Either[+A, +B] 
 case class Left[A](a: A)  extends Either[A, Nothing]
 case class Right[B](b: B) extends Either[Nothing, B]
 ```
 
-### Isomorphic type provided by scalaz
+### Example
 
 ```scala
-sealed trait \/[+A, +B]
-case class \/-[A](a: A) extends \/[A, Nothing]
-case class -\/[B](b: B) extends \/[Nothing, B]
+def safeDiv(a: Int, b: Int): Either[String, Int] =
+  if (b != 0) Right(a / b) else Left("Divide by zero!")
+
+scala> val x = safeDiv(10, 2)
+x: Either[String,Int] = Right(5)
+
+scala> val x = safeDiv(10, 0)
+x: Either[String,Int] = Left(Divide by zero!)
 ```
 
+???
+
+- you can use this to return this or that; most commonly you see left for errors and right for success.
+
+- code: match, not that many methods: fold, swap, projections: map, toOption
+
+- puzzle: what's the cardinality of Either?
+- note that Either[Unit,A] is isomorphic to Option[A]
+
+---
+
+# Standard Library: Try
+
+## Intuition: computations that may fail with an exception
+
+```scala
+sealed trait Try[+A]
+case class Success[A](a: A) extends Try[A]
+case class Failure[A](t: Throwable) extends Try[A]
+```
+
+### Example
+
+```scala
+import util._ // it's scala.util.Try
+
+def safeDiv(a: Int, b: Int): Try[Int] =
+  Try(a / b)
+
+scala> val x = safeDiv(10, 2)
+x: scala.util.Try[Int] = Success(5)
+
+scala> val x = safeDiv(10, 0)
+x: scala.util.Try[Int] = Failure(java.lang.ArithmeticException: / by zero)
+```
+
+???
+
+- isomorphic with Either[Throwable,A]
+- code: no fold, match, map, map w/ error "bulletproof principle"
+
+---
+
+# Standard Library: List
+
+## Intuition: computations that may return many answers
+
+```scala
+sealed trait List[+A]
+case object Nil extends List[Nothing]
+case class ::[A](head: A, tail: List[A]) extends List[A]
+
+object List {
+  def apply[A](as: A*): List[A] = ...
+}
+```
+
+### Example
+
+```scala
+def sum(ns: List[Int]): Int =
+  ns match {
+    case Nil     => 0
+    case n :: ns => n + sum(ns)
+  }
+
+scala> sum(List(1,2,3))
+res23: Int = 6
+```
 
 
 ???
 
-- puzzle: what's the cardinality of Option?
-
----
-
-# Blank Slide
-
----
-
-# Blank Slide
-
----
-
-# Blank Slide
+- a bit more here. we have an empty case and a non-empty case like option
+- and there's some syntax that helps us not have to deal with `::` directly.
+- list is an inductive type because it has a base case Nil, and an inductive case cons that takes a smaller list as an argument. And functions over lists have the same form as an inductive proof.
+- code: foldRight, map, flatMap, headOption
 
 ---
 
