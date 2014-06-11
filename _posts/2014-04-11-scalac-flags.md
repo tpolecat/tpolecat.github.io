@@ -25,7 +25,7 @@ scalacOptions ++= Seq(
 )
 ```
 
-If you're like me you and you find that the standard library gets in the way (especially `Predef` implicits) you might consider one of these (you don't need both):
+If you're like me and you find that the standard library gets in the way (especially `Predef` implicits) you might consider one of these (you don't need both):
 
 ```scala
   "-Yno-predef"   // no automatic import of Predef (removes irritating implicits)
