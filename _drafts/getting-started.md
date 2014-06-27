@@ -73,7 +73,7 @@ sbt.version=0.13.2
 
 ## Write Some Effin Scala
 
-Ok let's write us a Scala. Create `banjo/src/main/scala/Cookout.scala` with the following content:
+Ok let's write us a Scala. Down in `banjo/src/main/scala/` which you created momemnts ago, add the file `Cookout.scala` with the following content:
 
 ```scala
 object Cookout extends App {
