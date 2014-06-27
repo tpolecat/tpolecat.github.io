@@ -35,7 +35,7 @@ scala> // hmmm
 
 The problem here is that the arguments to `when` are always evaluated, even if they are never used. This means that at best we're doing extra work, and at worst we're triggering side-effects that should not happen. 
 
-Scala has a solution to this problem called **by-name parameters**. By declaring a parameter as `a: => A` (note that the space after the `:` is necessary) we are telling Scala to evalate `a` only when it is used (which may be never). So let's fix our method.
+Scala has a solution to this problem called **by-name parameters**. By declaring a parameter as `a: => A` (note that the space after the `:` is necessary) we are telling Scala to evaluate `a` only when it is used (which may be never). So let's fix our method.
 
 ```scala
 def when[A](test: Boolean, whenTrue: => A, whenFalse: => A): A = 
