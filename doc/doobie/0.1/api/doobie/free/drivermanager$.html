@@ -1,0 +1,763 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+        <head>
+          <title>drivermanager - doobie.free.drivermanager</title>
+          <meta name="description" content="drivermanager - doobie.free.drivermanager" />
+          <meta name="keywords" content="drivermanager doobie.free.drivermanager" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../index.html';
+            var hash = 'doobie.free.drivermanager$';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="value">
+      <div id="definition">
+        <img src="../../lib/object_big.png" />
+        <p id="owner"><a href="../package.html" class="extype" name="doobie">doobie</a>.<a href="package.html" class="extype" name="doobie.free">free</a></p>
+        <h1>drivermanager</h1>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <span class="name">drivermanager</span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                <li class="group out"><span>Grouped</span></li>
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="doobie.free.drivermanager"><span>drivermanager</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show all</span></li>
+            </ol>
+            <a href="http://docs.scala-lang.org/overviews/scaladoc/usage.html#members" target="_blank">Learn more about member selection</a>
+          </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="doobie.free.drivermanager.DriverManagerIO" visbl="pub" data-isabs="false" fullComment="no" group="Algebra">
+      <a id="DriverManagerIO[A]=scalaz.Free.FreeC[doobie.free.drivermanager.DriverManagerOp,A]"></a>
+      <a id="DriverManagerIO[A]:DriverManagerIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">type</span>
+      </span>
+      <span class="symbol">
+        <span class="name">DriverManagerIO</span><span class="tparams">[<span name="A">A</span>]</span><span class="result"> = <span class="extype" name="scalaz.Free">Free</span>[[x]<span class="extype" name="scalaz.Coyoneda">Coyoneda</span>[<a href="drivermanager$$DriverManagerOp.html" class="extype" name="doobie.free.drivermanager.DriverManagerOp">DriverManagerOp</a>, <span class="extype" name="scalaz.Free.&lt;refinement&gt;.f.x">x</span>], <span class="extype" name="doobie.free.drivermanager.DriverManagerIO.A">A</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Free monad over a free functor of <a href="drivermanager$$DriverManagerOp.html" class="extype" name="doobie.free.drivermanager.DriverManagerOp">DriverManagerOp</a>; abstractly, a computation that consumes
+a <code>java.sql.DriverManager</code> and produces a value of type <code>A</code>.</p>
+    </li><li name="doobie.free.drivermanager.DriverManagerIOOps" visbl="pub" data-isabs="false" fullComment="no" group="Algebra">
+      <a id="DriverManagerIOOps[A]extendsAnyRef"></a>
+      <a id="DriverManagerIOOps[A]:DriverManagerIOOps[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="drivermanager$$DriverManagerIOOps.html"><span class="name">DriverManagerIOOps</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4>
+      <p class="comment cmt">Syntax for <code>DriverManagerIO</code>.</p>
+    </li><li name="doobie.free.drivermanager.DriverManagerOp" visbl="pub" data-isabs="true" fullComment="no" group="Algebra">
+      <a id="DriverManagerOp[A]extendsAnyRef"></a>
+      <a id="DriverManagerOp[A]:DriverManagerOp[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">sealed </span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="drivermanager$$DriverManagerOp.html"><span class="name">DriverManagerOp</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4>
+      <p class="comment cmt">Sum type of primitive operations over a <code>java.sql.DriverManager</code>.</p>
+    </li></ol>
+            </div>
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="scala.AnyRef#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="!=(x$1:AnyRef):Boolean"></a>
+      <a id="!=(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.Any#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="!=(x$1:Any):Boolean"></a>
+      <a id="!=(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="scala.AnyRef###" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="##():Int"></a>
+      <a id="##():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#==" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="==(x$1:AnyRef):Boolean"></a>
+      <a id="==(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.Any#==" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="==(x$1:Any):Boolean"></a>
+      <a id="==(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="doobie.free.drivermanager#CatchableDriverManagerIO" visbl="pub" data-isabs="false" fullComment="no" group="Typeclass Instances">
+      <a id="CatchableDriverManagerIO:scalaz.Catchable[doobie.free.drivermanager.DriverManagerIO]"></a>
+      <a id="CatchableDriverManagerIO:Catchable[DriverManagerIO]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">CatchableDriverManagerIO</span><span class="result">: <span class="extype" name="scalaz.Catchable">Catchable</span>[<a href="#DriverManagerIO[A]=scalaz.Free.FreeC[doobie.free.drivermanager.DriverManagerOp,A]" class="extmbr" name="doobie.free.drivermanager.DriverManagerIO">DriverManagerIO</a>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Catchable instance for <a href="#DriverManagerIO[A]=scalaz.Free.FreeC[doobie.free.drivermanager.DriverManagerOp,A]" class="extmbr" name="doobie.free.drivermanager.DriverManagerIO">DriverManagerIO</a>.</p>
+    </li><li name="doobie.free.drivermanager.DriverManagerOp" visbl="pub" data-isabs="false" fullComment="no" group="Algebra">
+      <a id="DriverManagerOp"></a>
+      <a id="DriverManagerOp:DriverManagerOp"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="drivermanager$$DriverManagerOp$.html"><span class="name">DriverManagerOp</span></a>
+      </span>
+      </h4>
+      <p class="comment cmt">Module of constructors for <code>DriverManagerOp</code>.</p>
+    </li><li name="doobie.free.drivermanager#MonadDriverManagerIO" visbl="pub" data-isabs="false" fullComment="no" group="Typeclass Instances">
+      <a id="MonadDriverManagerIO:scalaz.Monad[doobie.free.drivermanager.DriverManagerIO]"></a>
+      <a id="MonadDriverManagerIO:Monad[DriverManagerIO]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">MonadDriverManagerIO</span><span class="result">: <span class="extype" name="scalaz.Monad">Monad</span>[<a href="#DriverManagerIO[A]=scalaz.Free.FreeC[doobie.free.drivermanager.DriverManagerOp,A]" class="extmbr" name="doobie.free.drivermanager.DriverManagerIO">DriverManagerIO</a>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Monad instance for <a href="#DriverManagerIO[A]=scalaz.Free.FreeC[doobie.free.drivermanager.DriverManagerOp,A]" class="extmbr" name="doobie.free.drivermanager.DriverManagerIO">DriverManagerIO</a> (can't be inferred).</p>
+    </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asInstanceOf[T0]:T0"></a>
+      <a id="asInstanceOf[T0]:T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="doobie.free.drivermanager#attempt" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Lifting)">
+      <a id="attempt[A](a:doobie.free.drivermanager.DriverManagerIO[A]):doobie.free.drivermanager.DriverManagerIO[scalaz.\/[Throwable,A]]"></a>
+      <a id="attempt[A](DriverManagerIO[A]):DriverManagerIO[\/[Throwable,A]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">attempt</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="a">a: <a href="#DriverManagerIO[A]=scalaz.Free.FreeC[doobie.free.drivermanager.DriverManagerOp,A]" class="extmbr" name="doobie.free.drivermanager.DriverManagerIO">DriverManagerIO</a>[<span class="extype" name="doobie.free.drivermanager.attempt.A">A</span>]</span>)</span><span class="result">: <a href="#DriverManagerIO[A]=scalaz.Free.FreeC[doobie.free.drivermanager.DriverManagerOp,A]" class="extmbr" name="doobie.free.drivermanager.DriverManagerIO">DriverManagerIO</a>[<span class="extype" name="scalaz.\/">\/</span>[<span class="extype" name="scala.Throwable">Throwable</span>, <span class="extype" name="doobie.free.drivermanager.attempt.A">A</span>]]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Lift a DriverManagerIO[A] into an exception-capturing DriverManagerIO[Throwable \/ A].</p>
+    </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clone():Object"></a>
+      <a id="clone():AnyRef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clone</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.CloneNotSupportedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="doobie.free.drivermanager#delay" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Lifting)">
+      <a id="delay[A](a:=&gt;A):doobie.free.drivermanager.DriverManagerIO[A]"></a>
+      <a id="delay[A](⇒A):DriverManagerIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">delay</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="a">a: ⇒ <span class="extype" name="doobie.free.drivermanager.delay.A">A</span></span>)</span><span class="result">: <a href="#DriverManagerIO[A]=scalaz.Free.FreeC[doobie.free.drivermanager.DriverManagerOp,A]" class="extmbr" name="doobie.free.drivermanager.DriverManagerIO">DriverManagerIO</a>[<span class="extype" name="doobie.free.drivermanager.delay.A">A</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Non-strict unit for capturing effects.</p>
+    </li><li name="doobie.free.drivermanager#deregisterDriver" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Primitives)">
+      <a id="deregisterDriver(a:java.sql.Driver):doobie.free.drivermanager.DriverManagerIO[Unit]"></a>
+      <a id="deregisterDriver(Driver):DriverManagerIO[Unit]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">deregisterDriver</span><span class="params">(<span name="a">a: <span class="extype" name="java.sql.Driver">Driver</span></span>)</span><span class="result">: <a href="#DriverManagerIO[A]=scalaz.Free.FreeC[doobie.free.drivermanager.DriverManagerOp,A]" class="extmbr" name="doobie.free.drivermanager.DriverManagerIO">DriverManagerIO</a>[<span class="extype" name="scala.Unit">Unit</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt"></p>
+    </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="eq(x$1:AnyRef):Boolean"></a>
+      <a id="eq(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#equals" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="equals(x$1:Any):Boolean"></a>
+      <a id="equals(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="finalize():Unit"></a>
+      <a id="finalize():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="symbol">classOf[java.lang.Throwable]</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getClass():Class[_]"></a>
+      <a id="getClass():Class[_]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="doobie.free.drivermanager#getConnection" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Primitives)">
+      <a id="getConnection(a:String,b:java.util.Properties):doobie.free.drivermanager.DriverManagerIO[java.sql.Connection]"></a>
+      <a id="getConnection(String,Properties):DriverManagerIO[Connection]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getConnection</span><span class="params">(<span name="a">a: <span class="extype" name="java.lang.String">String</span></span>, <span name="b">b: <span class="extype" name="java.util.Properties">Properties</span></span>)</span><span class="result">: <a href="#DriverManagerIO[A]=scalaz.Free.FreeC[doobie.free.drivermanager.DriverManagerOp,A]" class="extmbr" name="doobie.free.drivermanager.DriverManagerIO">DriverManagerIO</a>[<span class="extype" name="java.sql.Connection">Connection</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.free.drivermanager#getConnection" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Primitives)">
+      <a id="getConnection(a:String,b:String,c:String):doobie.free.drivermanager.DriverManagerIO[java.sql.Connection]"></a>
+      <a id="getConnection(String,String,String):DriverManagerIO[Connection]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getConnection</span><span class="params">(<span name="a">a: <span class="extype" name="java.lang.String">String</span></span>, <span name="b">b: <span class="extype" name="java.lang.String">String</span></span>, <span name="c">c: <span class="extype" name="java.lang.String">String</span></span>)</span><span class="result">: <a href="#DriverManagerIO[A]=scalaz.Free.FreeC[doobie.free.drivermanager.DriverManagerOp,A]" class="extmbr" name="doobie.free.drivermanager.DriverManagerIO">DriverManagerIO</a>[<span class="extype" name="java.sql.Connection">Connection</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.free.drivermanager#getConnection" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Primitives)">
+      <a id="getConnection(a:String):doobie.free.drivermanager.DriverManagerIO[java.sql.Connection]"></a>
+      <a id="getConnection(String):DriverManagerIO[Connection]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getConnection</span><span class="params">(<span name="a">a: <span class="extype" name="java.lang.String">String</span></span>)</span><span class="result">: <a href="#DriverManagerIO[A]=scalaz.Free.FreeC[doobie.free.drivermanager.DriverManagerOp,A]" class="extmbr" name="doobie.free.drivermanager.DriverManagerIO">DriverManagerIO</a>[<span class="extype" name="java.sql.Connection">Connection</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.free.drivermanager#getDriver" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Primitives)">
+      <a id="getDriver(a:String):doobie.free.drivermanager.DriverManagerIO[java.sql.Driver]"></a>
+      <a id="getDriver(String):DriverManagerIO[Driver]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getDriver</span><span class="params">(<span name="a">a: <span class="extype" name="java.lang.String">String</span></span>)</span><span class="result">: <a href="#DriverManagerIO[A]=scalaz.Free.FreeC[doobie.free.drivermanager.DriverManagerOp,A]" class="extmbr" name="doobie.free.drivermanager.DriverManagerIO">DriverManagerIO</a>[<span class="extype" name="java.sql.Driver">Driver</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.free.drivermanager#getDrivers" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Primitives)">
+      <a id="getDrivers:doobie.free.drivermanager.DriverManagerIO[java.util.Enumeration[java.sql.Driver]]"></a>
+      <a id="getDrivers:DriverManagerIO[Enumeration[Driver]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getDrivers</span><span class="result">: <a href="#DriverManagerIO[A]=scalaz.Free.FreeC[doobie.free.drivermanager.DriverManagerOp,A]" class="extmbr" name="doobie.free.drivermanager.DriverManagerIO">DriverManagerIO</a>[<span class="extype" name="java.util.Enumeration">Enumeration</span>[<span class="extype" name="java.sql.Driver">Driver</span>]]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.free.drivermanager#getLogStream" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Primitives)">
+      <a id="getLogStream:doobie.free.drivermanager.DriverManagerIO[java.io.PrintStream]"></a>
+      <a id="getLogStream:DriverManagerIO[PrintStream]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getLogStream</span><span class="result">: <a href="#DriverManagerIO[A]=scalaz.Free.FreeC[doobie.free.drivermanager.DriverManagerOp,A]" class="extmbr" name="doobie.free.drivermanager.DriverManagerIO">DriverManagerIO</a>[<span class="extype" name="java.io.PrintStream">PrintStream</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.free.drivermanager#getLogWriter" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Primitives)">
+      <a id="getLogWriter:doobie.free.drivermanager.DriverManagerIO[java.io.PrintWriter]"></a>
+      <a id="getLogWriter:DriverManagerIO[PrintWriter]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getLogWriter</span><span class="result">: <a href="#DriverManagerIO[A]=scalaz.Free.FreeC[doobie.free.drivermanager.DriverManagerOp,A]" class="extmbr" name="doobie.free.drivermanager.DriverManagerIO">DriverManagerIO</a>[<span class="extype" name="java.io.PrintWriter">PrintWriter</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.free.drivermanager#getLoginTimeout" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Primitives)">
+      <a id="getLoginTimeout:doobie.free.drivermanager.DriverManagerIO[Int]"></a>
+      <a id="getLoginTimeout:DriverManagerIO[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getLoginTimeout</span><span class="result">: <a href="#DriverManagerIO[A]=scalaz.Free.FreeC[doobie.free.drivermanager.DriverManagerOp,A]" class="extmbr" name="doobie.free.drivermanager.DriverManagerIO">DriverManagerIO</a>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt"></p>
+    </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="hashCode():Int"></a>
+      <a id="hashCode():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="doobie.free.drivermanager#liftConnection" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="liftConnection[A](s:java.sql.Connection,a:doobie.free.connection.ConnectionIO[A]):doobie.free.drivermanager.DriverManagerIO[A]"></a>
+      <a id="liftConnection[A](Connection,ConnectionIO[A]):DriverManagerIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">liftConnection</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.Connection">Connection</span></span>, <span name="a">a: <a href="connection$.html#ConnectionIO[A]=scalaz.Free.FreeC[doobie.free.connection.ConnectionOp,A]" class="extmbr" name="doobie.free.connection.ConnectionIO">ConnectionIO</a>[<span class="extype" name="doobie.free.drivermanager.liftConnection.A">A</span>]</span>)</span><span class="result">: <a href="#DriverManagerIO[A]=scalaz.Free.FreeC[doobie.free.drivermanager.DriverManagerOp,A]" class="extmbr" name="doobie.free.drivermanager.DriverManagerIO">DriverManagerIO</a>[<span class="extype" name="doobie.free.drivermanager.liftConnection.A">A</span>]</span>
+      </span>
+      </h4>
+      
+    </li><li name="doobie.free.drivermanager#liftDriver" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="liftDriver[A](s:java.sql.Driver,a:doobie.free.driver.DriverIO[A]):doobie.free.drivermanager.DriverManagerIO[A]"></a>
+      <a id="liftDriver[A](Driver,DriverIO[A]):DriverManagerIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">liftDriver</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.Driver">Driver</span></span>, <span name="a">a: <a href="driver$.html#DriverIO[A]=scalaz.Free.FreeC[doobie.free.driver.DriverOp,A]" class="extmbr" name="doobie.free.driver.DriverIO">DriverIO</a>[<span class="extype" name="doobie.free.drivermanager.liftDriver.A">A</span>]</span>)</span><span class="result">: <a href="#DriverManagerIO[A]=scalaz.Free.FreeC[doobie.free.drivermanager.DriverManagerOp,A]" class="extmbr" name="doobie.free.drivermanager.DriverManagerIO">DriverManagerIO</a>[<span class="extype" name="doobie.free.drivermanager.liftDriver.A">A</span>]</span>
+      </span>
+      </h4>
+      
+    </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ne(x$1:AnyRef):Boolean"></a>
+      <a id="ne(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notify():Unit"></a>
+      <a id="notify():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notifyAll" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notifyAll():Unit"></a>
+      <a id="notifyAll():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="doobie.free.drivermanager#println" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Primitives)">
+      <a id="println(a:String):doobie.free.drivermanager.DriverManagerIO[Unit]"></a>
+      <a id="println(String):DriverManagerIO[Unit]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">println</span><span class="params">(<span name="a">a: <span class="extype" name="java.lang.String">String</span></span>)</span><span class="result">: <a href="#DriverManagerIO[A]=scalaz.Free.FreeC[doobie.free.drivermanager.DriverManagerOp,A]" class="extmbr" name="doobie.free.drivermanager.DriverManagerIO">DriverManagerIO</a>[<span class="extype" name="scala.Unit">Unit</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.free.drivermanager#registerDriver" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Primitives)">
+      <a id="registerDriver(a:java.sql.Driver):doobie.free.drivermanager.DriverManagerIO[Unit]"></a>
+      <a id="registerDriver(Driver):DriverManagerIO[Unit]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">registerDriver</span><span class="params">(<span name="a">a: <span class="extype" name="java.sql.Driver">Driver</span></span>)</span><span class="result">: <a href="#DriverManagerIO[A]=scalaz.Free.FreeC[doobie.free.drivermanager.DriverManagerOp,A]" class="extmbr" name="doobie.free.drivermanager.DriverManagerIO">DriverManagerIO</a>[<span class="extype" name="scala.Unit">Unit</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.free.drivermanager#setLogStream" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Primitives)">
+      <a id="setLogStream(a:java.io.PrintStream):doobie.free.drivermanager.DriverManagerIO[Unit]"></a>
+      <a id="setLogStream(PrintStream):DriverManagerIO[Unit]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setLogStream</span><span class="params">(<span name="a">a: <span class="extype" name="java.io.PrintStream">PrintStream</span></span>)</span><span class="result">: <a href="#DriverManagerIO[A]=scalaz.Free.FreeC[doobie.free.drivermanager.DriverManagerOp,A]" class="extmbr" name="doobie.free.drivermanager.DriverManagerIO">DriverManagerIO</a>[<span class="extype" name="scala.Unit">Unit</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.free.drivermanager#setLogWriter" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Primitives)">
+      <a id="setLogWriter(a:java.io.PrintWriter):doobie.free.drivermanager.DriverManagerIO[Unit]"></a>
+      <a id="setLogWriter(PrintWriter):DriverManagerIO[Unit]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setLogWriter</span><span class="params">(<span name="a">a: <span class="extype" name="java.io.PrintWriter">PrintWriter</span></span>)</span><span class="result">: <a href="#DriverManagerIO[A]=scalaz.Free.FreeC[doobie.free.drivermanager.DriverManagerOp,A]" class="extmbr" name="doobie.free.drivermanager.DriverManagerIO">DriverManagerIO</a>[<span class="extype" name="scala.Unit">Unit</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.free.drivermanager#setLoginTimeout" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Primitives)">
+      <a id="setLoginTimeout(a:Int):doobie.free.drivermanager.DriverManagerIO[Unit]"></a>
+      <a id="setLoginTimeout(Int):DriverManagerIO[Unit]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setLoginTimeout</span><span class="params">(<span name="a">a: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <a href="#DriverManagerIO[A]=scalaz.Free.FreeC[doobie.free.drivermanager.DriverManagerOp,A]" class="extmbr" name="doobie.free.drivermanager.DriverManagerIO">DriverManagerIO</a>[<span class="extype" name="scala.Unit">Unit</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt"></p>
+    </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
+      <a id="synchronized[T0](⇒T0):T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#toString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toString():String"></a>
+      <a id="toString():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="doobie.free.drivermanager#trans" visbl="pub" data-isabs="false" fullComment="no" group="Algebra">
+      <a id="trans[M[_]](implicitevidence$1:scalaz.Monad[M],implicitevidence$2:scalaz.Catchable[M],implicitevidence$3:doobie.util.capture.Capture[M]):scalaz.~&gt;[doobie.free.drivermanager.DriverManagerOp,M]"></a>
+      <a id="trans[M[_]](Monad[M],Catchable[M],Capture[M]):~&gt;[DriverManagerOp,M]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">trans</span><span class="tparams">[<span name="M">M<span class="tparams">[<span name="_">_</span>]</span></span>]</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scalaz.Monad">Monad</span>[<span class="extype" name="doobie.free.drivermanager.trans.M">M</span>]</span>, <span name="arg1">arg1: <span class="extype" name="scalaz.Catchable">Catchable</span>[<span class="extype" name="doobie.free.drivermanager.trans.M">M</span>]</span>, <span name="arg2">arg2: <a href="../util/capture$$Capture.html" class="extype" name="doobie.util.capture.Capture">Capture</a>[<span class="extype" name="doobie.free.drivermanager.trans.M">M</span>]</span>)</span><span class="result">: <a href="../../scalaz/package.html#~&gt;[-F[_],+G[_]]=scalaz.NaturalTransformation[F,G]" class="extmbr" name="scalaz.~&gt;">~&gt;</a>[<a href="drivermanager$$DriverManagerOp.html" class="extype" name="doobie.free.drivermanager.DriverManagerOp">DriverManagerOp</a>, <span class="extype" name="doobie.free.drivermanager.trans.M">M</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Natural transformation from <code>DriverManagerOp</code> to the given <code>M</code>.</p>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait():Unit"></a>
+      <a id="wait():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long,x$2:Int):Unit"></a>
+      <a id="wait(Long,Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long):Unit"></a>
+      <a id="wait(Long):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Algebra">
+              <h3>Algebra</h3>
+              
+            </div><div class="group" name="Constructors (Lifting)">
+              <h3>Constructors (Lifting)</h3>
+              
+            </div><div class="group" name="Constructors (Primitives)">
+              <h3>Constructors (Primitives)</h3>
+              
+            </div><div class="group" name="Typeclass Instances">
+              <h3>Typeclass Instances</h3>
+              
+            </div><div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+      <script defer="defer" type="text/javascript" id="jquery-js" src="../../lib/jquery.js"></script><script defer="defer" type="text/javascript" id="jquery-ui-js" src="../../lib/jquery-ui.js"></script><script defer="defer" type="text/javascript" id="tools-tooltip-js" src="../../lib/tools.tooltip.js"></script><script defer="defer" type="text/javascript" id="template-js" src="../../lib/template.js"></script>
+    </body>
+      </html>

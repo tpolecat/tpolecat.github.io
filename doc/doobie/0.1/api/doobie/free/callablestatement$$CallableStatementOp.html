@@ -1,0 +1,425 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+        <head>
+          <title>CallableStatementOp - doobie.free.callablestatement.CallableStatementOp</title>
+          <meta name="description" content="CallableStatementOp - doobie.free.callablestatement.CallableStatementOp" />
+          <meta name="keywords" content="CallableStatementOp doobie.free.callablestatement.CallableStatementOp" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../index.html';
+            var hash = 'doobie.free.callablestatement$$CallableStatementOp';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="type">
+      <div id="definition">
+        <a href="callablestatement$$CallableStatementOp$.html" title="Go to companion"><img src="../../lib/trait_to_object_big.png" /></a>
+        <p id="owner"><a href="../package.html" class="extype" name="doobie">doobie</a>.<a href="package.html" class="extype" name="doobie.free">free</a>.<a href="callablestatement$.html" class="extype" name="doobie.free.callablestatement">callablestatement</a></p>
+        <h1><a href="callablestatement$$CallableStatementOp$.html" title="Go to companion">CallableStatementOp</a></h1>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">sealed </span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <span class="name">CallableStatementOp</span><span class="tparams">[<span name="A">A</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Sum type of primitive operations over a <code>java.sql.CallableStatement</code>.</p></div><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+        </div><div class="toggleContainer block">
+          <span class="toggle">Known Subclasses</span>
+          <div class="subClasses hiddenContent"><a href="callablestatement$$CallableStatementOp$$AddBatch$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.AddBatch">AddBatch</a>, <a href="callablestatement$$CallableStatementOp$$AddBatch1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.AddBatch1">AddBatch1</a>, <a href="callablestatement$$CallableStatementOp$$Attempt.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.Attempt">Attempt</a>, <a href="callablestatement$$CallableStatementOp$$Cancel$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.Cancel">Cancel</a>, <a href="callablestatement$$CallableStatementOp$$ClearBatch$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.ClearBatch">ClearBatch</a>, <a href="callablestatement$$CallableStatementOp$$ClearParameters$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.ClearParameters">ClearParameters</a>, <a href="callablestatement$$CallableStatementOp$$ClearWarnings$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.ClearWarnings">ClearWarnings</a>, <a href="callablestatement$$CallableStatementOp$$Close$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.Close">Close</a>, <a href="callablestatement$$CallableStatementOp$$Execute$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.Execute">Execute</a>, <a href="callablestatement$$CallableStatementOp$$Execute1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.Execute1">Execute1</a>, <a href="callablestatement$$CallableStatementOp$$Execute2.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.Execute2">Execute2</a>, <a href="callablestatement$$CallableStatementOp$$Execute3.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.Execute3">Execute3</a>, <a href="callablestatement$$CallableStatementOp$$Execute4.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.Execute4">Execute4</a>, <a href="callablestatement$$CallableStatementOp$$ExecuteBatch$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.ExecuteBatch">ExecuteBatch</a>, <a href="callablestatement$$CallableStatementOp$$ExecuteQuery$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.ExecuteQuery">ExecuteQuery</a>, <a href="callablestatement$$CallableStatementOp$$ExecuteQuery1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.ExecuteQuery1">ExecuteQuery1</a>, <a href="callablestatement$$CallableStatementOp$$ExecuteUpdate$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.ExecuteUpdate">ExecuteUpdate</a>, <a href="callablestatement$$CallableStatementOp$$ExecuteUpdate1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.ExecuteUpdate1">ExecuteUpdate1</a>, <a href="callablestatement$$CallableStatementOp$$ExecuteUpdate2.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.ExecuteUpdate2">ExecuteUpdate2</a>, <a href="callablestatement$$CallableStatementOp$$ExecuteUpdate3.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.ExecuteUpdate3">ExecuteUpdate3</a>, <a href="callablestatement$$CallableStatementOp$$ExecuteUpdate4.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.ExecuteUpdate4">ExecuteUpdate4</a>, <a href="callablestatement$$CallableStatementOp$$GetArray.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetArray">GetArray</a>, <a href="callablestatement$$CallableStatementOp$$GetArray1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetArray1">GetArray1</a>, <a href="callablestatement$$CallableStatementOp$$GetBigDecimal.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetBigDecimal">GetBigDecimal</a>, <a href="callablestatement$$CallableStatementOp$$GetBigDecimal1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetBigDecimal1">GetBigDecimal1</a>, <a href="callablestatement$$CallableStatementOp$$GetBigDecimal2.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetBigDecimal2">GetBigDecimal2</a>, <a href="callablestatement$$CallableStatementOp$$GetBlob.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetBlob">GetBlob</a>, <a href="callablestatement$$CallableStatementOp$$GetBlob1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetBlob1">GetBlob1</a>, <a href="callablestatement$$CallableStatementOp$$GetBoolean.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetBoolean">GetBoolean</a>, <a href="callablestatement$$CallableStatementOp$$GetBoolean1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetBoolean1">GetBoolean1</a>, <a href="callablestatement$$CallableStatementOp$$GetByte.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetByte">GetByte</a>, <a href="callablestatement$$CallableStatementOp$$GetByte1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetByte1">GetByte1</a>, <a href="callablestatement$$CallableStatementOp$$GetBytes.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetBytes">GetBytes</a>, <a href="callablestatement$$CallableStatementOp$$GetBytes1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetBytes1">GetBytes1</a>, <a href="callablestatement$$CallableStatementOp$$GetCharacterStream.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetCharacterStream">GetCharacterStream</a>, <a href="callablestatement$$CallableStatementOp$$GetCharacterStream1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetCharacterStream1">GetCharacterStream1</a>, <a href="callablestatement$$CallableStatementOp$$GetClob.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetClob">GetClob</a>, <a href="callablestatement$$CallableStatementOp$$GetClob1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetClob1">GetClob1</a>, <a href="callablestatement$$CallableStatementOp$$GetConnection$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetConnection">GetConnection</a>, <a href="callablestatement$$CallableStatementOp$$GetDate.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetDate">GetDate</a>, <a href="callablestatement$$CallableStatementOp$$GetDate1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetDate1">GetDate1</a>, <a href="callablestatement$$CallableStatementOp$$GetDate2.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetDate2">GetDate2</a>, <a href="callablestatement$$CallableStatementOp$$GetDate3.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetDate3">GetDate3</a>, <a href="callablestatement$$CallableStatementOp$$GetDouble.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetDouble">GetDouble</a>, <a href="callablestatement$$CallableStatementOp$$GetDouble1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetDouble1">GetDouble1</a>, <a href="callablestatement$$CallableStatementOp$$GetFetchDirection$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetFetchDirection">GetFetchDirection</a>, <a href="callablestatement$$CallableStatementOp$$GetFetchSize$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetFetchSize">GetFetchSize</a>, <a href="callablestatement$$CallableStatementOp$$GetFloat.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetFloat">GetFloat</a>, <a href="callablestatement$$CallableStatementOp$$GetFloat1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetFloat1">GetFloat1</a>, <a href="callablestatement$$CallableStatementOp$$GetGeneratedKeys$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetGeneratedKeys">GetGeneratedKeys</a>, <a href="callablestatement$$CallableStatementOp$$GetInt.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetInt">GetInt</a>, <a href="callablestatement$$CallableStatementOp$$GetInt1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetInt1">GetInt1</a>, <a href="callablestatement$$CallableStatementOp$$GetLong.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetLong">GetLong</a>, <a href="callablestatement$$CallableStatementOp$$GetLong1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetLong1">GetLong1</a>, <a href="callablestatement$$CallableStatementOp$$GetMaxFieldSize$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetMaxFieldSize">GetMaxFieldSize</a>, <a href="callablestatement$$CallableStatementOp$$GetMaxRows$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetMaxRows">GetMaxRows</a>, <a href="callablestatement$$CallableStatementOp$$GetMetaData$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetMetaData">GetMetaData</a>, <a href="callablestatement$$CallableStatementOp$$GetMoreResults.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetMoreResults">GetMoreResults</a>, <a href="callablestatement$$CallableStatementOp$$GetMoreResults1$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetMoreResults1">GetMoreResults1</a>, <a href="callablestatement$$CallableStatementOp$$GetNCharacterStream.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetNCharacterStream">GetNCharacterStream</a>, <a href="callablestatement$$CallableStatementOp$$GetNCharacterStream1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetNCharacterStream1">GetNCharacterStream1</a>, <a href="callablestatement$$CallableStatementOp$$GetNClob.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetNClob">GetNClob</a>, <a href="callablestatement$$CallableStatementOp$$GetNClob1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetNClob1">GetNClob1</a>, <a href="callablestatement$$CallableStatementOp$$GetNString.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetNString">GetNString</a>, <a href="callablestatement$$CallableStatementOp$$GetNString1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetNString1">GetNString1</a>, <a href="callablestatement$$CallableStatementOp$$GetObject.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetObject">GetObject</a>, <a href="callablestatement$$CallableStatementOp$$GetObject1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetObject1">GetObject1</a>, <a href="callablestatement$$CallableStatementOp$$GetObject2.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetObject2">GetObject2</a>, <a href="callablestatement$$CallableStatementOp$$GetObject3.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetObject3">GetObject3</a>, <a href="callablestatement$$CallableStatementOp$$GetParameterMetaData$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetParameterMetaData">GetParameterMetaData</a>, <a href="callablestatement$$CallableStatementOp$$GetQueryTimeout$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetQueryTimeout">GetQueryTimeout</a>, <a href="callablestatement$$CallableStatementOp$$GetRef.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetRef">GetRef</a>, <a href="callablestatement$$CallableStatementOp$$GetRef1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetRef1">GetRef1</a>, <a href="callablestatement$$CallableStatementOp$$GetResultSet$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetResultSet">GetResultSet</a>, <a href="callablestatement$$CallableStatementOp$$GetResultSetConcurrency$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetResultSetConcurrency">GetResultSetConcurrency</a>, <a href="callablestatement$$CallableStatementOp$$GetResultSetHoldability$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetResultSetHoldability">GetResultSetHoldability</a>, <a href="callablestatement$$CallableStatementOp$$GetResultSetType$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetResultSetType">GetResultSetType</a>, <a href="callablestatement$$CallableStatementOp$$GetRowId.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetRowId">GetRowId</a>, <a href="callablestatement$$CallableStatementOp$$GetRowId1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetRowId1">GetRowId1</a>, <a href="callablestatement$$CallableStatementOp$$GetSQLXML.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetSQLXML">GetSQLXML</a>, <a href="callablestatement$$CallableStatementOp$$GetSQLXML1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetSQLXML1">GetSQLXML1</a>, <a href="callablestatement$$CallableStatementOp$$GetShort.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetShort">GetShort</a>, <a href="callablestatement$$CallableStatementOp$$GetShort1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetShort1">GetShort1</a>, <a href="callablestatement$$CallableStatementOp$$GetString.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetString">GetString</a>, <a href="callablestatement$$CallableStatementOp$$GetString1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetString1">GetString1</a>, <a href="callablestatement$$CallableStatementOp$$GetTime.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetTime">GetTime</a>, <a href="callablestatement$$CallableStatementOp$$GetTime1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetTime1">GetTime1</a>, <a href="callablestatement$$CallableStatementOp$$GetTime2.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetTime2">GetTime2</a>, <a href="callablestatement$$CallableStatementOp$$GetTime3.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetTime3">GetTime3</a>, <a href="callablestatement$$CallableStatementOp$$GetTimestamp.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetTimestamp">GetTimestamp</a>, <a href="callablestatement$$CallableStatementOp$$GetTimestamp1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetTimestamp1">GetTimestamp1</a>, <a href="callablestatement$$CallableStatementOp$$GetTimestamp2.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetTimestamp2">GetTimestamp2</a>, <a href="callablestatement$$CallableStatementOp$$GetTimestamp3.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetTimestamp3">GetTimestamp3</a>, <a href="callablestatement$$CallableStatementOp$$GetURL.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetURL">GetURL</a>, <a href="callablestatement$$CallableStatementOp$$GetURL1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetURL1">GetURL1</a>, <a href="callablestatement$$CallableStatementOp$$GetUpdateCount$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetUpdateCount">GetUpdateCount</a>, <a href="callablestatement$$CallableStatementOp$$GetWarnings$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.GetWarnings">GetWarnings</a>, <a href="callablestatement$$CallableStatementOp$$IsClosed$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.IsClosed">IsClosed</a>, <a href="callablestatement$$CallableStatementOp$$IsPoolable$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.IsPoolable">IsPoolable</a>, <a href="callablestatement$$CallableStatementOp$$IsWrapperFor.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.IsWrapperFor">IsWrapperFor</a>, <a href="callablestatement$$CallableStatementOp$$LiftBlobIO.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.LiftBlobIO">LiftBlobIO</a>, <a href="callablestatement$$CallableStatementOp$$LiftClobIO.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.LiftClobIO">LiftClobIO</a>, <a href="callablestatement$$CallableStatementOp$$LiftConnectionIO.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.LiftConnectionIO">LiftConnectionIO</a>, <a href="callablestatement$$CallableStatementOp$$LiftDatabaseMetaDataIO.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.LiftDatabaseMetaDataIO">LiftDatabaseMetaDataIO</a>, <a href="callablestatement$$CallableStatementOp$$LiftDriverIO.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.LiftDriverIO">LiftDriverIO</a>, <a href="callablestatement$$CallableStatementOp$$LiftNClobIO.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.LiftNClobIO">LiftNClobIO</a>, <a href="callablestatement$$CallableStatementOp$$LiftPreparedStatementIO.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.LiftPreparedStatementIO">LiftPreparedStatementIO</a>, <a href="callablestatement$$CallableStatementOp$$LiftRefIO.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.LiftRefIO">LiftRefIO</a>, <a href="callablestatement$$CallableStatementOp$$LiftResultSetIO.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.LiftResultSetIO">LiftResultSetIO</a>, <a href="callablestatement$$CallableStatementOp$$LiftSQLDataIO.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.LiftSQLDataIO">LiftSQLDataIO</a>, <a href="callablestatement$$CallableStatementOp$$LiftSQLInputIO.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.LiftSQLInputIO">LiftSQLInputIO</a>, <a href="callablestatement$$CallableStatementOp$$LiftSQLOutputIO.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.LiftSQLOutputIO">LiftSQLOutputIO</a>, <a href="callablestatement$$CallableStatementOp$$LiftStatementIO.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.LiftStatementIO">LiftStatementIO</a>, <a href="callablestatement$$CallableStatementOp$$Pure.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.Pure">Pure</a>, <a href="callablestatement$$CallableStatementOp$$RegisterOutParameter.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.RegisterOutParameter">RegisterOutParameter</a>, <a href="callablestatement$$CallableStatementOp$$RegisterOutParameter1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.RegisterOutParameter1">RegisterOutParameter1</a>, <a href="callablestatement$$CallableStatementOp$$RegisterOutParameter2.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.RegisterOutParameter2">RegisterOutParameter2</a>, <a href="callablestatement$$CallableStatementOp$$RegisterOutParameter3.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.RegisterOutParameter3">RegisterOutParameter3</a>, <a href="callablestatement$$CallableStatementOp$$RegisterOutParameter4.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.RegisterOutParameter4">RegisterOutParameter4</a>, <a href="callablestatement$$CallableStatementOp$$RegisterOutParameter5.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.RegisterOutParameter5">RegisterOutParameter5</a>, <a href="callablestatement$$CallableStatementOp$$SetArray.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetArray">SetArray</a>, <a href="callablestatement$$CallableStatementOp$$SetAsciiStream.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetAsciiStream">SetAsciiStream</a>, <a href="callablestatement$$CallableStatementOp$$SetAsciiStream1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetAsciiStream1">SetAsciiStream1</a>, <a href="callablestatement$$CallableStatementOp$$SetAsciiStream2.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetAsciiStream2">SetAsciiStream2</a>, <a href="callablestatement$$CallableStatementOp$$SetAsciiStream3.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetAsciiStream3">SetAsciiStream3</a>, <a href="callablestatement$$CallableStatementOp$$SetAsciiStream4.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetAsciiStream4">SetAsciiStream4</a>, <a href="callablestatement$$CallableStatementOp$$SetAsciiStream5.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetAsciiStream5">SetAsciiStream5</a>, <a href="callablestatement$$CallableStatementOp$$SetBigDecimal.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetBigDecimal">SetBigDecimal</a>, <a href="callablestatement$$CallableStatementOp$$SetBigDecimal1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetBigDecimal1">SetBigDecimal1</a>, <a href="callablestatement$$CallableStatementOp$$SetBinaryStream.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetBinaryStream">SetBinaryStream</a>, <a href="callablestatement$$CallableStatementOp$$SetBinaryStream1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetBinaryStream1">SetBinaryStream1</a>, <a href="callablestatement$$CallableStatementOp$$SetBinaryStream2.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetBinaryStream2">SetBinaryStream2</a>, <a href="callablestatement$$CallableStatementOp$$SetBinaryStream3.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetBinaryStream3">SetBinaryStream3</a>, <a href="callablestatement$$CallableStatementOp$$SetBinaryStream4.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetBinaryStream4">SetBinaryStream4</a>, <a href="callablestatement$$CallableStatementOp$$SetBinaryStream5.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetBinaryStream5">SetBinaryStream5</a>, <a href="callablestatement$$CallableStatementOp$$SetBlob.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetBlob">SetBlob</a>, <a href="callablestatement$$CallableStatementOp$$SetBlob1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetBlob1">SetBlob1</a>, <a href="callablestatement$$CallableStatementOp$$SetBlob2.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetBlob2">SetBlob2</a>, <a href="callablestatement$$CallableStatementOp$$SetBlob3.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetBlob3">SetBlob3</a>, <a href="callablestatement$$CallableStatementOp$$SetBlob4.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetBlob4">SetBlob4</a>, <a href="callablestatement$$CallableStatementOp$$SetBlob5.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetBlob5">SetBlob5</a>, <a href="callablestatement$$CallableStatementOp$$SetBoolean.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetBoolean">SetBoolean</a>, <a href="callablestatement$$CallableStatementOp$$SetBoolean1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetBoolean1">SetBoolean1</a>, <a href="callablestatement$$CallableStatementOp$$SetByte.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetByte">SetByte</a>, <a href="callablestatement$$CallableStatementOp$$SetByte1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetByte1">SetByte1</a>, <a href="callablestatement$$CallableStatementOp$$SetBytes.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetBytes">SetBytes</a>, <a href="callablestatement$$CallableStatementOp$$SetBytes1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetBytes1">SetBytes1</a>, <a href="callablestatement$$CallableStatementOp$$SetCharacterStream.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetCharacterStream">SetCharacterStream</a>, <a href="callablestatement$$CallableStatementOp$$SetCharacterStream1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetCharacterStream1">SetCharacterStream1</a>, <a href="callablestatement$$CallableStatementOp$$SetCharacterStream2.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetCharacterStream2">SetCharacterStream2</a>, <a href="callablestatement$$CallableStatementOp$$SetCharacterStream3.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetCharacterStream3">SetCharacterStream3</a>, <a href="callablestatement$$CallableStatementOp$$SetCharacterStream4.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetCharacterStream4">SetCharacterStream4</a>, <a href="callablestatement$$CallableStatementOp$$SetCharacterStream5.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetCharacterStream5">SetCharacterStream5</a>, <a href="callablestatement$$CallableStatementOp$$SetClob.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetClob">SetClob</a>, <a href="callablestatement$$CallableStatementOp$$SetClob1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetClob1">SetClob1</a>, <a href="callablestatement$$CallableStatementOp$$SetClob2.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetClob2">SetClob2</a>, <a href="callablestatement$$CallableStatementOp$$SetClob3.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetClob3">SetClob3</a>, <a href="callablestatement$$CallableStatementOp$$SetClob4.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetClob4">SetClob4</a>, <a href="callablestatement$$CallableStatementOp$$SetClob5.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetClob5">SetClob5</a>, <a href="callablestatement$$CallableStatementOp$$SetCursorName.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetCursorName">SetCursorName</a>, <a href="callablestatement$$CallableStatementOp$$SetDate.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetDate">SetDate</a>, <a href="callablestatement$$CallableStatementOp$$SetDate1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetDate1">SetDate1</a>, <a href="callablestatement$$CallableStatementOp$$SetDate2.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetDate2">SetDate2</a>, <a href="callablestatement$$CallableStatementOp$$SetDate3.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetDate3">SetDate3</a>, <a href="callablestatement$$CallableStatementOp$$SetDouble.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetDouble">SetDouble</a>, <a href="callablestatement$$CallableStatementOp$$SetDouble1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetDouble1">SetDouble1</a>, <a href="callablestatement$$CallableStatementOp$$SetEscapeProcessing.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetEscapeProcessing">SetEscapeProcessing</a>, <a href="callablestatement$$CallableStatementOp$$SetFetchDirection.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetFetchDirection">SetFetchDirection</a>, <a href="callablestatement$$CallableStatementOp$$SetFetchSize.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetFetchSize">SetFetchSize</a>, <a href="callablestatement$$CallableStatementOp$$SetFloat.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetFloat">SetFloat</a>, <a href="callablestatement$$CallableStatementOp$$SetFloat1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetFloat1">SetFloat1</a>, <a href="callablestatement$$CallableStatementOp$$SetInt.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetInt">SetInt</a>, <a href="callablestatement$$CallableStatementOp$$SetInt1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetInt1">SetInt1</a>, <a href="callablestatement$$CallableStatementOp$$SetLong.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetLong">SetLong</a>, <a href="callablestatement$$CallableStatementOp$$SetLong1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetLong1">SetLong1</a>, <a href="callablestatement$$CallableStatementOp$$SetMaxFieldSize.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetMaxFieldSize">SetMaxFieldSize</a>, <a href="callablestatement$$CallableStatementOp$$SetMaxRows.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetMaxRows">SetMaxRows</a>, <a href="callablestatement$$CallableStatementOp$$SetNCharacterStream.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetNCharacterStream">SetNCharacterStream</a>, <a href="callablestatement$$CallableStatementOp$$SetNCharacterStream1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetNCharacterStream1">SetNCharacterStream1</a>, <a href="callablestatement$$CallableStatementOp$$SetNCharacterStream2.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetNCharacterStream2">SetNCharacterStream2</a>, <a href="callablestatement$$CallableStatementOp$$SetNCharacterStream3.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetNCharacterStream3">SetNCharacterStream3</a>, <a href="callablestatement$$CallableStatementOp$$SetNClob.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetNClob">SetNClob</a>, <a href="callablestatement$$CallableStatementOp$$SetNClob1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetNClob1">SetNClob1</a>, <a href="callablestatement$$CallableStatementOp$$SetNClob2.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetNClob2">SetNClob2</a>, <a href="callablestatement$$CallableStatementOp$$SetNClob3.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetNClob3">SetNClob3</a>, <a href="callablestatement$$CallableStatementOp$$SetNClob4.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetNClob4">SetNClob4</a>, <a href="callablestatement$$CallableStatementOp$$SetNClob5.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetNClob5">SetNClob5</a>, <a href="callablestatement$$CallableStatementOp$$SetNString.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetNString">SetNString</a>, <a href="callablestatement$$CallableStatementOp$$SetNString1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetNString1">SetNString1</a>, <a href="callablestatement$$CallableStatementOp$$SetNull.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetNull">SetNull</a>, <a href="callablestatement$$CallableStatementOp$$SetNull1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetNull1">SetNull1</a>, <a href="callablestatement$$CallableStatementOp$$SetNull2.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetNull2">SetNull2</a>, <a href="callablestatement$$CallableStatementOp$$SetNull3.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetNull3">SetNull3</a>, <a href="callablestatement$$CallableStatementOp$$SetObject.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetObject">SetObject</a>, <a href="callablestatement$$CallableStatementOp$$SetObject1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetObject1">SetObject1</a>, <a href="callablestatement$$CallableStatementOp$$SetObject2.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetObject2">SetObject2</a>, <a href="callablestatement$$CallableStatementOp$$SetObject3.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetObject3">SetObject3</a>, <a href="callablestatement$$CallableStatementOp$$SetObject4.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetObject4">SetObject4</a>, <a href="callablestatement$$CallableStatementOp$$SetObject5.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetObject5">SetObject5</a>, <a href="callablestatement$$CallableStatementOp$$SetPoolable.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetPoolable">SetPoolable</a>, <a href="callablestatement$$CallableStatementOp$$SetQueryTimeout.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetQueryTimeout">SetQueryTimeout</a>, <a href="callablestatement$$CallableStatementOp$$SetRef.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetRef">SetRef</a>, <a href="callablestatement$$CallableStatementOp$$SetRowId.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetRowId">SetRowId</a>, <a href="callablestatement$$CallableStatementOp$$SetRowId1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetRowId1">SetRowId1</a>, <a href="callablestatement$$CallableStatementOp$$SetSQLXML.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetSQLXML">SetSQLXML</a>, <a href="callablestatement$$CallableStatementOp$$SetSQLXML1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetSQLXML1">SetSQLXML1</a>, <a href="callablestatement$$CallableStatementOp$$SetShort.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetShort">SetShort</a>, <a href="callablestatement$$CallableStatementOp$$SetShort1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetShort1">SetShort1</a>, <a href="callablestatement$$CallableStatementOp$$SetString.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetString">SetString</a>, <a href="callablestatement$$CallableStatementOp$$SetString1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetString1">SetString1</a>, <a href="callablestatement$$CallableStatementOp$$SetTime.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetTime">SetTime</a>, <a href="callablestatement$$CallableStatementOp$$SetTime1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetTime1">SetTime1</a>, <a href="callablestatement$$CallableStatementOp$$SetTime2.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetTime2">SetTime2</a>, <a href="callablestatement$$CallableStatementOp$$SetTime3.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetTime3">SetTime3</a>, <a href="callablestatement$$CallableStatementOp$$SetTimestamp.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetTimestamp">SetTimestamp</a>, <a href="callablestatement$$CallableStatementOp$$SetTimestamp1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetTimestamp1">SetTimestamp1</a>, <a href="callablestatement$$CallableStatementOp$$SetTimestamp2.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetTimestamp2">SetTimestamp2</a>, <a href="callablestatement$$CallableStatementOp$$SetTimestamp3.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetTimestamp3">SetTimestamp3</a>, <a href="callablestatement$$CallableStatementOp$$SetURL.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetURL">SetURL</a>, <a href="callablestatement$$CallableStatementOp$$SetURL1.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetURL1">SetURL1</a>, <a href="callablestatement$$CallableStatementOp$$SetUnicodeStream.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.SetUnicodeStream">SetUnicodeStream</a>, <a href="callablestatement$$CallableStatementOp$$Unwrap.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.Unwrap">Unwrap</a>, <a href="callablestatement$$CallableStatementOp$$WasNull$.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp.WasNull">WasNull</a></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="doobie.free.callablestatement.CallableStatementOp"><span>CallableStatementOp</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show all</span></li>
+            </ol>
+            <a href="http://docs.scala-lang.org/overviews/scaladoc/usage.html#members" target="_blank">Learn more about member selection</a>
+          </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="scala.AnyRef#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="!=(x$1:AnyRef):Boolean"></a>
+      <a id="!=(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.Any#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="!=(x$1:Any):Boolean"></a>
+      <a id="!=(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="scala.AnyRef###" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="##():Int"></a>
+      <a id="##():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#==" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="==(x$1:AnyRef):Boolean"></a>
+      <a id="==(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.Any#==" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="==(x$1:Any):Boolean"></a>
+      <a id="==(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asInstanceOf[T0]:T0"></a>
+      <a id="asInstanceOf[T0]:T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clone():Object"></a>
+      <a id="clone():AnyRef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clone</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.CloneNotSupportedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="eq(x$1:AnyRef):Boolean"></a>
+      <a id="eq(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#equals" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="equals(x$1:Any):Boolean"></a>
+      <a id="equals(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="finalize():Unit"></a>
+      <a id="finalize():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="symbol">classOf[java.lang.Throwable]</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getClass():Class[_]"></a>
+      <a id="getClass():Class[_]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="hashCode():Int"></a>
+      <a id="hashCode():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ne(x$1:AnyRef):Boolean"></a>
+      <a id="ne(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notify():Unit"></a>
+      <a id="notify():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notifyAll" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notifyAll():Unit"></a>
+      <a id="notifyAll():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
+      <a id="synchronized[T0](⇒T0):T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#toString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toString():String"></a>
+      <a id="toString():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait():Unit"></a>
+      <a id="wait():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long,x$2:Int):Unit"></a>
+      <a id="wait(Long,Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long):Unit"></a>
+      <a id="wait(Long):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+      <script defer="defer" type="text/javascript" id="jquery-js" src="../../lib/jquery.js"></script><script defer="defer" type="text/javascript" id="jquery-ui-js" src="../../lib/jquery-ui.js"></script><script defer="defer" type="text/javascript" id="tools-tooltip-js" src="../../lib/tools.tooltip.js"></script><script defer="defer" type="text/javascript" id="template-js" src="../../lib/template.js"></script>
+    </body>
+      </html>
