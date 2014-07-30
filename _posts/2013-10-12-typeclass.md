@@ -197,7 +197,7 @@ res15: (Int, ((Boolean, Int), List[Char])) = (10,((true,15),List(a, b, c, d)))
 
 Ok that's it for now. A few final notes:
 
-* Congratulations, you have done some abstract algebra! The mathy name for `Combiner` is **Monoid**. In order to be correct we have to show that `zero |+| a == a` and `a |+| zero == a`. We have not done that here. With some luck we will do that in another example.
+* Congratulations, you have done some abstract algebra! The mathy name for `Combiner` is **Monoid**. In order to be correct we have to show that `zero |+| a == a` and `a |+| zero == a`, and also that `|+|` is associative. We have not done that here.
 
 * We defined the additive monoid for integers and the conjunctive monoid for booleans, but both types have consistent monoids for other operations. What are they?
 
