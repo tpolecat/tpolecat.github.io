@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" viewBox="71 110 127 161" width="127pt" height="161pt"><metadata xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:date>2014-06-13 00:02Z</dc:date><!-- Produced by OmniGraffle Professional 4.2.3 --></metadata><defs><font-face font-family="Arial Unicode MS" font-size="96" units-per-em="1000" underline-position="-100.097656" underline-thickness="49.804688" slope="0" x-height="529.78516" cap-height="728.02734" ascent="1068.84766" descent="-270.9961" font-weight="500"><!--NSCTFontDescriptor &lt;0x830c740&gt; = {
-    NSFontNameAttribute = ArialUnicodeMS;
-    NSFontSizeAttribute = 96;
-}--><font-face-src><font-face-name name="ArialUnicodeMS"/></font-face-src></font-face><font-face font-family="Menlo" font-size="19" units-per-em="1000" underline-position="-63.476562" underline-thickness="43.945312" slope="0" x-height="546.875" cap-height="729.98047" ascent="928.22266" descent="-235.83984" font-weight="bold"><!--NSCTFontDescriptor &lt;0xa6ba3e0&gt; = {
-    NSFontNameAttribute = "Menlo-Bold";
-    NSFontSizeAttribute = 19;
-}--><font-face-src><font-face-name name="Menlo-Bold"/></font-face-src></font-face></defs><g stroke="none" stroke-opacity="1" stroke-dasharray="none" fill="none" fill-opacity="1"><title>Canvas 1</title><g><title>Layer 1</title><text transform="translate(86.484375 120.65625)" fill="black"><tspan font-family="Arial Unicode MS" font-size="96" font-weight="500" x="0" y="103" textLength="96">♖</tspan></text><text transform="translate(99.984375 238.02344)" fill="black"><tspan font-family="Menlo" font-size="19" font-weight="bold" x=".18310547" y="18" textLength="69">scalaz</tspan></text></g></g></svg>
