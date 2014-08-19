@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+      @import url(http://fonts.googleapis.com/css?family=Droid+Serif);
+      @import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+
+      body {
+        font-family: 'Droid Serif';
+        font-size: 20px;
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+      h1 { font-size: 3em; }
+      h2 { font-size: 2em; }
+      h3 { font-size: 1.6em; }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .large { font-size: 2em; }
+      a, a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+      }
+      code {
+        -moz-border-radius: 5px;
+        -web-border-radius: 5px;
+        background: #e7e8e2;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+      #slideshow .slide .content code {
+        font-size: 0.8em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+      }
+      .inverse {
+        background: #272822;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+class: center, middle
+
+# Pure-Functional Database Access in Scala
+Rob Norris / `@tpolecat`
+
+???
+
+- name is rob
+- interested in FP
+- like a challenge so i do it in scala
+- going to talk about some work i have been doing with pure functional database access
+- please ask questions. this is a *beginner* talk so if there is anything at all that doesn't make sense, raise your hand or interrupt me
+
+
+---
+
+# What is Functional Programming?
+
+Key idea: *Referential Transparency*
+
+- Expressions can be replaced with their values without changing the meaning of the program.
+
+- More generally, equivalent expressions are interchangeable.
+
+- When you can't do the above, we call it a *side effect*.
+  - Printing to the console
+  - Throwing an exception
+  - Looking at the clock
+  - Reading a file
+  - Etc., etc.
+
+Intuition: FP is about programming with *values*
+
+
+
+---
+
+# What is Functional IO?
+
+Key idea: *programs* are values
+
+```scala
+sealed trait ConsoleAction
+case class  Print(s: String) extends ConsoleAction
+case object Newline extends ConsoleAction
+
+type Program = List[ConsoleAction]
+```
+
+Here is a pure functional IO program:
+```scala
+val prog = List(Print("Hello"), Newline, Print("World!"))
+```
+
+---
+
+# What is Functional IO?
+
+...
+```scala
+val prog = List(Print("Hello"), Newline, Print("World!"))
+```
+
+Here is a possible *interpreter* for our program.
+
+```scala
+def stringInterpreter(p: Program): String = 
+  p.foldLeft("") { (accum, a) =>
+    a match {
+      case Print(s) => accum + s
+      case Newline  => accum + '\n'
+    }
+  }
+```
+
+And we can run it:
+
+```scala
+scala> stringInterpreter(prog)
+res0: String = 
+Hello
+World!
+```
+
+---
+
+# What is Functional IO?
+
+... 
+```scala
+scala> stringInterpreter(prog)
+res0: String = 
+Hello
+World!
+```
+
+Note:
+
+- No side-effects anywhere.
+
+- `prog` is just a value.
+
+---
+
+# What is Functional IO?
+
+Another interpreter:
+
+```scala
+def unsafeInterpreter(p: Program): Unit = 
+  p.foreach { 
+    case Print(s) => Console.print(s)
+    case Newline  => Console.println()
+  }
+```
+
+And we can run it:
+
+```scala
+scala> unsafeInterpreter(prog)
+Hello
+World!
+```
+
+---
+
+# What is Functional IO?
+
+...
+```scala
+scala> unsafeInterpreter(prog)
+Hello
+World!
+```
+
+Note:
+
+- No side-effects anywhere *until we run the unsafe interpreter*
+
+- `prog` is *still* just a value.
+
+Intuition:
+
+- We treat the interpreter as *part of the runtime*.
+
+- We can talk about programs as values right up until we run them.
+
+---
+
+# Introducing Doobie
+
+Pure-functional library for writing JDBC programs.
+
+- Programs are values.
+
+- Monadic API (no nutty DSL) with familiar scalaz abstractions.
+
+- *Interpreted* into a target monad of your choosing (`IO` and `Task` provided). API is open; you can write your own interpreter if you prefer.
+
+- *Not* an ORM.
+
+- *Not* a relational algebra or SQL generator, although such a thing could be built on top.
+
+---
+
+# Introducing Doobie
+
+Out of the box:
+
+- Low-level API allows direct translation of existing imperative JDBC code.
+  - Supports full `java.sql` API (as of JDK 1.6)
+  - Designed for library implementors.
+
+- High-level API provides a resource-safe subset with higher-level features:
+
+  - Typeclass-based mapping of product types to columns.
+  - Treat result sets as streams.
+  - String interpolation and other syntax to make this easy.
+  - Designed for end users.
+  - *Good* support for String-based queries.
+
+- Same types used in both APIs; drop down as needed.
+
+---
+
+# Low-Level API
+
+Key idea: *nested* programs
+
+**image**
+
+- Programs can be *lifted* into higher levels or *interpreted* in a target monad given an instance of the proper carrier type.
+
+
+---
+
+# Low-Level API
+
+Example program.
+
+```scala
+// Data type to read
+case class CountryCode(code: String)
+
+// DriverManager program
+val tmain: DriverManagerIO[List[CountryCode]] = 
+  for {
+    c <- getConnection("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "sa", "")
+    s <- speakerQuery("English", 10)
+  } yield ()
+
+// Connection Program
+def speakerQuery(s: String, p: Double): ConnectionIO[List[CountryCode]] =
+  for {
+    ps <- prepareStatement("""SELECT COUNTRYCODE FROM COUNTRYLANGUAGE 
+                              WHERE LANGUAGE = ? AND PERCENTAGE > ?""")
+    l  <- liftPreparedStatement(ps, 
+      // PreparedStatement Program
+      for {
+        _  <- setString(1, s)
+        _  <- setDouble(2, p)
+        rs <- executeQuery
+        l  <- liftResultSet(rs, unroll(getString(1).map(CountryCode(_))))
+      } yield l)
+  } yield l
+```
+
+---
+
+# Low-Level API
+
+Example program (cont'd)
+
+```scala
+// ResultSet Program
+def unroll[A](a: ResultSetIO[A]): ResultSetIO[List[A]] = {
+  def unroll0(as: List[A]): ResultSetIO[List[A]] = 
+    next >>= {
+      case false => as.point[ResultSetIO]
+      case true  => a >>= { a => unroll0(a :: as) }
+    }
+  unroll0(Nil).map(_.reverse)
+}
+
+// Main Program  
+def main(args: Array[String]): Unit = 
+  tmain.trans[IO].traverseU(putStrLn).unsafePerformIO
+```
+
+Takeaway: 
+- Powerful and very general; can write *any* JDBC program this way.
+- Must be careful: raw JDBC objects, manual error handling.
+- Also kind of verbose.
+
+
+---
+
+# High-Level API
+
+- Same types as low-level API, but all operations are resource-safe.
+- Implemented entirely in terms of low-level API. (Abstractions FTW)
+- Syntax and helper classes.
+
+---
+
+# High-Level API
+
+
+A much better program, in much less code:
+
+```scala
+// Data type to read
+case class Country(name: String, continent: String, population: Int)
+
+// Transactor knows how to create connection and manage transactions
+val xa = DriverManagerTransactor[Task]("org.h2.Driver", "jdbc:...", "sa", "")
+
+// A parameterized query, as a scalaz-stream Process
+def query(e: Double) = 
+  sql"""SELECT NAME, CONTINENT, POPULATION 
+        FROM COUNTRY WHERE LIFEEXPECTANCY >= $e""".process[Country]
+
+// Run query and stream top 5 results to stdout
+val program = xa.transact(q(80)).take(5).map(_.toString).to(io.stdOutLines).run
+
+// Main program
+def main(args: Array[String]): Unit =
+  program.run
+```
+
+---
+
+class: center, middle
+
+# Demos
+
+
+---
+
+# Status
+
+- Currently a preview release (0.1) for the daring.
+
+- Features in the works.
+  - High-level API support for callable statements.
+  - Integration with HTTP4s.
+  - Static typechecking of SQL literals.
+  - Relational algebra (SQL generation).
+
+---
+class: center, middle
+
+# Thanks! Questions?
+Rob Norris / `@tpolecat` 
+
+<small>Code and examples at `github.com/tpolecat/doobie`.</small>
+
+???
+
+- feedback, complaints
+
+
+
+
+
+
+
+
+
+    </textarea>
+    <script src="http://gnab.github.io/remark/downloads/remark-0.6.3.min.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
