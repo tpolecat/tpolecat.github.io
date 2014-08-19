@@ -130,10 +130,8 @@ Rob Norris / `@tpolecat`
 ???
 
 - name is rob
-- interested in FP
-- like a challenge so i do it in scala
 - going to talk about some work i have been doing with pure functional database access
-- please ask questions. this is a *beginner* talk so if there is anything at all that doesn't make sense, raise your hand or interrupt me
+- please ask questions as I go, it's likely i will lose some people since i haven't put a lot of time into this
 
 
 ---
@@ -155,7 +153,10 @@ Key idea: *Referential Transparency*
 
 Intuition: FP is about programming with *values*
 
+???
 
+- so RT is a syntactic property of programs that tells you what kinds of transformations you can do freely
+- so what you get is equational reasoning; you can treat equal things as truly equal
 
 ---
 
@@ -269,6 +270,32 @@ Intuition:
 
 - We can talk about programs as values right up until we run them.
 
+???
+
+- Ok so in real life you need something more sophisticated than a list of statements, but you actually don't need *much* more.
+- Data structure called `Free` that provides this minimal structure, and that's what is really happning in the examples I'll be showing you.
+
+
+---
+
+# Problems with Existing DB Libs
+
+- Not functional (effects are uncontrolled).
+
+- Unprincipled resource management (implicit sessions).
+
+- No proper abstractions.
+  - Lots of new not-quite-right stuff to learn.
+  - Can't build big programs from smaller ones.
+  - Can't reuse existing library support like scalaz.
+
+- Some people can cope with this. I can't.
+
+
+???
+
+- today there was a guy on `#scala` struggling to abstract over tables in Slick and he was really suffering. 
+
 ---
 
 # Introducing Doobie
@@ -311,16 +338,21 @@ Out of the box:
 
 Key idea: *nested* programs
 
-**image**
+<img src="doobie1.png"/>
 
-- Programs can be *lifted* into higher levels or *interpreted* in a target monad given an instance of the proper carrier type.
+- Each carrier type has its own monadic DSL, and all can be interpreted directly or lifted into another carrier type's DSL.
 
+
+???
+
+- So what this means is, you can use doobie just to process a resultset, and do everything else with your existing database code; all you need is a resultset.
+- Or you can build your whole program by composing programs written in these little languages.
 
 ---
 
 # Low-Level API
 
-Example program.
+Example program. You are not expected to think this looks easy.
 
 ```scala
 // Data type to read
@@ -349,6 +381,11 @@ def speakerQuery(s: String, p: Double): ConnectionIO[List[CountryCode]] =
   } yield l
 ```
 
+???
+
+- Things to notice, we're just using monad comprehensions here to sequence our computations.
+- We use lifting to embed smaller programs inside larger one.
+
 ---
 
 # Low-Level API
@@ -357,11 +394,11 @@ Example program (cont'd)
 
 ```scala
 // ResultSet Program
-def unroll[A](a: ResultSetIO[A]): ResultSetIO[List[A]] = {
+def unroll[A](action: ResultSetIO[A]): ResultSetIO[List[A]] = {
   def unroll0(as: List[A]): ResultSetIO[List[A]] = 
-    next >>= {
+    next flatMap {
       case false => as.point[ResultSetIO]
-      case true  => a >>= { a => unroll0(a :: as) }
+      case true  => action flatMap { a => unroll0(a :: as) }
     }
   unroll0(Nil).map(_.reverse)
 }
@@ -375,6 +412,11 @@ Takeaway:
 - Powerful and very general; can write *any* JDBC program this way.
 - Must be careful: raw JDBC objects, manual error handling.
 - Also kind of verbose.
+
+???
+
+- But, we're using map and flatMap and traverse and all these operations that you get for free if you use the right abstractions.
+- Ok but you don't want to write programs like this; it's too much work. So most of the time...
 
 
 ---
@@ -404,13 +446,18 @@ def query(e: Double) =
   sql"""SELECT NAME, CONTINENT, POPULATION 
         FROM COUNTRY WHERE LIFEEXPECTANCY >= $e""".process[Country]
 
-// Run query and stream top 5 results to stdout
+// Transact yields Process[Task,Country] ... stream top 5 results to stdout
 val program = xa.transact(q(80)).take(5).map(_.toString).to(io.stdOutLines).run
 
 // Main program
 def main(args: Array[String]): Unit =
   program.run
 ```
+
+???
+
+- (Be sure to talk about desugaring of query)
+
 
 ---
 
@@ -428,6 +475,7 @@ class: center, middle
 - Features in the works.
   - High-level API support for callable statements.
   - Integration with HTTP4s.
+  - Structured logging ([example](https://raw.githubusercontent.com/tpolecat/doobie/master/log.png)).
   - Static typechecking of SQL literals.
   - Relational algebra (SQL generation).
 
