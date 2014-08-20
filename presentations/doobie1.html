@@ -442,7 +442,7 @@ case class Country(name: String, continent: String, population: Int)
 val xa = DriverManagerTransactor[Task]("org.h2.Driver", "jdbc:...", "sa", "")
 
 // A parameterized query, as a scalaz-stream Process
-def query(e: Double) = 
+def q(e: Double) = 
   sql"""SELECT NAME, CONTINENT, POPULATION 
         FROM COUNTRY WHERE LIFEEXPECTANCY >= $e""".process[Country]
 
