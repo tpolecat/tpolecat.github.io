@@ -362,8 +362,8 @@ case class CountryCode(code: String)
 val tmain: DriverManagerIO[List[CountryCode]] = 
   for {
     c <- getConnection("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "sa", "")
-    s <- speakerQuery("English", 10)
-  } yield ()
+    a <- liftConnection(c, speakerQuery("English", 10))
+  } yield a
 
 // Connection Program
 def speakerQuery(s: String, p: Double): ConnectionIO[List[CountryCode]] =
