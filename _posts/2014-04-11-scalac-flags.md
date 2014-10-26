@@ -21,7 +21,8 @@ scalacOptions ++= Seq(
   "-Ywarn-dead-code",        // N.B. doesn't work well with the ??? hole
   "-Ywarn-numeric-widen",   
   "-Ywarn-value-discard",
-  "-Xfuture"     
+  "-Xfuture",
+  "-Ywarn-unused-import"     // 2.11 only
 )
 ```
 
@@ -44,3 +45,4 @@ Sukant Hajra has more energy than I do and finally got to the bottom of the `-Xl
 
 Brian McKenna points out that "only good things happen with `-Xfuture`" so it's now on the list above. Thanks for the tip.
 
+Gary Pamparà notes that `-Ywarn-unused-import` is available in 2.11, so it's now on the list as well.
