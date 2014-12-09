@@ -1,0 +1,1 @@
+talk about typeclass coherency and why you don't want to capture instances on construction
