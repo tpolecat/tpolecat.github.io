@@ -1,5 +1,3 @@
----
----
 [
 {% for item in site.posts %}
 {"date": {{ item.date | jsonify }},
