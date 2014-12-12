@@ -29,7 +29,7 @@ You will also need a **decent text editor**. Since you're probably a programmer 
 
 For better or worse [**sbt**](http://www.scala-sbt.org/) is the accepted way to build Scala programs. It's not the easiest build system to understand, but for simple projects it's pretty easy to get up and running. And since you have no real choice we'll just move on.
 
-Don't follow the installation instructions on the website. Instead go to [sbt-extras](https://github.com/paulp/sbt-extras) and follow the instructions there to install a nice sbt startup script. At this point you have two options:
+**Don't follow the installation instructions on the website.** Instead go to [sbt-extras](https://github.com/paulp/sbt-extras) and follow the instructions there to install a nice sbt startup script. At this point you have two options:
 
 1. Install it in some central location on your path like `/usr/local/bin`, or
 2. Put it at the root of each project and check it into source control like anything else.
@@ -51,7 +51,7 @@ organization := "org.chickenpants"
 
 version := "0.1-SNAPSHOT"
 
-scalaVersion := "2.11.2" // Scala is a dependency (!)
+scalaVersion := "2.11.4" // Scala is a dependency (!)
 ```
 
 Create `project/build.properties` with the following content. This is weird, sorry, but this is how to pick an sbt version (the `sbt` script you installed is really just a bootloader that downloads whichever version you specify here).
@@ -91,11 +91,17 @@ And at the sbt prompt type `run`. You will find to your squealing delight that t
 - `compile` which compiles everything it can find.
 - `clean` to remove all the build products.
 - `~compile` to compile every time a source file changes.
-
+- `console` to enter the Scala REPL, with all your code and dependencies available.
 
 ## Learn Some More
 
-Congratulations, you now have a working development environment. There is a ton more to learn of course, but at least you have some working tools. Here are some suggestions:
+Congratulations, you now have a **minimal but functional** development environment. There is a ton more to learn of course, but at least you have some working tools. Here are some suggestions:
 
 - Join the `#scala` IRC channel on FreeNode. It's a very friendly group of people who are happy to help anyone who is willing to listen and learn.
+- Buy [Programming Scala, 2e](http://shop.oreilly.com/product/0636920033073.do) to learn the Scala language, and [Functional Programming in Scala](http://manning.com/bjarnason/) to learn how to write beautiful programs.
+- Take Martin's [Functional Programming Principles in Scala](https://www.coursera.org/course/progfun) course on Coursera.
+- Check out [Meetup](http://www.meetup.com/) and see if there's a Scala group in the area. You might be surprised!
+
+
+
 
