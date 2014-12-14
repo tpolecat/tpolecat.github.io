@@ -68,5 +68,5 @@ Feedback of all kinds (especially negative) on **doobie** or this book is genuin
 
 ```scala
 scala> val generatedOn = new java.util.Date
-generatedOn: java.util.Date = Wed Dec 10 22:30:30 PST 2014
+generatedOn: java.util.Date = Sat Dec 13 23:32:08 PST 2014
 ```
