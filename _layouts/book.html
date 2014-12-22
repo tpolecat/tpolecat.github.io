@@ -18,10 +18,12 @@ layout: root
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">chapters<span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                 {% for x in site.book %}
-                  {% if x.number == page.number %}
-                    <li style="background-color: #eeeeee"><a href="{{x.url}}">{{ x.number }}. {{ x.title }}</a></li>
-                  {% else %}
-                    <li><a href="{{x.url}}">{{ x.number }}. {{ x.title }}</a></li>
+                  {% if x.number > 0 %}
+                    {% if x.number == page.number %}
+                      <li style="background-color: #eeeeee"><a href="{{x.url}}">{{ x.number }}. {{ x.title }}</a></li>
+                    {% else %}
+                      <li><a href="{{x.url}}">{{ x.number }}. {{ x.title }}</a></li>
+                    {% endif %}
                   {% endif %}
                 {% endfor %}
                 </ul>
@@ -35,6 +37,10 @@ layout: root
 </nav>
 
 <div class="container" role="main">
-  <h2>{{ page.number }}. {{ page.title }}</h2>
+  {% if page.number > 0 %}
+    <h2>{{ page.number }}. {{ page.title }}</h2>
+  {% else %}
+    <h2>{{ page.title }}</h2>
+  {% endif %}
   {{ content }}
 </div>

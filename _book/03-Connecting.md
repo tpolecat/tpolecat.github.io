@@ -37,7 +37,7 @@ A `Transactor` is simply a structure that knows how to connect to a database, ha
 
 ```scala
 scala> val task = program.transact(xa)
-task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@7c93283c
+task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@644385e5
 
 scala> task.run
 res0: Int = 42
@@ -54,7 +54,7 @@ scala> val program2 = sql"select 42".query[Int].unique
 program2: doobie.hi.ConnectionIO[Int] = Gosub()
 
 scala> val task2 = program2.transact(xa)
-task2: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@10fd83ed
+task2: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@aa3aa5
 
 scala> task2.run
 res1: Int = 42
@@ -78,7 +78,7 @@ And behold!
 
 ```scala
 scala> program3.transact(xa).run
-res2: (Int, java.util.Date) = (42,2014-12-13)
+res2: (Int, java.util.Date) = (42,2014-12-19)
 ```
 
 
@@ -95,10 +95,10 @@ scala> val kleisli = program3.transK[Task]
 kleisli: scalaz.Kleisli[scalaz.concurrent.Task,java.sql.Connection,(Int, java.util.Date)] = Kleisli(<function1>)
 
 scala> val task = (null: java.sql.Connection).point[Task] >>= kleisli
-task: scalaz.concurrent.Task[(Int, java.util.Date)] = scalaz.concurrent.Task@1526cc1a
+task: scalaz.concurrent.Task[(Int, java.util.Date)] = scalaz.concurrent.Task@5cc088c9
 ```
 
-So the `Transactor` above simply knows how to construct a `Task[Connection]`, which it can bind through the `Kleisli`, yielding our `Task[Int]`. There is a bit more going on; we also set up a transaction, error handlers, etc., but fundamentally that's all that is going on.
+So the `Transactor` above simply knows how to construct a `Task[Connection]`, which it can bind through the `Kleisli`, yielding our `Task[Int]`.
 
 ##### The Capture Typeclass
 

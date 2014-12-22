@@ -4,4 +4,9 @@ number: 0
 title: Welcome!
 ---
 
-<p>Say something nice here.</p>
+
+
+```scala
+scala> s""""This text was compiled on ${new java.util.Date}.""""
+res0: String = "This text was compiled on Fri Dec 19 23:32:17 CST 2014."
+```

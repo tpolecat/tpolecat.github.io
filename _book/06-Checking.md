@@ -63,7 +63,7 @@ def biggerThan(minPop: Short) = sql"""
 
 So let's try the `check` method provided by YOLO and see what happens.
 
-```scala
+```
 scala> biggerThan(0).check.run
 
   
@@ -104,28 +104,26 @@ If we fix all of these problems and try again, we get a clean bill of health.
 case class Country(code: String, name: String, pop: Int, gnp: Option[BigDecimal])
 
 def biggerThan(minPop: Int) = sql"""
-  select code, name, population, gnp, indepyear
+  select code, name, population, gnp
   from country
   where population > $minPop
 """.query[Country]
 ```
 
-```scala
+```
 scala> biggerThan(0).check.run
 
   
-    select code, name, population, gnp, indepyear
+    select code, name, population, gnp
     from country
     where population > ?
 
   ✓ SQL Compiles and Typechecks
   ✓ P01 Int  →  INTEGER (INTEGER)
-  ✓ C01 CODE       CHAR     (CHAR)     NOT NULL  →  String
-  ✓ C02 NAME       VARCHAR  (VARCHAR)  NOT NULL  →  String
-  ✓ C03 POPULATION INTEGER  (INTEGER)  NOT NULL  →  Int
-  ✓ C04 GNP        DECIMAL  (DECIMAL)  NULL      →  Option[BigDecimal]
-  ✕ C05 INDEPYEAR  SMALLINT (SMALLINT) NULL      →  
-    - Column is unused. Remove it from the SELECT statement.
+  ✓ C01 CODE       CHAR    (CHAR)    NOT NULL  →  String
+  ✓ C02 NAME       VARCHAR (VARCHAR) NOT NULL  →  String
+  ✓ C03 POPULATION INTEGER (INTEGER) NOT NULL  →  Int
+  ✓ C04 GNP        DECIMAL (DECIMAL) NULL      →  Option[BigDecimal]
 ```
 
 **doobie** supports `check` for queries and updates in three ways: programmatically, via YOLO mode in the REPL, and via the `contrib-specs2` package, which allows checking to become part of your unit test suite. We will investigate this in the chapter on testing.
