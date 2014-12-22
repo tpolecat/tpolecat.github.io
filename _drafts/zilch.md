@@ -107,8 +107,7 @@ foo: [A >: Null]=> A
 
 ## Ok but really, so what?
 
-When writing Scala programs we pretend `null` doesn't exist because `Option` is a much better way to encode the notion of a missing value. It is also claimed on occasion that `null` violates parametricity, which is in fact incorrect as demonstrated above.
-
+...
 
 
 
