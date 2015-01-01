@@ -28,7 +28,7 @@ This is a perfectly cromulent **doobie** program, but we can't run it as-is; we 
 ```scala
 val xa = DriverManagerTransactor[Task](
   "org.h2.Driver",                      // driver class
-  "jdbc:h2:mem:ch3;DB_CLOSE_DELAY=-1", // connect URL
+  "jdbc:h2:mem:ch3;DB_CLOSE_DELAY=-1",  // connect URL
   "sa", ""                              // user and pass
 )
 ```
@@ -37,7 +37,7 @@ A `Transactor` is simply a structure that knows how to connect to a database, ha
 
 ```scala
 scala> val task = program.transact(xa)
-task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@3e95e653
+task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@79b901c7
 
 scala> task.run
 res0: Int = 42
@@ -54,7 +54,7 @@ scala> val program2 = sql"select 42".query[Int].unique
 program2: doobie.hi.ConnectionIO[Int] = Gosub()
 
 scala> val task2 = program2.transact(xa)
-task2: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@2e5bd085
+task2: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@612a5e97
 
 scala> task2.run
 res1: Int = 42
@@ -95,7 +95,7 @@ scala> val kleisli = program3.transK[Task]
 kleisli: scalaz.Kleisli[scalaz.concurrent.Task,java.sql.Connection,(Int, java.util.Date)] = Kleisli(<function1>)
 
 scala> val task = (null: java.sql.Connection).point[Task] >>= kleisli
-task: scalaz.concurrent.Task[(Int, java.util.Date)] = scalaz.concurrent.Task@5dd83fe0
+task: scalaz.concurrent.Task[(Int, java.util.Date)] = scalaz.concurrent.Task@1d75053c
 ```
 
 So the `Transactor` above simply knows how to construct a `Task[Connection]`, which it can bind through the `Kleisli`, yielding our `Task[Int]`.

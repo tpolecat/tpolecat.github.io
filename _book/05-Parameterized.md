@@ -15,7 +15,7 @@ import scalaz._, Scalaz._, scalaz.concurrent.Task
 
 val xa = DriverManagerTransactor[Task](
   "org.h2.Driver",                      // driver class
-  "jdbc:h2:mem:ch5;DB_CLOSE_DELAY=-1", // connect URL
+  "jdbc:h2:mem:ch5;DB_CLOSE_DELAY=-1",  // connect URL
   "sa", ""                              // user and pass
 )
 ```
