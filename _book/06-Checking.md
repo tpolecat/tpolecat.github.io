@@ -66,7 +66,6 @@ So let's try the `check` method provided by YOLO and see what happens.
 ```
 scala> biggerThan(0).check.run
 
-  
     select code, name, population, gnp, indepyear
     from country
     where population > ?
@@ -113,7 +112,6 @@ def biggerThan(minPop: Int) = sql"""
 ```
 scala> biggerThan(0).check.run
 
-  
     select code, name, population, gnp
     from country
     where population > ?
