@@ -39,8 +39,29 @@ layout: root
 <div class="container" role="main">
   {% if page.number > 0 %}
     <h2>{{ page.number }}. {{ page.title }}</h2>
-  {% else %}
-    <h2>{{ page.title }}</h2>
   {% endif %}
   {{ content }}
+</div>
+
+<div class="container" role="nav-2" style="padding-top: 20px">
+  <hr>
+  <nav>
+    <ul class="pager">
+    {% capture prev %}{{ page.number | minus: 1 }}{% endcapture %}
+    {% capture next %}{{ page.number | plus: 1 }}{% endcapture %}
+    {% for y in site.book %}
+      {% capture curr %}{{ y.number | minus: 0 }}{% endcapture %}
+      {% if curr == prev %}
+        <li class="previous">
+          <a href="{{y.url}}"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> {{ y.title }}</a>
+        </li>
+      {% endif %}
+      {% if curr == next %}
+        <li class="next">
+          <a href="{{y.url}}">{{ y.title }} <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> </a>
+        </li>
+    {% endif %}
+    {% endfor %}
+    </ul>
+  </nav>
 </div>

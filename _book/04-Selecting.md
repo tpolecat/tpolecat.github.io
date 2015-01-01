@@ -114,10 +114,9 @@ This syntax allows you to quickly run a `Query0[A]` or `Process[ConnectionIO, A]
 We can select multiple columns, of course, and map them to a tuple. The `gnp` column is nullable so we'll select that one into an `Option[Double]`. In a later chapter we'll see how to check the types to be sure they're sensible.
 
 ```scala
-scala> sql"""
-     |   select code, name, population, gnp 
-     |   from country
-     | """.query[(String, String, Int, Option[Double])].process.take(5).quick.run
+scala> (sql"select code, name, population, gnp from country"
+     |   .query[(String, String, Int, Option[Double])]
+     |   .process.take(5).quick.run)
 (AFG,Afghanistan,22720000,Some(5976.0))
 (NLD,Netherlands,15864000,Some(371362.0))
 (ANT,Netherlands Antilles,217000,Some(1941.0))
@@ -134,10 +133,9 @@ case class Country(code: String, name: String, pop: Int, gnp: Option[Double])
 And try our query again, using `Country` rather than our tuple type.
 
 ```scala
-scala> sql"""
-     |   select code, name, population, gnp 
-     |   from country
-     | """.query[Country].process.take(5).quick.run
+scala> (sql"select code, name, population, gnp from country"
+     |   .query[Country] // Query0[Country]
+     |   .process.take(5).quick.run)
 Country(AFG,Afghanistan,22720000,Some(5976.0))
 Country(NLD,Netherlands,15864000,Some(371362.0))
 Country(ANT,Netherlands Antilles,217000,Some(1941.0))
@@ -154,10 +152,9 @@ case class Country(name: String, pop: Int, gnp: Option[Double])
 ```
 
 ```scala
-scala> sql"""
-     |   select code, name, population, gnp 
-     |   from country
-     | """.query[(Code, Country)].process.take(5).quick.run
+scala> (sql"select code, name, population, gnp from country"
+     |   .query[(Code, Country)] // Query0[(Code, Country)]
+     |   .process.take(5).quick.run)
 (Code(AFG),Country(Afghanistan,22720000,Some(5976.0)))
 (Code(NLD),Country(Netherlands,15864000,Some(371362.0)))
 (Code(ANT),Country(Netherlands Antilles,217000,Some(1941.0)))
@@ -168,10 +165,8 @@ scala> sql"""
 This kind of thing is useful for example if we want a `Map` rather than a `List` as our result. With types illustrated, for your convenience:
 
 ```scala
-scala> (sql"""
-     |   select code, name, population, gnp 
-     |   from country
-     | """.query[(Code, Country)] // Query0[(Code, Country)]
+scala> (sql"select code, name, population, gnp from country"
+     |    .query[(Code, Country)] // Query0[(Code, Country)]
      |    .process.take(5)        // Process[ConnectionIO, (Code, Country)]
      |    .list                   // ConnectionIO[List[(Code, Country)]]
      |    .map(_.toMap)           // ConnectionIO[Map[Code, Country]]
@@ -180,9 +175,22 @@ Map(Code(ANT) -> Country(Netherlands Antilles,217000,Some(1941.0)), Code(DZA) ->
 ```
 
 
+### Diving Deeper
 
+The `sql` interpolator is sugar for constructors defined in the `doobie.hi.connection` module, aliased as `HC` if you use the standard imports. Using these constructors directly, the above program would look like this:
 
+```scala
+val sql = "select code, name, population, gnp from country"
 
+val proc = HC.process[(Code, Country)](sql, ().point[PreparedStatementIO])
+
+(proc.take(5)        // Process[ConnectionIO, (Code, Country)]
+     .list           // ConnectionIO[List[(Code, Country)]]
+     .map(_.toMap)   // ConnectionIO[Map[Code, Country]]
+     .quick.run)
+```
+
+The `process` combinator is parameterized on the process element type and consumes a sql statement and a program in `PreparedStatementIO` that sets input parameters and any other pre-execution configuration.
 
 
 

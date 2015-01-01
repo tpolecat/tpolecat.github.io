@@ -57,10 +57,8 @@ case class Country(code: String, name: String, pop: Int, gnp: Option[Double])
 And try our query again, just to be sure.
 
 ```scala
-scala> sql"""
-     |   select code, name, population, gnp 
-     |   from country
-     | """.query[Country].process.take(5).quick.run
+scala> (sql"select code, name, population, gnp from country"
+     |   .query[Country].process.take(5).quick.run)
 Country(AFG,Afghanistan,22720000,Some(5976.0))
 Country(NLD,Netherlands,15864000,Some(371362.0))
 Country(ANT,Netherlands Antilles,217000,Some(1941.0))
@@ -68,16 +66,19 @@ Country(ALB,Albania,3401200,Some(3205.0))
 Country(DZA,Algeria,31471000,Some(49982.0))
 ```
 
-Still works. Ok. So let's add a parameter. 
+Still works. Ok. So let's factor our query into a method and add a parameter.
 
 ```scala
-scala> def biggerThan(minPop: Int) = sql"""
-     |   select code, name, population, gnp 
-     |   from country
-     |   where population > $minPop
-     | """.query[Country]
-biggerThan: (minPop: Int)doobie.util.query.Query0[Country]
+def biggerThan(minPop: Int) = sql"""
+  select code, name, population, gnp 
+  from country
+  where population > $minPop
+""".query[Country]
+```
 
+And we can run it of course.
+
+```scala
 scala> biggerThan(150000000).quick.run // Let's see them all
 Country(BRA,Brazil,170115000,Some(776739.0))
 Country(IDN,Indonesia,212107000,Some(84982.0))

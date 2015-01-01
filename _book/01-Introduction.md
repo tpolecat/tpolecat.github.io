@@ -7,7 +7,7 @@ title: Introduction
 
 This is a very short book about **doobie**, which is a pure-functional JDBC layer for Scala. 
 
-Although **doobie** provides low-level access to everything in `java.sql` (JDBC 4.0), allowing you to write any JDBC program in a pure functional style, the focus of this book is the **high-level API**, which is where most users will spend their time.
+**doobie** provides low-level access to everything in `java.sql` (JDBC 4.0), allowing you to write any JDBC program in a pure functional style. However the focus of this book is the **high-level API**, which is where most users will spend their time.
 
 This book is organized cookbook-style: we demonstrate a common task and then explain how it works, probably going into more detail than you want, but you may return to it later. The goal is to get you up and running quickly, but give you a handle to the deeper stuff when you need it. You're a scala programmer, you can handle it.
 
