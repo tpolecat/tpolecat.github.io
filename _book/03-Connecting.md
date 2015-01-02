@@ -37,7 +37,7 @@ A `Transactor` is simply a structure that knows how to connect to a database, ha
 
 ```scala
 scala> val task = program.transact(xa)
-task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@79b901c7
+task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@62d87df8
 
 scala> task.run
 res0: Int = 42
@@ -54,7 +54,7 @@ scala> val program2 = sql"select 42".query[Int].unique
 program2: doobie.hi.ConnectionIO[Int] = Gosub()
 
 scala> val task2 = program2.transact(xa)
-task2: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@612a5e97
+task2: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@7c559e8c
 
 scala> task2.run
 res1: Int = 42
@@ -95,12 +95,12 @@ scala> val kleisli = program3.transK[Task]
 kleisli: scalaz.Kleisli[scalaz.concurrent.Task,java.sql.Connection,(Int, java.util.Date)] = Kleisli(<function1>)
 
 scala> val task = (null: java.sql.Connection).point[Task] >>= kleisli
-task: scalaz.concurrent.Task[(Int, java.util.Date)] = scalaz.concurrent.Task@1d75053c
+task: scalaz.concurrent.Task[(Int, java.util.Date)] = scalaz.concurrent.Task@35d93594
 ```
 
 So the `Transactor` above simply knows how to construct a `Task[Connection]`, which it can bind through the `Kleisli`, yielding our `Task[Int]`.
 
-##### The Capture Typeclass
+#### The Capture Typeclass
 
 Currently scalaz has no typeclass for monads with **effect-capturing unit** so that's all `Capture` does; it's simply `(=> A) => M[A]` that is referentially transparent for *all* expressions, even those with side-effects. This allows us to sequence the same effect multiple times in the same program. This is exactly the behavior you expect from `IO` for example. 
 
