@@ -45,7 +45,7 @@ A `Transactor` is simply a structure that knows how to connect to a database, ha
 
 ```scala
 scala> val task = program.transact(xa)
-task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@2a2adaaf
+task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@c122e83
 
 scala> task.run
 res0: Int = 42
@@ -67,7 +67,7 @@ scala> val program2 = sql"select 42".query[Int].unique
 program2: doobie.hi.ConnectionIO[Int] = Gosub()
 
 scala> val task2 = program2.transact(xa)
-task2: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@7a1fd955
+task2: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@56223732
 
 scala> task2.run
 res1: Int = 42
@@ -92,7 +92,7 @@ And behold!
 
 ```scala
 scala> program3.transact(xa).run
-res2: (Int, Double) = (42,0.7641802855492782)
+res2: (Int, Double) = (42,0.3351786709100635)
 ```
 
 The astute among you will note that we don't actually need a monad to do this; an applicative functor is all we need here. So we could also write `program3` as:
@@ -109,18 +109,18 @@ And lo, it was good:
 
 ```scala
 scala> program3a.transact(xa).run
-res3: (Int, Double) = (42,0.15740536766248225)
+res3: (Int, Double) = (42,0.18266555529112383)
 ```
 
 And of course this composition can continue indefinitely.
 
 ```scala
 scala> List.fill(5)(program3a).sequenceU.transact(xa).run.foreach(println)
-(42,0.36218233713333225)
-(42,0.921526011251286)
-(42,0.9568202218430053)
-(42,0.61147183134261)
-(42,0.8858071258266474)
+(42,0.7684525972200118)
+(42,0.28632049944947335)
+(42,0.9284597151953361)
+(42,0.25877072298326387)
+(42,0.13630471882216777)
 ```
 
 
@@ -137,7 +137,7 @@ scala> val kleisli = program3.transK[Task]
 kleisli: scalaz.Kleisli[scalaz.concurrent.Task,java.sql.Connection,(Int, Double)] = Kleisli(<function1>)
 
 scala> val task = (null: java.sql.Connection).point[Task] >>= kleisli
-task: scalaz.concurrent.Task[(Int, Double)] = scalaz.concurrent.Task@21651c28
+task: scalaz.concurrent.Task[(Int, Double)] = scalaz.concurrent.Task@450caaec
 ```
 
 So the `Transactor` above simply knows how to construct a `Task[Connection]`, which it can bind through the `Kleisli`, yielding our `Task[Int]`. There is a bit more going on (we add commit/rollback handling and ensure that the connection is closed in all cases) but fundamentally it's just a natural transformation and a bind.

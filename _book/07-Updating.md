@@ -1,7 +1,7 @@
 ---
 layout: book
 number: 7
-title: Updating Data
+title: Inserting and Updating
 ---
 
 ### Setting Up
@@ -37,6 +37,14 @@ CREATE TABLE country (
 )
 ```
 
+
+### Inserting
+
+
+### Updating
+
+
+### Retrieving Results
 
 
 

@@ -4,7 +4,7 @@ number: 5
 title: Parameterized Queries
 ---
 
-In this short chapter we learn how to construct parameterized queries.
+In this short chapter we learn how to construct parameterized queries, and introduce the `Composite` typeclass.
 
 ### Setting Up
 
@@ -43,7 +43,7 @@ CREATE TABLE country (
 ```
 
 
-### Parameterized Queries
+### Adding a Parameter
 
 Let's set up our Country class and re-run last chapter's query just to review.
 
@@ -63,7 +63,7 @@ Country(DZA,Algeria,31471000,Some(49982.0))
 
 Still works. Ok. 
 
-So let's factor our query into a method and add a parameter that selects only the countries with a population larger than some value the user will provide. We insert the `minProp` argument into our SQL statement as `$minPop`, just as if we were doing string interpolation.
+So let's factor our query into a method and add a parameter that selects only the countries with a population larger than some value the user will provide. We insert the `minPop` argument into our SQL statement as `$minPop`, just as if we were doing string interpolation.
 
 ```scala
 def biggerThan(minPop: Int) = sql"""
@@ -89,11 +89,81 @@ So what's going on? It looks like we're just dropping a string literal into our 
 
 **doobie** allows you to interpolate any JVM type that has a target mapping defined by the JDBC spec, plus vendor-specific types and custom column types that you define. We will discuss custom type mappings in a later chapter.
 
+### Multiple Parameters
+
+```scala
+scala> def populationIn(range: Range) = sql"""
+     |   select code, name, population, gnp 
+     |   from country
+     |   where population > ${range.min}
+     |   and   population < ${range.max}
+     | """.query[Country]
+populationIn: (range: Range)doobie.util.query.Query0[Country]
+
+scala> populationIn(150000000 to 200000000).quick.run 
+Country(BRA,Brazil,170115000,Some(776739.0))
+Country(PAK,Pakistan,156483000,Some(61289.0))
+```
+
 ### Diving Deeper
 
 TODO: explain in terms of `hi` combinators.
 
+```scala
+import scalaz.stream.Process
 
+val q = """
+  select code, name, population, gnp 
+  from country
+  where population > ?
+  and   population < ?
+  """
+
+def proc(range: Range): Process[ConnectionIO, Country] = 
+  HC.process[Country](q, HPS.set((range.min, range.max)))
+```
+
+```scala
+scala> proc(150000000 to 200000000).quick.run
+Country(BRA,Brazil,170115000,Some(776739.0))
+Country(PAK,Pakistan,156483000,Some(61289.0))
+```
+
+#### The `Composite` Typeclass, Briefly
+
+When reading a row or setting parameters in the high-level API, we require an instance of `Composite[A]` for the input or output type. It is not immediately obvious when using the `sql` interpolator, but the parameters (each of which require an `Atom` instance, to be discussed in a later chapter) are gathered into a tuple and treated as a single composite parameter.
+
+`Composite` instances are derived automatically for column types, and for products of other composites. We can summon their instances thus:
+
+```scala
+scala> Composite[Country]
+res5: doobie.util.composite.Composite[Country] = doobie.util.composite$LowerPriorityComposite$$anon$4$$anon$7@5e869ca2
+
+scala> Composite[(Int, Int)]
+res6: doobie.util.composite.Composite[(Int, Int)] = doobie.util.composite$LowerPriorityComposite$$anon$4$$anon$7@78a72f8a
+```
+
+
+
+```scala
+// Set parameters as (String, Boolean) starting at index 1 (default)
+HPS.set(("foo", true))
+
+// Set parameters as (String, Boolean) starting at index 1 (explicit)
+HPS.set(1, ("foo", true))
+
+// Set parameters individually
+HPS.set(1, "foo") *> HPS.set(2, true)
+
+// Or out of order, who cares?
+HPS.set(2, true) *> HPS.set(1, "foo")
+```
+
+Using the low level `doobie.free` constructors there is no typeclass-driven type mapping, so each parameter type requires a distinct method, exactly as in the underlying JDBC API.
+
+```scala
+FPS.setString(1, "foo") *> FPS.setBoolean(2, true)
+```
 
 
 

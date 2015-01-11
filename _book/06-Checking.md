@@ -72,20 +72,21 @@ scala> biggerThan(0).check.run
 
   ✓ SQL Compiles and Typechecks
   ✕ P01 Short  →  INTEGER (INTEGER)
-    - Short is not coercible to INTEGER (INTEGER) according to the JDBC specification. Fix this by
-      changing the schema type to SMALLINT, or the Scala type to Int or JdbcType.
+    - Short is not coercible to INTEGER (INTEGER) according to the JDBC specification.
+      Fix this by changing the schema type to SMALLINT, or the Scala type to Int or
+      JdbcType.
   ✕ C01 CODE       CHAR     (CHAR)     NOT NULL  →  Int
-    - CHAR (CHAR) is ostensibly coercible to Int according to the JDBC specification but is not a
-      recommended target type. Fix this by changing the schema type to INTEGER; or the Scala type to
-      String.
+    - CHAR (CHAR) is ostensibly coercible to Int according to the JDBC specification
+      but is not a recommended target type. Fix this by changing the schema type to
+      INTEGER; or the Scala type to String.
   ✓ C02 NAME       VARCHAR  (VARCHAR)  NOT NULL  →  String
   ✓ C03 POPULATION INTEGER  (INTEGER)  NOT NULL  →  Int
   ✕ C04 GNP        DECIMAL  (DECIMAL)  NULL      →  Double
-    - DECIMAL (DECIMAL) is ostensibly coercible to Double according to the JDBC specification but is not a
-      recommended target type. Fix this by changing the schema type to FLOAT or DOUBLE; or the Scala type
-      to BigDecimal or BigDecimal.
-    - Reading a NULL value into Double will result in a runtime failure. Fix this by making the schema
-      type NOT NULL or by changing the Scala type to Option[Double]
+    - DECIMAL (DECIMAL) is ostensibly coercible to Double according to the JDBC
+      specification but is not a recommended target type. Fix this by changing the
+      schema type to FLOAT or DOUBLE; or the Scala type to BigDecimal or BigDecimal.
+    - Reading a NULL value into Double will result in a runtime failure. Fix this by
+      making the schema type NOT NULL or by changing the Scala type to Option[Double]
   ✕ C05 INDEPYEAR  SMALLINT (SMALLINT) NULL      →  
     - Column is unused. Remove it from the SELECT statement.
 ```
