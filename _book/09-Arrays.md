@@ -79,8 +79,6 @@ IListAtom: [A](implicit evidence$1: reflect.runtime.universe.TypeTag[A], implici
 ```
 
 ```scala
-scala> sql"select pets from person".query[IList[String]].quick.run
-[Nixon,Slappy]
-[]
+sql"select pets from person".query[IList[String]].quick.run
 ```
 
