@@ -102,11 +102,11 @@ scala> (sql"select name from country"
      |   .take(5)       // Process[ConnectionIO, String]
      |   .quick         // Task[Unit]
      |   .run)
-Afghanistan
-Netherlands
-Netherlands Antilles
-Albania
-Algeria
+  Afghanistan
+  Netherlands
+  Netherlands Antilles
+  Albania
+  Algeria
 ```
 
 This syntax allows you to quickly run a `Query0[A]` or `Process[ConnectionIO, A]` and see the results printed to the console. This isn't a huge deal but it can save you some keystrokes when you're just messing around.
@@ -119,11 +119,11 @@ We can select multiple columns, of course, and map them to a tuple. The `gnp` co
 scala> (sql"select code, name, population, gnp from country"
      |   .query[(String, String, Int, Option[Double])]
      |   .process.take(5).quick.run)
-(AFG,Afghanistan,22720000,Some(5976.0))
-(NLD,Netherlands,15864000,Some(371362.0))
-(ANT,Netherlands Antilles,217000,Some(1941.0))
-(ALB,Albania,3401200,Some(3205.0))
-(DZA,Algeria,31471000,Some(49982.0))
+  (AFG,Afghanistan,22720000,Some(5976.0))
+  (NLD,Netherlands,15864000,Some(371362.0))
+  (ANT,Netherlands Antilles,217000,Some(1941.0))
+  (ALB,Albania,3401200,Some(3205.0))
+  (DZA,Algeria,31471000,Some(49982.0))
 ```
 **doobie** automatically supports row mappings for atomic column types, as well as options, tuples, and case classes thereof. So let's try the same query, mapping rows to a case class.
 
@@ -135,11 +135,11 @@ case class Country(code: String, name: String, pop: Int, gnp: Option[Double])
 scala> (sql"select code, name, population, gnp from country"
      |   .query[Country] // Query0[Country]
      |   .process.take(5).quick.run)
-Country(AFG,Afghanistan,22720000,Some(5976.0))
-Country(NLD,Netherlands,15864000,Some(371362.0))
-Country(ANT,Netherlands Antilles,217000,Some(1941.0))
-Country(ALB,Albania,3401200,Some(3205.0))
-Country(DZA,Algeria,31471000,Some(49982.0))
+  Country(AFG,Afghanistan,22720000,Some(5976.0))
+  Country(NLD,Netherlands,15864000,Some(371362.0))
+  Country(ANT,Netherlands Antilles,217000,Some(1941.0))
+  Country(ALB,Albania,3401200,Some(3205.0))
+  Country(DZA,Algeria,31471000,Some(49982.0))
 ```
 
 You can also nest case classes and/or tuples arbitrarily as long as the eventual members are of supported columns types. For instance, here we map the same set of columns to a tuple of two case classes:
@@ -154,11 +154,11 @@ case class Country(name: String, pop: Int, gnp: Option[Double])
 scala> (sql"select code, name, population, gnp from country"
      |   .query[(Code, Country)] // Query0[(Code, Country)]
      |   .process.take(5).quick.run)
-(Code(AFG),Country(Afghanistan,22720000,Some(5976.0)))
-(Code(NLD),Country(Netherlands,15864000,Some(371362.0)))
-(Code(ANT),Country(Netherlands Antilles,217000,Some(1941.0)))
-(Code(ALB),Country(Albania,3401200,Some(3205.0)))
-(Code(DZA),Country(Algeria,31471000,Some(49982.0)))
+  (Code(AFG),Country(Afghanistan,22720000,Some(5976.0)))
+  (Code(NLD),Country(Netherlands,15864000,Some(371362.0)))
+  (Code(ANT),Country(Netherlands Antilles,217000,Some(1941.0)))
+  (Code(ALB),Country(Albania,3401200,Some(3205.0)))
+  (Code(DZA),Country(Algeria,31471000,Some(49982.0)))
 ```
 
 And just for fun, since the `Code` values are constructed from the primary key, let's turn the results into a `Map`. Trivial but useful.
@@ -170,7 +170,7 @@ scala> (sql"select code, name, population, gnp from country"
      |    .list                   // ConnectionIO[List[(Code, Country)]]
      |    .map(_.toMap)           // ConnectionIO[Map[Code, Country]]
      |    .quick.run)
-Map(Code(ANT) -> Country(Netherlands Antilles,217000,Some(1941.0)), Code(DZA) -> Country(Algeria,31471000,Some(49982.0)), Code(ALB) -> Country(Albania,3401200,Some(3205.0)), Code(NLD) -> Country(Netherlands,15864000,Some(371362.0)), Code(AFG) -> Country(Afghanistan,22720000,Some(5976.0)))
+  Map(Code(ANT) -> Country(Netherlands Antilles,217000,Some(1941.0)), Code(DZA) -> Country(Algeria,31471000,Some(49982.0)), Code(ALB) -> Country(Albania,3401200,Some(3205.0)), Code(NLD) -> Country(Netherlands,15864000,Some(371362.0)), Code(AFG) -> Country(Afghanistan,22720000,Some(5976.0)))
 ```
 
 

@@ -50,7 +50,7 @@ Now it works!
 
 ```scala
 scala> sql"select * from person where id = $pid"
-res1: doobie.syntax.string.SqlInterpolator#Builder = doobie.syntax.string$SqlInterpolator$Source@2f27d0c9
+res1: doobie.syntax.string.SqlInterpolator#Builder = doobie.syntax.string$SqlInterpolator$Source@9544502
 ```
 
 
@@ -77,6 +77,6 @@ implicit val Point2DComposite: Composite[Point2D.Double] =
 
 ```scala
 scala> sql"select 12, 42".query[Point2D.Double].unique.quick.run
-Point2D.Double[12.0, 42.0]
+  Point2D.Double[12.0, 42.0]
 ```
 

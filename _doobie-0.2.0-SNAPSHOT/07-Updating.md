@@ -53,10 +53,10 @@ scala> def insert1(name: String, age: Option[Int]): Update0 =
 insert1: (name: String, age: Option[Int])doobie.imports.Update0
 
 scala> insert1("Alice", Some(12)).quick.run
-1 row(s) updated
+  1 row(s) updated
 
 scala> insert1("Bob", None).quick.run
-1 row(s) updated
+  1 row(s) updated
 ```
 
 And read them back.
@@ -67,8 +67,8 @@ case class Person(id: Long, name: String, age: Option[Int])
 
 ```scala
 scala> sql"select id, name, age from person".query[Person].quick.run
-Person(1,Alice,Some(12))
-Person(2,Bob,None)
+  Person(1,Alice,Some(12))
+  Person(2,Bob,None)
 ```
 
 
@@ -79,11 +79,11 @@ Updating follows the same pattern.
 
 ```scala
 scala> sql"update person set age = 15 where name = 'Alice'".update.quick.run
-1 row(s) updated
+  1 row(s) updated
 
 scala> sql"select id, name, age from person".query[Person].quick.run
-Person(1,Alice,Some(15))
-Person(2,Bob,None)
+  Person(1,Alice,Some(15))
+  Person(2,Bob,None)
 ```
 
 ### Retrieving Results
@@ -101,7 +101,7 @@ def insert2(name: String, age: Option[Int]): ConnectionIO[Person] =
 
 ```scala
 scala> insert2("Jimmy", Some(42)).quick.run
-Person(3,Jimmy,Some(42))
+  Person(3,Jimmy,Some(42))
 ```
 
 This is irritating but it is supported by all databases (although the "get the last used id" function will vary by vendor). A nicer way to do this is in one shot by returning specified columns from the inserted row. H2 supports this feature.

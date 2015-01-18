@@ -54,11 +54,11 @@ case class Country(code: String, name: String, pop: Int, gnp: Option[Double])
 ```scala
 scala> (sql"select code, name, population, gnp from country"
      |   .query[Country].process.take(5).quick.run)
-Country(AFG,Afghanistan,22720000,Some(5976.0))
-Country(NLD,Netherlands,15864000,Some(371362.0))
-Country(ANT,Netherlands Antilles,217000,Some(1941.0))
-Country(ALB,Albania,3401200,Some(3205.0))
-Country(DZA,Algeria,31471000,Some(49982.0))
+  Country(AFG,Afghanistan,22720000,Some(5976.0))
+  Country(NLD,Netherlands,15864000,Some(371362.0))
+  Country(ANT,Netherlands Antilles,217000,Some(1941.0))
+  Country(ALB,Albania,3401200,Some(3205.0))
+  Country(DZA,Algeria,31471000,Some(49982.0))
 ```
 
 Still works. Ok. 
@@ -77,12 +77,12 @@ And when we run the query ... surprise, it works!
 
 ```scala
 scala> biggerThan(150000000).quick.run // Let's see them all
-Country(BRA,Brazil,170115000,Some(776739.0))
-Country(IDN,Indonesia,212107000,Some(84982.0))
-Country(IND,India,1013662000,Some(447114.0))
-Country(CHN,China,1277558000,Some(982268.0))
-Country(PAK,Pakistan,156483000,Some(61289.0))
-Country(USA,United States,278357000,Some(8510700.0))
+  Country(BRA,Brazil,170115000,Some(776739.0))
+  Country(IDN,Indonesia,212107000,Some(84982.0))
+  Country(IND,India,1013662000,Some(447114.0))
+  Country(CHN,China,1277558000,Some(982268.0))
+  Country(PAK,Pakistan,156483000,Some(61289.0))
+  Country(USA,United States,278357000,Some(8510700.0))
 ```
 
 So what's going on? It looks like we're just dropping a string literal into our SQL string, but actually wer'e constructing a proper parameterized `PreparedStatement`, and the `minProp` value is ultimately set via a call to `setInteger` (see "Diving Deeper" below.)
@@ -101,8 +101,8 @@ scala> def populationIn(range: Range) = sql"""
 populationIn: (range: Range)doobie.util.query.Query0[Country]
 
 scala> populationIn(150000000 to 200000000).quick.run 
-Country(BRA,Brazil,170115000,Some(776739.0))
-Country(PAK,Pakistan,156483000,Some(61289.0))
+  Country(BRA,Brazil,170115000,Some(776739.0))
+  Country(PAK,Pakistan,156483000,Some(61289.0))
 ```
 
 ### Diving Deeper
@@ -125,8 +125,8 @@ def proc(range: Range): Process[ConnectionIO, Country] =
 
 ```scala
 scala> proc(150000000 to 200000000).quick.run
-Country(BRA,Brazil,170115000,Some(776739.0))
-Country(PAK,Pakistan,156483000,Some(61289.0))
+  Country(BRA,Brazil,170115000,Some(776739.0))
+  Country(PAK,Pakistan,156483000,Some(61289.0))
 ```
 
 #### The `Composite` Typeclass, Briefly
@@ -137,10 +137,9 @@ When reading a row or setting parameters in the high-level API, we require an in
 
 ```scala
 scala> Composite[Country]
-res5: doobie.util.composite.Composite[Country] = doobie.util.composite$LowerPriorityComposite$$anon$4$$anon$7@2f755b1a
+res5: doobie.util.composite.Composite[Country] = doobie.util.composite$LowerPriorityComposite$$anon$4$$anon$7@1284142a
 
-scala> Composite[(Int, Int)]
-res6: doobie.util.composite.Composite[(Int, Int)] = doobie.util.composite$LowerPriorityComposite$$anon$4$$anon$7@22d75b29
+scala> // Composite[(Int, Int)] // hmm crashes compiler
 ```
 
 

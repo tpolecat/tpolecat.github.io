@@ -45,7 +45,7 @@ A `Transactor` is simply a structure that knows how to connect to a database, ha
 
 ```scala
 scala> val task = program.transact(xa)
-task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@ac1480e
+task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@ed28d5f
 
 scala> task.run
 res0: Int = 42
@@ -67,7 +67,7 @@ scala> val program2 = sql"select 42".query[Int].unique
 program2: doobie.hi.ConnectionIO[Int] = Gosub()
 
 scala> val task2 = program2.transact(xa)
-task2: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@201efcd0
+task2: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@5f3e864f
 
 scala> task2.run
 res1: Int = 42
@@ -78,7 +78,7 @@ Ok! We have now connected to a database to compute a constant. Considerably more
 
 ### Our Third Program
 
-What if we want to do more than one thing in a transaction? Easy! `ConnecionIO` is a monad, so we can use a `for` comprehension to compose two smaller programs into one larger program.
+What if we want to do more than one thing in a transaction? Easy! `ConnectionIO` is a monad, so we can use a `for` comprehension to compose two smaller programs into one larger program.
 
 ```scala
 val program3 = 
@@ -92,7 +92,7 @@ And behold!
 
 ```scala
 scala> program3.transact(xa).run
-res2: (Int, Double) = (42,0.025880334133083327)
+res2: (Int, Double) = (42,0.2119118658512934)
 ```
 
 The astute among you will note that we don't actually need a monad to do this; an applicative functor is all we need here. So we could also write `program3` as:
@@ -109,18 +109,18 @@ And lo, it was good:
 
 ```scala
 scala> program3a.transact(xa).run
-res3: (Int, Double) = (42,0.5413285170085494)
+res3: (Int, Double) = (42,0.24654432298667772)
 ```
 
 And of course this composition can continue indefinitely.
 
 ```scala
 scala> List.fill(5)(program3a).sequenceU.transact(xa).run.foreach(println)
-(42,0.7731437096856261)
-(42,0.3249469154451069)
-(42,0.004729546777461846)
-(42,0.8984921857274658)
-(42,0.9253716086931674)
+(42,0.2646901697042935)
+(42,0.5465426244968516)
+(42,0.5166877933310754)
+(42,0.9965705186543853)
+(42,0.9436812149717181)
 ```
 
 
@@ -137,7 +137,7 @@ scala> val kleisli = program3.transK[Task]
 kleisli: scalaz.Kleisli[scalaz.concurrent.Task,java.sql.Connection,(Int, Double)] = Kleisli(<function1>)
 
 scala> val task = (null: java.sql.Connection).point[Task] >>= kleisli
-task: scalaz.concurrent.Task[(Int, Double)] = scalaz.concurrent.Task@80f97da
+task: scalaz.concurrent.Task[(Int, Double)] = scalaz.concurrent.Task@ac6b1fe
 ```
 
 So the `Transactor` above simply knows how to construct a `Task[Connection]`, which it can bind through the `Kleisli`, yielding our `Task[Int]`. There is a bit more going on (we add commit/rollback handling and ensure that the connection is closed in all cases) but fundamentally it's just a natural transformation and a bind.

@@ -17,7 +17,7 @@ import scalaz._, Scalaz._, scalaz.concurrent.Task
 
 val xa = DriverManagerTransactor[Task](
   "org.h2.Driver",                      
-  "jdbc:h2:mem:ch7;DB_CLOSE_DELAY=-1",  
+  "jdbc:h2:mem:ch9;DB_CLOSE_DELAY=-1",
   "sa", ""                              
 )
 
@@ -40,7 +40,7 @@ scala> sql"""
      |     age  TINYINT,
      |     pets ARRAY NOT NULL
      |   )""".update.quick.run
-0 row(s) updated
+  0 row(s) updated
 ```
 
 ### Reading and Writing
@@ -60,25 +60,25 @@ def insert(name: String, age: Option[Int], pets: List[String]): ConnectionIO[Per
 
 ```scala
 scala> insert("Bob", Some(12), List("Nixon", "Slappy")).quick.run
-Person(1,Bob,Some(12),List(Nixon, Slappy))
+  Person(1,Bob,Some(12),List(Nixon, Slappy))
 
 scala> insert("Alice", None, Nil).quick.run
-Person(2,Alice,None,List())
+  Person(2,Alice,None,List())
 ```
 
 
 ### Diving Deep
 
 ```scala
-scala> import scala.reflect.runtime.universe.TypeTag
 import scala.reflect.runtime.universe.TypeTag
 
-scala> implicit def IListAtom[A: TypeTag](implicit ev: Meta[List[A]]): Meta[IList[A]] =
-     |   ev.xmap[IList[A]](IList.fromList, _.toList)
-IListAtom: [A](implicit evidence$1: reflect.runtime.universe.TypeTag[A], implicit ev: doobie.imports.Meta[List[A]])doobie.imports.Meta[scalaz.IList[A]]
+implicit def IListAtom[A: TypeTag](implicit ev: Meta[List[A]]): Meta[IList[A]] =
+  ev.xmap[IList[A]](IList.fromList, _.toList)
 ```
 
 ```scala
-sql"select pets from person".query[IList[String]].quick.run
+scala> sql"select pets from person".query[IList[String]].quick.run
+  [Nixon,Slappy]
+  []
 ```
 
