@@ -96,7 +96,7 @@ Query0[Country] defined at <console>:20
 x P01 Short  →  INTEGER (INTEGER)
    x Short is not coercible to INTEGER (INTEGER) according to the JDBC specification.
      Fix this by changing the schema type to SMALLINT, or the Scala type to Int or
-     JdbcType. (<console>:20)
+     PersonId or JdbcType. (<console>:20)
 
 x C01 CODE       CHAR     (CHAR)     NOT NULL  →  Int
    x CHAR (CHAR) is ostensibly coercible to Int according to the JDBC specification
@@ -124,7 +124,7 @@ Update0 defined at <console>:18
 + P02 String  →  VARCHAR (VARCHAR)
 
 Total for specification $line14.$read$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$AnalysisTestSpec$
-Finished in 19 ms
+Finished in 29 ms
 13 examples, 4 failures, 0 error
 res1: Seq[org.specs2.specification.ExecutedSpecification] = List(ExecutedSpecification(AnalysisTestSpec$,SeqViewM(...)))
 ```

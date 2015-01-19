@@ -85,11 +85,13 @@ scala> biggerThan(150000000).quick.run // Let's see them all
   Country(USA,United States,278357000,Some(8510700.0))
 ```
 
-So what's going on? It looks like we're just dropping a string literal into our SQL string, but actually wer'e constructing a proper parameterized `PreparedStatement`, and the `minProp` value is ultimately set via a call to `setInteger` (see "Diving Deeper" below.)
+So what's going on? It looks like we're just dropping a string literal into our SQL string, but actually we're constructing a proper parameterized `PreparedStatement`, and the `minProp` value is ultimately set via a call to `setInt` (see "Diving Deeper" below).
 
 **doobie** allows you to interpolate any JVM type that has a target mapping defined by the JDBC spec, plus vendor-specific types and custom column types that you define. We will discuss custom type mappings in a later chapter.
 
 ### Multiple Parameters
+
+Multiple parameters work the same way. No surprises here.
 
 ```scala
 scala> def populationIn(range: Range) = sql"""
@@ -107,7 +109,7 @@ scala> populationIn(150000000 to 200000000).quick.run
 
 ### Diving Deeper
 
-TODO: explain in terms of `hi` combinators.
+In the previous chapter's *Diving Deeper* we saw how a query constructed with the `sql` interpolator is just sugar for the `process` constructor defined in the `doobie.hi.connection` module (aliased as `HC`). Here we see that the second parameter, a `PreparedStatementIO` program, is used to set the query parameters.
 
 ```scala
 import scalaz.stream.Process
@@ -123,26 +125,29 @@ def proc(range: Range): Process[ConnectionIO, Country] =
   HC.process[Country](q, HPS.set((range.min, range.max)))
 ```
 
+Which produces the same output.
+
 ```scala
 scala> proc(150000000 to 200000000).quick.run
   Country(BRA,Brazil,170115000,Some(776739.0))
   Country(PAK,Pakistan,156483000,Some(61289.0))
 ```
 
-#### The `Composite` Typeclass, Briefly
+But how does the `set` constructor work?
 
 When reading a row or setting parameters in the high-level API, we require an instance of `Composite[A]` for the input or output type. It is not immediately obvious when using the `sql` interpolator, but the parameters (each of which require an `Atom` instance, to be discussed in a later chapter) are gathered into a tuple and treated as a single composite parameter.
 
-`Composite` instances are derived automatically for column types, and for products of other composites. We can summon their instances thus:
+`Composite` instances are derived automatically for column types that have `Atom` instances, and for products of other composites (via `shapeless.ProductTypeclass`). We can summon their instances thus:
 
 ```scala
-scala> Composite[Country]
-res5: doobie.util.composite.Composite[Country] = doobie.util.composite$LowerPriorityComposite$$anon$4$$anon$7@1284142a
+scala> Composite[(String, Boolean)]
+res5: doobie.util.composite.Composite[(String, Boolean)] = doobie.util.composite$LowerPriorityComposite$$anon$4$$anon$7@65c6f55c
 
-scala> // Composite[(Int, Int)] // hmm crashes compiler
+scala> Composite[Country]
+res6: doobie.util.composite.Composite[Country] = doobie.util.composite$LowerPriorityComposite$$anon$4$$anon$7@75bc3d2e
 ```
 
-
+The `set` constructor takes an argument of any type with a `Composite` instance and returns a program that sets the unrolled sequence of values starting at parameter index 1 by default. Some other variations are shown here.
 
 ```scala
 // Set parameters as (String, Boolean) starting at index 1 (default)
@@ -158,7 +163,7 @@ HPS.set(1, "foo") *> HPS.set(2, true)
 HPS.set(2, true) *> HPS.set(1, "foo")
 ```
 
-Using the low level `doobie.free` constructors there is no typeclass-driven type mapping, so each parameter type requires a distinct method, exactly as in the underlying JDBC API.
+Using the low level `doobie.free` constructors there is no typeclass-driven type mapping, so each parameter type requires a distinct method, exactly as in the underlying JDBC API. The purpose of the `Atom` typeclass (discussed in a later chapter) is to abstract away these differences.
 
 ```scala
 FPS.setString(1, "foo") *> FPS.setBoolean(2, true)

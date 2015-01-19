@@ -20,7 +20,7 @@ val xa = DriverManagerTransactor[Task](
 )
 ```
 
-Now let's load up the sample database at the root of the **doobie** source tree (you can go grab it from github if you want to play along at home). Note that this is an in-memory database, so there won't be anything left behind when we exit the VM.The result of this program is the total number of inserted rows.
+Now let's load up the sample database at the root of the **doobie** source tree (you can go grab it from github if you want to play along at home). Note that this is an in-memory database, so there won't be anything left behind when we exit the VM. The result of this program (which we will explain more in the chapter on updates) is the total number of inserted rows.
 
 ```scala
 scala> sql"RUNSCRIPT FROM 'world.sql' CHARSET 'UTF-8'".update.run.transact(xa).run
@@ -83,11 +83,11 @@ Algeria
 
 The difference here is that `process` gives us a `scalaz.stream.Process[ConnectionIO, String]` which emits the results as they arrive from the database. By applying `take(5)` we instruct the process to shut everything down (and clean everything up) after five elements have been emitted. This is much more efficient than pulling all 239 rows and then throwing most of them away.
 
-Of course a server-side `LIMIT` would be an even better way to do this (for databases that support it), but in cases where you need client-side filtering or other custom postprocessing, `Process` is a very general and elegant tool.
+Of course a server-side `LIMIT` would be an even better way to do this (for databases that support it), but in cases where you need client-side filtering or other custom postprocessing, `Process` is a very general and powerful tool. For more information see the [scalaz-stream](https://github.com/scalaz/scalaz-stream) site, which has a good list of learning resources. 
 
 ### YOLO Mode
 
-The API we have seen so far is pretty expressive, but it's tiresome to keep saying `transact(xa)` and doing `foreach(println)` to see what the results look like. So **just for REPL exploration** there is a module of extra syntax provided on `Transactor` that you can import, and it gives you some shortcuts.
+The API we have seen so far is ok, but it's tiresome to keep saying `transact(xa)` and doing `foreach(println)` to see what the results look like. So **just for REPL exploration** there is a module of extra syntax provided on `Transactor` that you can import, and it gives you some shortcuts.
 
 ```scala
 import xa.yolo._
