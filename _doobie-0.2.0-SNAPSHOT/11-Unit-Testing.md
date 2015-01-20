@@ -4,7 +4,15 @@ number: 11
 title: Unit Testing
 ---
 
+<div class="alert alert-warning" role="alert">
+<b>Warning:</b> The functionality described in this chapter is experimental and is likely to change in future versions.
+</div>
+
+The YOLO-mode query checking feature demonstated in an earlier chapter is also available as a trait you can mix into your [Specs2](http://etorreborre.github.io/specs2/) unit tests.
+
 ### Setting Up
+
+Note that the code in this chapter requires the `doobie-contrib-specs2` module.
 
 ```scala
 import doobie.imports._
@@ -35,7 +43,7 @@ CREATE TABLE country (
 
 ### The Specs Package
 
-Some queries.
+Here are some queries we would like to check. Note that we can only check values of type `Query0` and `Update0`; we can't check `Process` or `ConnectionIO` values, so a good practice is to define your queries in a DAO module and apply further operations at a higher level. 
 
 ```scala
 case class Country(code: Int, name: String, pop: Int, gnp: Double)
@@ -55,7 +63,7 @@ def update(oldName: String, newName: String) = sql"""
 """.update
 ```
 
-A unit test, which just needs to mention the queries. The arguments are never used so they can be any values that typecheck. We must define a transactor to be used by the checker.
+Our unit test needs to extend `AnalysisSpec` and must define a `Transactor[Task]`. To construct a testcase for a query, pass it to the `check` method. Note that query arguments are never used, so they can be any values that typecheck.
 
 ```scala
 import doobie.contrib.specs2.AnalysisSpec
@@ -96,7 +104,7 @@ Query0[Country] defined at <console>:20
 x P01 Short  →  INTEGER (INTEGER)
    x Short is not coercible to INTEGER (INTEGER) according to the JDBC specification.
      Fix this by changing the schema type to SMALLINT, or the Scala type to Int or
-     PersonId or JdbcType. (<console>:20)
+     JdbcType. (<console>:20)
 
 x C01 CODE       CHAR     (CHAR)     NOT NULL  →  Int
    x CHAR (CHAR) is ostensibly coercible to Int according to the JDBC specification
@@ -124,7 +132,7 @@ Update0 defined at <console>:18
 + P02 String  →  VARCHAR (VARCHAR)
 
 Total for specification $line14.$read$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$AnalysisTestSpec$
-Finished in 29 ms
+Finished in 59 ms
 13 examples, 4 failures, 0 error
 res1: Seq[org.specs2.specification.ExecutedSpecification] = List(ExecutedSpecification(AnalysisTestSpec$,SeqViewM(...)))
 ```

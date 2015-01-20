@@ -50,14 +50,13 @@ Now it works!
 
 ```scala
 scala> sql"select * from person where id = $pid"
-res1: doobie.syntax.string.SqlInterpolator#Builder = doobie.syntax.string$SqlInterpolator$Source@74b76bb5
+res1: doobie.syntax.string.SqlInterpolator#Builder = doobie.syntax.string$SqlInterpolator$Source@70b18b04
 ```
-
 
 
 ### Composite by Invariant Map
 
-We get `Composite[A]` for free given `Atom[A]`, or for tuples and case classes whose fields have `Composite` instances. This covers a lot of cases, but we still need a way to map other types (non-`case` classes for instance).
+We get `Composite[A]` for free given `Atom[A]`, or for tuples and case classes whose fields have `Composite` instances. This covers a lot of cases, but we still need a way to map other types (non-`case` classes for instance). 
 
 
 ```scala
