@@ -8,29 +8,19 @@ In this chapter we learn how to construct parameterized queries, and introduce t
 
 ### Setting Up
 
-Same as last chapter, so if you're still set up you can skip this section. Otherwise let's set up an in-memory database.
+Same as last chapter, so if you're still set up you can skip this section. Otherwise let's set up a `Transactor` and YOLO mode.
 
 ```scala
 import doobie.imports._, scalaz._, Scalaz._, scalaz.concurrent.Task
 
 val xa = DriverManagerTransactor[Task](
-  "org.h2.Driver",                      // driver class
-  "jdbc:h2:mem:ch5;DB_CLOSE_DELAY=-1",  // connect URL
-  "sa", ""                              // user and pass
+  "org.postgresql.Driver", "jdbc:postgresql:world", "postgres", ""
 )
-```
 
-And then load up our sample data and pull in YOLO mode to save some typing.
-
-```scala
-scala> sql"RUNSCRIPT FROM 'world.sql' CHARSET 'UTF-8'".update.run.transact(xa).run
-res0: Int = 5313
-
-scala> import xa.yolo._
 import xa.yolo._
 ```
 
-This time we're still be playing with the `country` table, but just with a few columns, shown here.
+We're still playing with the `country` table, shown here for reference.
 
 ```sql
 CREATE TABLE country (
@@ -41,7 +31,6 @@ CREATE TABLE country (
   -- more columns, but we won't use them here
 )
 ```
-
 
 ### Adding a Parameter
 
@@ -141,10 +130,10 @@ When reading a row or setting parameters in the high-level API, we require an in
 
 ```scala
 scala> Composite[(String, Boolean)]
-res5: doobie.util.composite.Composite[(String, Boolean)] = doobie.util.composite$LowerPriorityComposite$$anon$4$$anon$7@3c14350f
+res4: doobie.util.composite.Composite[(String, Boolean)] = doobie.util.composite$LowerPriorityComposite$$anon$4$$anon$7@2e7cf364
 
 scala> Composite[Country]
-res6: doobie.util.composite.Composite[Country] = doobie.util.composite$LowerPriorityComposite$$anon$4$$anon$7@7a8270e9
+res5: doobie.util.composite.Composite[Country] = doobie.util.composite$LowerPriorityComposite$$anon$4$$anon$7@5f0197f0
 ```
 
 The `set` constructor takes an argument of any type with a `Composite` instance and returns a program that sets the unrolled sequence of values starting at parameter index 1 by default. Some other variations are shown here.

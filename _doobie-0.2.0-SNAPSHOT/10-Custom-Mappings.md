@@ -10,9 +10,7 @@ title: Custom Mappings
 import doobie.imports._, scalaz._, Scalaz._, scalaz.concurrent.Task, java.awt.geom.Point2D
 
 val xa = DriverManagerTransactor[Task](
-  "org.h2.Driver",                      
-  "jdbc:h2:mem:ch7;DB_CLOSE_DELAY=-1",  
-  "sa", ""                              
+  "org.postgresql.Driver", "jdbc:postgresql:world", "postgres", ""
 )
 
 import xa.yolo._
@@ -50,7 +48,7 @@ Now it works!
 
 ```scala
 scala> sql"select * from person where id = $pid"
-res1: doobie.syntax.string.SqlInterpolator#Builder = doobie.syntax.string$SqlInterpolator$Source@70b18b04
+res1: doobie.syntax.string.SqlInterpolator#Builder = doobie.syntax.string$SqlInterpolator$Source@118f5a91
 ```
 
 

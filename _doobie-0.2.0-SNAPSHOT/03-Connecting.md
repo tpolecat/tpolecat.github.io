@@ -35,9 +35,7 @@ This is a perfectly respectable **doobie** program, but we can't run it as-is; w
 
 ```scala
 val xa = DriverManagerTransactor[Task](
-  "org.h2.Driver",                      // driver class
-  "jdbc:h2:mem:ch3;DB_CLOSE_DELAY=-1",  // connect URL
-  "sa", ""                              // user and pass
+  "org.postgresql.Driver", "jdbc:postgresql:world", "postgres", ""
 )
 ```
 
@@ -45,7 +43,7 @@ A `Transactor` is simply a structure that knows how to connect to a database, ha
 
 ```scala
 scala> val task = program1.transact(xa)
-task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@59dd29d7
+task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@5fb36220
 
 scala> task.run
 res0: Int = 42
@@ -66,7 +64,7 @@ scala> val program2 = sql"select 42".query[Int].unique
 program2: doobie.hi.ConnectionIO[Int] = Gosub()
 
 scala> val task2 = program2.transact(xa)
-task2: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@2958b97a
+task2: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@1ef0777d
 
 scala> task2.run
 res1: Int = 42
@@ -91,7 +89,7 @@ And behold!
 
 ```scala
 scala> program3.transact(xa).run
-res2: (Int, Double) = (42,0.5057386313801291)
+res2: (Int, Double) = (42,0.3485541217960417)
 ```
 
 The astute among you will note that we don't actually need a monad to do this; an applicative functor is all we need here. So we could also write `program3` as:
@@ -108,18 +106,18 @@ And lo, it was good:
 
 ```scala
 scala> program3a.transact(xa).run
-res3: (Int, Double) = (42,0.9958268094813562)
+res3: (Int, Double) = (42,0.3031042334623635)
 ```
 
 And of course this composition can continue indefinitely.
 
 ```scala
 scala> List.fill(5)(program3a).sequenceU.transact(xa).run.foreach(println)
-(42,0.8984906028048829)
-(42,0.38650047549615485)
-(42,0.6493852959144123)
-(42,0.1499943360870435)
-(42,0.5633149782873086)
+(42,0.7056088764220476)
+(42,0.8315908052027225)
+(42,0.4949608691968024)
+(42,0.7958932844921947)
+(42,0.6171801313757896)
 ```
 
 
@@ -136,7 +134,7 @@ scala> val kleisli = program1.transK[Task]
 kleisli: scalaz.Kleisli[scalaz.concurrent.Task,java.sql.Connection,Int] = Kleisli(<function1>)
 
 scala> val task = Task.delay(null: java.sql.Connection) >>= kleisli
-task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@61d5fd11
+task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@795e28c9
 
 scala> task.run // sneaky; program1 never looks at the connection
 res5: Int = 42

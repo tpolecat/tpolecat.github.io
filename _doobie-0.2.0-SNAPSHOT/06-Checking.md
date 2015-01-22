@@ -12,20 +12,14 @@ In this chapter we learn how to use YOLO mode to validate queries against the da
 
 ### Setting Up
 
-Our setup here is the same as last chapter, so if you're still running from last chapter you can skip this section. Otherwise: imports, `Transactor`, test data, and YOLO mode.
+Our setup here is the same as last chapter, so if you're still running from last chapter you can skip this section. Otherwise: imports, `Transactor`, and YOLO mode.
 
 ```scala
-import doobie.imports._
-
-import scalaz._, Scalaz._, scalaz.concurrent.Task
+import doobie.imports._, scalaz._, Scalaz._, scalaz.concurrent.Task
 
 val xa = DriverManagerTransactor[Task](
-  "org.h2.Driver",                      // driver class
-  "jdbc:h2:mem:ch6;DB_CLOSE_DELAY=-1",  // connect URL
-  "sa", ""                              // user and pass
+  "org.postgresql.Driver", "jdbc:postgresql:world", "postgres", ""
 )
-
-sql"RUNSCRIPT FROM 'world.sql' CHARSET 'UTF-8'".update.run.transact(xa).run
 
 import xa.yolo._
 ```
@@ -71,23 +65,23 @@ scala> biggerThan(0).check.run
     where population > ?
 
   ✓ SQL Compiles and Typechecks
-  ✕ P01 Short  →  INTEGER (INTEGER)
-    - Short is not coercible to INTEGER (INTEGER) according to the JDBC specification.
+  ✕ P01 Short  →  INTEGER (int4)
+    - Short is not coercible to INTEGER (int4) according to the JDBC specification.
       Fix this by changing the schema type to SMALLINT, or the Scala type to Int or
       JdbcType.
-  ✕ C01 CODE       CHAR     (CHAR)     NOT NULL  →  Int
-    - CHAR (CHAR) is ostensibly coercible to Int according to the JDBC specification
+  ✕ C01 code       CHAR     (bpchar)  NOT NULL  →  Int
+    - CHAR (bpchar) is ostensibly coercible to Int according to the JDBC specification
       but is not a recommended target type. Fix this by changing the schema type to
       INTEGER; or the Scala type to String.
-  ✓ C02 NAME       VARCHAR  (VARCHAR)  NOT NULL  →  String
-  ✓ C03 POPULATION INTEGER  (INTEGER)  NOT NULL  →  Int
-  ✕ C04 GNP        DECIMAL  (DECIMAL)  NULL      →  Double
-    - DECIMAL (DECIMAL) is ostensibly coercible to Double according to the JDBC
+  ✓ C02 name       VARCHAR  (varchar) NOT NULL  →  String
+  ✓ C03 population INTEGER  (int4)    NOT NULL  →  Int
+  ✕ C04 gnp        NUMERIC  (numeric) NULL      →  Double
+    - NUMERIC (numeric) is ostensibly coercible to Double according to the JDBC
       specification but is not a recommended target type. Fix this by changing the
       schema type to FLOAT or DOUBLE; or the Scala type to BigDecimal or BigDecimal.
     - Reading a NULL value into Double will result in a runtime failure. Fix this by
       making the schema type NOT NULL or by changing the Scala type to Option[Double]
-  ✕ C05 INDEPYEAR  SMALLINT (SMALLINT) NULL      →  
+  ✕ C05 indepyear  SMALLINT (int2)    NULL      →  
     - Column is unused. Remove it from the SELECT statement.
 ```
 
@@ -98,7 +92,7 @@ Yikes, there are quite a few problems, in several categories. In this case **doo
 - a column nullability mismatch, where a column is read into a non-`Option` type;
 - and an unused column.
 
-Suggested fixes are given in terms of both JDBC and vendor-specific schema types (which mostly have the same names in H2) and include known custom types like **doobie**'s enumerated `JdbcType`.  Currently this is based on instantiated `Meta` instances, which is not ideal; hopefully in the next release the tooling will improve to support all instances in scope.
+Suggested fixes are given in terms of both JDBC and vendor-specific schema types and include known custom types like **doobie**'s enumerated `JdbcType`.  Currently this is based on instantiated `Meta` instances, which is not ideal; hopefully in the next release the tooling will improve to support all instances in scope.
 
 Anyway, if we fix all of these problems and try again, we get a clean bill of health.
 
@@ -120,11 +114,11 @@ scala> biggerThan(0).check.run
     where population > ?
 
   ✓ SQL Compiles and Typechecks
-  ✓ P01 Int  →  INTEGER (INTEGER)
-  ✓ C01 CODE       CHAR    (CHAR)    NOT NULL  →  String
-  ✓ C02 NAME       VARCHAR (VARCHAR) NOT NULL  →  String
-  ✓ C03 POPULATION INTEGER (INTEGER) NOT NULL  →  Int
-  ✓ C04 GNP        DECIMAL (DECIMAL) NULL      →  Option[BigDecimal]
+  ✓ P01 Int  →  INTEGER (int4)
+  ✓ C01 code       CHAR    (bpchar)  NOT NULL  →  String
+  ✓ C02 name       VARCHAR (varchar) NOT NULL  →  String
+  ✓ C03 population INTEGER (int4)    NOT NULL  →  Int
+  ✓ C04 gnp        NUMERIC (numeric) NULL      →  Option[BigDecimal]
 ```
 
 **doobie** supports `check` for queries and updates in three ways: programmatically, via YOLO mode in the REPL, and via the `contrib-specs2` package, which allows checking to become part of your unit test suite. We will investigate this in the chapter on testing.
