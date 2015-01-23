@@ -31,8 +31,8 @@ import doobie.contrib.postgresql.pgtypes._
 Let's create a new table, which we will use for the examples to follow. Note that one of our columns is an array of `VARCHAR`.
 
 ```scala
-scala> val drop = sql"DROP TABLE IF EXISTS person".update.quick
-drop: scalaz.concurrent.Task[Unit] = scalaz.concurrent.Task@27731ca8
+scala> val drop = sql"DROP TABLE IF EXISTS person".update.run
+drop: doobie.hi.ConnectionIO[Int] = Gosub()
 
 scala> val create = 
      |   sql"""
@@ -42,12 +42,11 @@ scala> val create =
      |       age  SMALLINT,
      |       pets VARCHAR[] NOT NULL
      |     )
-     |   """.update.quick
-create: scalaz.concurrent.Task[Unit] = scalaz.concurrent.Task@6a2febc5
+     |   """.update.run
+create: doobie.hi.ConnectionIO[Int] = Gosub()
 
-scala> (drop *> create).run
-  0 row(s) updated
-  0 row(s) updated
+scala> (drop *> create).quick.run
+  0
 ```
 
 ### Reading and Writing
@@ -60,7 +59,7 @@ case class Person(id: Long, name: String, age: Option[Int], pets: List[String])
 def insert(name: String, age: Option[Int], pets: List[String]): ConnectionIO[Person] = {
   sql"insert into person (name, age, pets) values ($name, $age, $pets)"
     .update
-    .withUniqueGeneratedKeys[Person]("id", "name", "age", "pets")
+    .withUniqueGeneratedKeys("id", "name", "age", "pets")
 }
 ```
 

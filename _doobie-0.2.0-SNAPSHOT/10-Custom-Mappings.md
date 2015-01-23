@@ -48,7 +48,7 @@ Now it works!
 
 ```scala
 scala> sql"select * from person where id = $pid"
-res1: doobie.syntax.string.SqlInterpolator#Builder = doobie.syntax.string$SqlInterpolator$Source@118f5a91
+res1: doobie.syntax.string.SqlInterpolator#Builder = doobie.syntax.string$SqlInterpolator$Source@23c7064c
 ```
 
 

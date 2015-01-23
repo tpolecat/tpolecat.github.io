@@ -128,7 +128,7 @@ Update0 defined at <console>:18
 + P02 String  →  VARCHAR (text)
 
 Total for specification $line12.$read$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$AnalysisTestSpec$
-Finished in 13 seconds, 54 ms
+Finished in 40 ms
 13 examples, 5 failures, 0 error
 res0: Seq[org.specs2.specification.ExecutedSpecification] = List(ExecutedSpecification(AnalysisTestSpec$,SeqViewM(...)))
 ```

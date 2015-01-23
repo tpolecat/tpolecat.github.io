@@ -30,7 +30,7 @@ CREATE TABLE country (
 )
 ```
 
-### Elementary Streaming
+### Internal Streaming
 
 For our first query let's aim low and select some country names into a `List`, then print out the first few. There are several steps here so we have noted the types along the way.
 
@@ -75,6 +75,7 @@ Algeria
 The difference here is that `process` gives us a `scalaz.stream.Process[ConnectionIO, String]` which emits the results as they arrive from the database. By applying `take(5)` we instruct the process to shut everything down (and clean everything up) after five elements have been emitted. This is much more efficient than pulling all 239 rows and then throwing most of them away.
 
 Of course a server-side `LIMIT` would be an even better way to do this (for databases that support it), but in cases where you need client-side filtering or other custom postprocessing, `Process` is a very general and powerful tool. For more information see the [scalaz-stream](https://github.com/scalaz/scalaz-stream) site, which has a good list of learning resources. 
+
 
 ### YOLO Mode
 
@@ -163,6 +164,30 @@ scala> (sql"select code, name, population, gnp from country"
      |    .quick.run)
   Map(Code(ANT) -> Country(Netherlands Antilles,217000,Some(1941.0)), Code(DZA) -> Country(Algeria,31471000,Some(49982.0)), Code(ALB) -> Country(Albania,3401200,Some(3205.0)), Code(NLD) -> Country(Netherlands,15864000,Some(371362.0)), Code(AFG) -> Country(Afghanistan,22720000,Some(5976.0)))
 ```
+
+### Final Streaming
+
+In the examples above we construct a `Process[ConnectionIO, A]` and discharge it via `.list` (which is just shorthand for `.runLog.map(_.toList)`), yielding a `ConnectionIO[List[A]]` which eventually becomes a `Task[List[A]]`. So the construction and execution of the `Process` is entirely internal to the **doobie** program.
+
+However in some cases a stream is what we want as our "top level" type. For example, [http4s](https://github.com/http4s/http4s) can use a `Process[Task, A]` directly as a response type, which could allow us to stream a resultset directly to the network socket. We can achieve this in **doobie** by calling `transact` directly on the `Process[ConnectionIO, A]`.
+
+```scala
+scala> val p = {
+     |   sql"select name, population, gnp from country"
+     |     .query[Country]  // Query0[Country]
+     |     .process         // Process[ConnectionIO, Country]
+     |     .transact(xa)    // Process[Task, Country]
+     |  }
+p: scalaz.stream.Process[scalaz.concurrent.Task,Country] = Await(scalaz.concurrent.Task@3f820a42,<function1>)
+
+scala> p.take(5).runLog.run.foreach(println)
+Country(Afghanistan,22720000,Some(5976.0))
+Country(Netherlands,15864000,Some(371362.0))
+Country(Netherlands Antilles,217000,Some(1941.0))
+Country(Albania,3401200,Some(3205.0))
+Country(Algeria,31471000,Some(49982.0))
+```
+
 
 
 ### Diving Deeper
