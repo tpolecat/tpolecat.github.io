@@ -178,7 +178,7 @@ scala> val p = {
      |     .process         // Process[ConnectionIO, Country]
      |     .transact(xa)    // Process[Task, Country]
      |  }
-p: scalaz.stream.Process[scalaz.concurrent.Task,Country] = Await(scalaz.concurrent.Task@3f820a42,<function1>)
+p: scalaz.stream.Process[scalaz.concurrent.Task,Country] = Await(scalaz.concurrent.Task@4b92ec15,<function1>)
 
 scala> p.take(5).runLog.run.foreach(println)
 Country(Afghanistan,22720000,Some(5976.0))
