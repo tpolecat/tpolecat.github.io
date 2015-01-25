@@ -7,7 +7,13 @@ title: Error Handling
 ### Setting Up
 
 ```scala
-import scalaz._, Scalaz._, doobie.imports._
+import doobie.imports._, scalaz._, Scalaz._, scalaz.concurrent.Task
+
+val xa = DriverManagerTransactor[Task](
+  "org.postgresql.Driver", "jdbc:postgresql:world", "postgres", ""
+)
+
+import xa.yolo._
 ```
 
 ### About Exceptions
@@ -34,7 +40,7 @@ scala> val p = 42.point[ConnectionIO]
 p: doobie.imports.ConnectionIO[Int] = Return(42)
 
 scala> p.attempt
-res0: doobie.imports.ConnectionIO[scalaz.\/[Throwable,Int]] = Suspend(scalaz.Coyoneda$$anon$22@1ded7e5d)
+res0: doobie.imports.ConnectionIO[scalaz.\/[Throwable,Int]] = Suspend(scalaz.Coyoneda$$anon$22@341481d2)
 ```
 
 From the `.attempt` combinator we derive the following, available as combinators and as syntax:
@@ -60,4 +66,64 @@ And finally we have a set of combinators that focus on `SQLState`s.
 - `exceptSomeSqlState`  recovers from specified `SQLState`s with a new action.
 
 See the ScalaDoc for more information.
+
+### Example: Unique Constraint Violation
+
+
+```scala
+scala> List(sql"""DROP TABLE IF EXISTS person""",
+     |      sql"""CREATE TABLE person (
+     |              id    SERIAL,
+     |              name  VARCHAR NOT NULL UNIQUE
+     |            )""").traverse(_.update.quick).void.run
+  0 row(s) updated
+  0 row(s) updated
+```
+
+
+```scala
+case class Person(id: Int, name: String)
+
+def insert(s: String): ConnectionIO[Person] = {
+  sql"insert into person (name) values ($s)"
+    .update.withUniqueGeneratedKeys("id", "name")
+}
+```
+
+```scala
+scala> insert("bob").quick.run
+  Person(1,bob)
+```
+
+```scala
+scala> try {
+     |   insert("bob").quick.run
+     | } catch {
+     |   case e: Exception => println(e.getMessage)
+     | }
+ERROR: duplicate key value violates unique constraint "person_name_key"
+  Detail: Key (name)=(bob) already exists.
+```
+
+```scala
+import doobie.contrib.postgresql.sqlstate
+
+def safeInsert(s: String): ConnectionIO[String \/ Person] =
+  insert(s).attemptSomeSqlState {
+    case sqlstate.class23.UNIQUE_VIOLATION => "Oops!"
+  }
+```
+
+```scala
+scala> safeInsert("bob").quick.run
+  -\/(Oops!)
+
+scala> safeInsert("steve").quick.run
+  \/-(Person(4,steve))
+```
+
+
+
+
+
 

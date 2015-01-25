@@ -48,7 +48,7 @@ Now it works!
 
 ```scala
 scala> sql"select * from person where id = $pid"
-res1: doobie.syntax.string.SqlInterpolator#Builder = doobie.syntax.string$SqlInterpolator$Source@272c5482
+res1: doobie.syntax.string.SqlInterpolator#Builder = doobie.syntax.string$SqlInterpolator$Source@c68747c
 ```
 
 ### Meta by Construction
@@ -96,22 +96,14 @@ import scala.reflect.runtime.universe.TypeTag
 
 import org.postgresql.util.PGobject
 
-implicit val JsonMeta = Meta.other[PGobject]("json").xmap[Json](
-    o => Option(o).map(a => Parse.parse(a.getValue).leftMap[Json](sys.error).merge).orNull,
-    a => Option(a).map(a => new PGobject <| (_.setType("json")) <| (_.setValue(a.nospaces))).orNull)
+implicit val JsonMeta = Meta.other[PGobject]("json").nxmap[Json](
+    a => Parse.parse(a.getValue).leftMap[Json](sys.error).merge,
+    a => new PGobject <| (_.setType("json")) <| (_.setValue(a.nospaces)))
 
-implicit def codecMeta[A: CodecJson: TypeTag] =
-  Meta[Json].xmap[A](_.as[A].toOption.get, _.asJson)
-```
+def codecMeta[A >: Null : CodecJson: TypeTag] =
+  Meta[Json].nxmap[A](_.as[A].toOption.get, _.asJson)
 
-We now get a `Meta` instance for free. Note that the `Composite` instance has a length of one, meaning that it spans a single column. So a consequence of `codecMeta` above is that **any type with a `CodecJson` instance** will map to a single column; if this is not desired, simply make that method non-implicit and derive only the implicit instances you want.
-
-```scala
-scala> Meta[Person]
-res3: doobie.util.meta.Meta[Person] = doobie.util.meta$Meta$$anon$2@369c0060
-
-scala> Composite[Person].length // note
-res4: Int = 1
+implicit val codecPerson = codecMeta[Person]
 ```
 
 Note that our `check` output now knows about the `Json` and `Person` mappings. This is a side-effect of constructing instance above, which isn't a good design. Will revisit this, possibly after 0.2.0; this information is only used for diagnostics so it's not critical.
@@ -147,7 +139,7 @@ We get `Composite[A]` for free given `Atom[A]`, or for tuples and case classes w
 
 ```scala
 scala> sql"select x, y from points".query[Point2D.Double]
-<console>:40: error: Could not find or construct Composite[java.awt.geom.Point2D.Double].
+<console>:41: error: Could not find or construct Composite[java.awt.geom.Point2D.Double].
               sql"select x, y from points".query[Point2D.Double]
                                                 ^
 ```

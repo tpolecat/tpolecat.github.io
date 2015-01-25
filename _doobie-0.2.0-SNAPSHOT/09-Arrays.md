@@ -31,22 +31,23 @@ import doobie.contrib.postgresql.pgtypes._
 Let's create a new table, which we will use for the examples to follow. Note that one of our columns is an array of `VARCHAR`.
 
 ```scala
-scala> val drop = sql"DROP TABLE IF EXISTS person".update.run
-drop: doobie.hi.ConnectionIO[Int] = Gosub()
+val drop = sql"DROP TABLE IF EXISTS person".update.quick
 
-scala> val create = 
-     |   sql"""
-     |     CREATE TABLE person (
-     |       id   SERIAL,
-     |       name VARCHAR NOT NULL UNIQUE,
-     |       age  SMALLINT,
-     |       pets VARCHAR[] NOT NULL
-     |     )
-     |   """.update.run
-create: doobie.hi.ConnectionIO[Int] = Gosub()
+val create = 
+  sql"""
+    CREATE TABLE person (
+      id   SERIAL,
+      name VARCHAR NOT NULL UNIQUE,
+      age  SMALLINT,
+      pets VARCHAR[] NOT NULL
+    )
+  """.update.quick
+```
 
-scala> (drop *> create).quick.run
-  0
+```scala
+scala> (drop *> create).run
+  0 row(s) updated
+  0 row(s) updated
 ```
 
 ### Reading and Writing
@@ -58,8 +59,7 @@ case class Person(id: Long, name: String, age: Option[Int], pets: List[String])
 
 def insert(name: String, age: Option[Int], pets: List[String]): ConnectionIO[Person] = {
   sql"insert into person (name, age, pets) values ($name, $age, $pets)"
-    .update
-    .withUniqueGeneratedKeys("id", "name", "age", "pets")
+    .update.withUniqueGeneratedKeys("id", "name", "age", "pets")
 }
 ```
 
@@ -79,7 +79,7 @@ We can add a mapping from array types to `scalaz.IList` by invariant mapping.
 ```scala
 import scala.reflect.runtime.universe.TypeTag
 
-implicit def IListAtom[A: TypeTag](implicit ev: Meta[List[A]]): Meta[IList[A]] =
+implicit def IListMeta[A: TypeTag](implicit ev: Meta[List[A]]): Meta[IList[A]] =
   ev.xmap[IList[A]](IList.fromList, _.toList)
 ```
 
