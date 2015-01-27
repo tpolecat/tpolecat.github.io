@@ -28,7 +28,7 @@ And again, playing with the `country` table, here again for reference.
 CREATE TABLE country (
   code        character(3)  NOT NULL,
   name        text          NOT NULL,
-  population  integer NOT NULL,
+  population  integer       NOT NULL,
   gnp         numeric(10,2),
   indepyear   smallint
   -- more columns, but we won't use them here
@@ -128,7 +128,7 @@ Update0 defined at <console>:18
 + P02 String  →  VARCHAR (text)
 
 Total for specification $line12.$read$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$AnalysisTestSpec$
-Finished in 40 ms
+Finished in 28 ms
 13 examples, 5 failures, 0 error
 res0: Seq[org.specs2.specification.ExecutedSpecification] = List(ExecutedSpecification(AnalysisTestSpec$,SeqViewM(...)))
 ```

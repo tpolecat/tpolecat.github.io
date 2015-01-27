@@ -48,7 +48,7 @@ Now it works!
 
 ```scala
 scala> sql"select * from person where id = $pid"
-res1: doobie.syntax.string.SqlInterpolator#Builder = doobie.syntax.string$SqlInterpolator$Source@6d041462
+res1: doobie.syntax.string.SqlInterpolator#Builder = doobie.syntax.string$SqlInterpolator$Source@40593bb7
 ```
 
 ### Meta by Construction
@@ -82,7 +82,7 @@ val create =
     CREATE TABLE pet (
       id    SERIAL,
       name  VARCHAR NOT NULL UNIQUE,
-      owner JSON NOT NULL
+      owner JSON    NOT NULL
     )
   """.update.run
 
