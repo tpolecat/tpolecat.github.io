@@ -12,7 +12,7 @@ The YOLO-mode query checking feature demonstated in an earlier chapter is also a
 
 ### Setting Up
 
-Note that the code in this chapter requires the `doobie-contrib-specs2` module.
+As with earlier chapters we set up a `Transactor` and YOLO mode. Note that the code in this chapter also requires the `doobie-contrib-specs2` add-on.
 
 ```scala
 import doobie.imports._, scalaz._, Scalaz._, scalaz.concurrent.Task
@@ -22,7 +22,7 @@ val xa = DriverManagerTransactor[Task](
 )
 ```
 
-And again, playing with the `country` table, here again for reference.
+And again we are playing with the `country` table, given here for reference.
 
 ```sql
 CREATE TABLE country (
@@ -37,13 +37,15 @@ CREATE TABLE country (
 
 ### The Specs Package
 
-Here are some queries we would like to check. Note that we can only check values of type `Query0` and `Update0`; we can't check `Process` or `ConnectionIO` values, so a good practice is to define your queries in a DAO module and apply further operations at a higher level. 
+The `doobie-contrib-specs2` add-on provides a mix-in trait that we can add to a `Specification` to allow for typechecking of queries, interpreted as a set of specifications.
+
+So here are a few queries we would like to check. Note that we can only check values of type `Query0` and `Update0`; we can't check `Process` or `ConnectionIO` values, so a good practice is to define your queries in a DAO module and apply further operations at a higher level. 
 
 ```scala
 case class Country(code: Int, name: String, pop: Int, gnp: Double)
 
 val trivial = sql"""
-  select 42, 'foo'
+  select 42, 'foo'::varchar
 """.query[(Int, String)]
 
 def biggerThan(minPop: Short) = sql"""
@@ -77,19 +79,15 @@ object AnalysisTestSpec extends Specification with AnalysisSpec {
 When we run the test we get output similar to what we saw in the previous chapter on checking queries, but each item is now a test. Note that doing this in the REPL is a little awkward; in real source you would get the source file and line number associated with each query.
 
 ```
-scala> specs2 run AnalysisTestSpec
+scala> { specs2 run AnalysisTestSpec; () } // pretend this is sbt> test
 $line12.$read$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$AnalysisTestSpec$
 
 Query0[(Int, String)] defined at <console>:18
   
-  select 42, 'foo'
+  select 42, 'foo'::varchar
 + SQL Compiles and Typechecks
 + C01 ?column? INTEGER (int4)    NULL?  →  Int
-x C02 ?column? OTHER   (unknown) NULL?  →  String
-   x OTHER (unknown) is not coercible to String according to the JDBC specification
-     or any defined mapping. Fix this by changing the schema type to CHAR or VARCHAR;
-     or the Scala type to an appropriate object type. (<console>:18)
-
++ C02 varchar  VARCHAR (varchar) NULL?  →  String
 
 Query0[Country] defined at <console>:20
   
@@ -100,7 +98,7 @@ Query0[Country] defined at <console>:20
 x P01 Short  →  INTEGER (int4)
    x Short is not coercible to INTEGER (int4) according to the JDBC specification.
      Fix this by changing the schema type to SMALLINT, or the Scala type to Int or
-     PersonId or JdbcType. (<console>:20)
+     JdbcType. (<console>:20)
 
 x C01 code       CHAR     (bpchar)  NOT NULL  →  Int
    x CHAR (bpchar) is ostensibly coercible to Int according to the JDBC specification
@@ -128,9 +126,8 @@ Update0 defined at <console>:18
 + P02 String  →  VARCHAR (text)
 
 Total for specification $line12.$read$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$AnalysisTestSpec$
-Finished in 28 ms
-13 examples, 5 failures, 0 error
-res0: Seq[org.specs2.specification.ExecutedSpecification] = List(ExecutedSpecification(AnalysisTestSpec$,SeqViewM(...)))
+Finished in 47 ms
+13 examples, 4 failures, 0 error
 ```
 
 
