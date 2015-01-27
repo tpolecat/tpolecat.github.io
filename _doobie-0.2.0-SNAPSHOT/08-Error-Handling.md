@@ -4,6 +4,8 @@ number: 8
 title: Error Handling
 ---
 
+In this chapter we examine a set of combinators that allow us to construct programs that trap and handle exceptions.
+
 ### Setting Up
 
 ```scala
@@ -40,7 +42,7 @@ scala> val p = 42.point[ConnectionIO]
 p: doobie.imports.ConnectionIO[Int] = Return(42)
 
 scala> p.attempt
-res0: doobie.imports.ConnectionIO[scalaz.\/[Throwable,Int]] = Suspend(scalaz.Coyoneda$$anon$22@341481d2)
+res0: doobie.imports.ConnectionIO[scalaz.\/[Throwable,Int]] = Suspend(scalaz.Coyoneda$$anon$22@46747ef1)
 ```
 
 From the `.attempt` combinator we derive the following, available as combinators and as syntax:
@@ -69,6 +71,7 @@ See the ScalaDoc for more information.
 
 ### Example: Unique Constraint Violation
 
+Ok let's set up a `person` table again, using a slightly different formulation just for fun. Note that the `name` column is marked as being unique.
 
 ```scala
 scala> List(sql"""DROP TABLE IF EXISTS person""",
@@ -80,6 +83,8 @@ scala> List(sql"""DROP TABLE IF EXISTS person""",
   0 row(s) updated
 ```
 
+Alright, let's define a `Person` class and a way to insert them.
+
 
 ```scala
 case class Person(id: Int, name: String)
@@ -90,29 +95,42 @@ def insert(s: String): ConnectionIO[Person] = {
 }
 ```
 
+The first insert will work.
+
 ```scala
 scala> insert("bob").quick.run
   Person(1,bob)
 ```
 
+The second will fail with a unique constraint violation.
+
 ```scala
 scala> try {
      |   insert("bob").quick.run
      | } catch {
-     |   case e: Exception => println(e.getMessage)
+     |   case e: java.sql.SQLException => 
+     |     println(e.getMessage)
+     |     println(e.getSQLState)
      | }
 ERROR: duplicate key value violates unique constraint "person_name_key"
   Detail: Key (name)=(bob) already exists.
+23505
 ```
 
+So let's change our method to return a `String \/ Person` by using the `attemptSomeSql` combinator. This allows us to specify the `SQLState` value that we want to trap. In this case the culprit `"23505"` (yes, it's a string) is provided as a constant in the `contrib-postgresql` add-on. 
+
+
 ```scala
-import doobie.contrib.postgresql.sqlstate
+import doobie.contrib.postgresql.sqlstate.class23.UNIQUE_VIOLATION
 
 def safeInsert(s: String): ConnectionIO[String \/ Person] =
   insert(s).attemptSomeSqlState {
-    case sqlstate.class23.UNIQUE_VIOLATION => "Oops!"
+    case UNIQUE_VIOLATION => "Oops!"
   }
 ```
+
+Given this definition we can safely attempt to insert duplicate records and get a helpful error message rather than an exception.
+
 
 ```scala
 scala> safeInsert("bob").quick.run
@@ -121,9 +139,3 @@ scala> safeInsert("bob").quick.run
 scala> safeInsert("steve").quick.run
   \/-(Person(4,steve))
 ```
-
-
-
-
-
-
