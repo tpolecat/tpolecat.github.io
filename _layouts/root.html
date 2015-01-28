@@ -59,7 +59,39 @@
       ul.pager a {
         color: black;
       }
-    </style>
+      .ribbon {
+        background-color: #47a;
+        overflow: hidden;
+        white-space: nowrap;
+        /* top left corner */
+        position: absolute;
+        right: -50px;
+        top: 70px;
+        /* 45 deg ccw rotation */
+        -webkit-transform: rotate(45deg);
+           -moz-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+             -o-transform: rotate(45deg);
+                transform: rotate(45deg);
+        /* shadow */
+        -webkit-box-shadow: 0 0 10px #888;
+           -moz-box-shadow: 0 0 10px #888;
+                box-shadow: 0 0 10px #888;
+      }
+      .ribbon a {
+        border: 1px solid #eee;
+        color: #fff;
+        display: block;
+        font: bold 81.25% 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        margin: 1px 0;
+        padding: 10px 50px;
+        text-align: center;
+        text-decoration: none;
+        width: 175px;
+        /* shadow */
+        text-shadow: 0 0 5px #444;
+      }
+      </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
