@@ -98,7 +98,7 @@ Query0[Country] defined at <console>:20
 x P01 Short  →  INTEGER (int4)
    x Short is not coercible to INTEGER (int4) according to the JDBC specification.
      Fix this by changing the schema type to SMALLINT, or the Scala type to Int or
-     JdbcType. (<console>:20)
+     PersonId or JdbcType. (<console>:20)
 
 x C01 code       CHAR     (bpchar)  NOT NULL  →  Int
    x CHAR (bpchar) is ostensibly coercible to Int according to the JDBC specification
@@ -126,7 +126,7 @@ Update0 defined at <console>:18
 + P02 String  →  VARCHAR (text)
 
 Total for specification $line12.$read$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$AnalysisTestSpec$
-Finished in 47 ms
+Finished in 18 ms
 13 examples, 4 failures, 0 error
 ```
 
