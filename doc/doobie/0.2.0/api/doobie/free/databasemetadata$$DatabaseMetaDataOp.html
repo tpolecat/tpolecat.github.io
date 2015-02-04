@@ -1,0 +1,425 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+        <head>
+          <title>DatabaseMetaDataOp - doobie.free.databasemetadata.DatabaseMetaDataOp</title>
+          <meta name="description" content="DatabaseMetaDataOp - doobie.free.databasemetadata.DatabaseMetaDataOp" />
+          <meta name="keywords" content="DatabaseMetaDataOp doobie.free.databasemetadata.DatabaseMetaDataOp" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../index.html';
+            var hash = 'doobie.free.databasemetadata$$DatabaseMetaDataOp';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="type">
+      <div id="definition">
+        <a href="databasemetadata$$DatabaseMetaDataOp$.html" title="Go to companion"><img src="../../lib/trait_to_object_big.png" /></a>
+        <p id="owner"><a href="../package.html" class="extype" name="doobie">doobie</a>.<a href="package.html" class="extype" name="doobie.free">free</a>.<a href="databasemetadata$.html" class="extype" name="doobie.free.databasemetadata">databasemetadata</a></p>
+        <h1><a href="databasemetadata$$DatabaseMetaDataOp$.html" title="Go to companion">DatabaseMetaDataOp</a></h1>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">sealed </span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <span class="name">DatabaseMetaDataOp</span><span class="tparams">[<span name="A">A</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Sum type of primitive operations over a <code>java.sql.DatabaseMetaData</code>.</p></div><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/tpolecat/doobie/tree/master/core/src/main/scala/doobie/free/databasemetadata.scala" target="_blank">databasemetadata.scala</a></dd></dl><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+        </div><div class="toggleContainer block">
+          <span class="toggle">Known Subclasses</span>
+          <div class="subClasses hiddenContent"><a href="databasemetadata$$DatabaseMetaDataOp$$AllProceduresAreCallable$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.AllProceduresAreCallable">AllProceduresAreCallable</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$AllTablesAreSelectable$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.AllTablesAreSelectable">AllTablesAreSelectable</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$Attempt.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.Attempt">Attempt</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$AutoCommitFailureClosesAllResultSets$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.AutoCommitFailureClosesAllResultSets">AutoCommitFailureClosesAllResultSets</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$DataDefinitionCausesTransactionCommit$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.DataDefinitionCausesTransactionCommit">DataDefinitionCausesTransactionCommit</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$DataDefinitionIgnoredInTransactions$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.DataDefinitionIgnoredInTransactions">DataDefinitionIgnoredInTransactions</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$DeletesAreDetected.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.DeletesAreDetected">DeletesAreDetected</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$DoesMaxRowSizeIncludeBlobs$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.DoesMaxRowSizeIncludeBlobs">DoesMaxRowSizeIncludeBlobs</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetAttributes.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetAttributes">GetAttributes</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetBestRowIdentifier.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetBestRowIdentifier">GetBestRowIdentifier</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetCatalogSeparator$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetCatalogSeparator">GetCatalogSeparator</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetCatalogTerm$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetCatalogTerm">GetCatalogTerm</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetCatalogs$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetCatalogs">GetCatalogs</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetClientInfoProperties$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetClientInfoProperties">GetClientInfoProperties</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetColumnPrivileges.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetColumnPrivileges">GetColumnPrivileges</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetColumns.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetColumns">GetColumns</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetConnection$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetConnection">GetConnection</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetCrossReference.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetCrossReference">GetCrossReference</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetDatabaseMajorVersion$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetDatabaseMajorVersion">GetDatabaseMajorVersion</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetDatabaseMinorVersion$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetDatabaseMinorVersion">GetDatabaseMinorVersion</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetDatabaseProductName$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetDatabaseProductName">GetDatabaseProductName</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetDatabaseProductVersion$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetDatabaseProductVersion">GetDatabaseProductVersion</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetDefaultTransactionIsolation$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetDefaultTransactionIsolation">GetDefaultTransactionIsolation</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetDriverMajorVersion$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetDriverMajorVersion">GetDriverMajorVersion</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetDriverMinorVersion$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetDriverMinorVersion">GetDriverMinorVersion</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetDriverName$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetDriverName">GetDriverName</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetDriverVersion$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetDriverVersion">GetDriverVersion</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetExportedKeys.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetExportedKeys">GetExportedKeys</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetExtraNameCharacters$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetExtraNameCharacters">GetExtraNameCharacters</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetFunctionColumns.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetFunctionColumns">GetFunctionColumns</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetFunctions.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetFunctions">GetFunctions</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetIdentifierQuoteString$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetIdentifierQuoteString">GetIdentifierQuoteString</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetImportedKeys.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetImportedKeys">GetImportedKeys</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetIndexInfo.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetIndexInfo">GetIndexInfo</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetJDBCMajorVersion$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetJDBCMajorVersion">GetJDBCMajorVersion</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetJDBCMinorVersion$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetJDBCMinorVersion">GetJDBCMinorVersion</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetMaxBinaryLiteralLength$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetMaxBinaryLiteralLength">GetMaxBinaryLiteralLength</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetMaxCatalogNameLength$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetMaxCatalogNameLength">GetMaxCatalogNameLength</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetMaxCharLiteralLength$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetMaxCharLiteralLength">GetMaxCharLiteralLength</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetMaxColumnNameLength$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetMaxColumnNameLength">GetMaxColumnNameLength</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetMaxColumnsInGroupBy$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetMaxColumnsInGroupBy">GetMaxColumnsInGroupBy</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetMaxColumnsInIndex$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetMaxColumnsInIndex">GetMaxColumnsInIndex</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetMaxColumnsInOrderBy$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetMaxColumnsInOrderBy">GetMaxColumnsInOrderBy</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetMaxColumnsInSelect$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetMaxColumnsInSelect">GetMaxColumnsInSelect</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetMaxColumnsInTable$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetMaxColumnsInTable">GetMaxColumnsInTable</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetMaxConnections$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetMaxConnections">GetMaxConnections</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetMaxCursorNameLength$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetMaxCursorNameLength">GetMaxCursorNameLength</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetMaxIndexLength$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetMaxIndexLength">GetMaxIndexLength</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetMaxProcedureNameLength$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetMaxProcedureNameLength">GetMaxProcedureNameLength</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetMaxRowSize$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetMaxRowSize">GetMaxRowSize</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetMaxSchemaNameLength$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetMaxSchemaNameLength">GetMaxSchemaNameLength</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetMaxStatementLength$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetMaxStatementLength">GetMaxStatementLength</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetMaxStatements$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetMaxStatements">GetMaxStatements</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetMaxTableNameLength$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetMaxTableNameLength">GetMaxTableNameLength</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetMaxTablesInSelect$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetMaxTablesInSelect">GetMaxTablesInSelect</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetMaxUserNameLength$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetMaxUserNameLength">GetMaxUserNameLength</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetNumericFunctions$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetNumericFunctions">GetNumericFunctions</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetPrimaryKeys.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetPrimaryKeys">GetPrimaryKeys</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetProcedureColumns.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetProcedureColumns">GetProcedureColumns</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetProcedureTerm$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetProcedureTerm">GetProcedureTerm</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetProcedures.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetProcedures">GetProcedures</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetResultSetHoldability$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetResultSetHoldability">GetResultSetHoldability</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetRowIdLifetime$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetRowIdLifetime">GetRowIdLifetime</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetSQLKeywords$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetSQLKeywords">GetSQLKeywords</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetSQLStateType$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetSQLStateType">GetSQLStateType</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetSchemaTerm$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetSchemaTerm">GetSchemaTerm</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetSchemas$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetSchemas">GetSchemas</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetSchemas1.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetSchemas1">GetSchemas1</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetSearchStringEscape$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetSearchStringEscape">GetSearchStringEscape</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetStringFunctions$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetStringFunctions">GetStringFunctions</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetSuperTables.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetSuperTables">GetSuperTables</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetSuperTypes.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetSuperTypes">GetSuperTypes</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetSystemFunctions$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetSystemFunctions">GetSystemFunctions</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetTablePrivileges.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetTablePrivileges">GetTablePrivileges</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetTableTypes$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetTableTypes">GetTableTypes</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetTables.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetTables">GetTables</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetTimeDateFunctions$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetTimeDateFunctions">GetTimeDateFunctions</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetTypeInfo$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetTypeInfo">GetTypeInfo</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetUDTs.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetUDTs">GetUDTs</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetURL$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetURL">GetURL</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetUserName$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetUserName">GetUserName</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$GetVersionColumns.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.GetVersionColumns">GetVersionColumns</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$InsertsAreDetected.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.InsertsAreDetected">InsertsAreDetected</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$IsCatalogAtStart$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.IsCatalogAtStart">IsCatalogAtStart</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$IsReadOnly$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.IsReadOnly">IsReadOnly</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$IsWrapperFor.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.IsWrapperFor">IsWrapperFor</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$LiftBlobIO.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.LiftBlobIO">LiftBlobIO</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$LiftCallableStatementIO.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.LiftCallableStatementIO">LiftCallableStatementIO</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$LiftClobIO.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.LiftClobIO">LiftClobIO</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$LiftConnectionIO.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.LiftConnectionIO">LiftConnectionIO</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$LiftDriverIO.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.LiftDriverIO">LiftDriverIO</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$LiftNClobIO.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.LiftNClobIO">LiftNClobIO</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$LiftPreparedStatementIO.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.LiftPreparedStatementIO">LiftPreparedStatementIO</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$LiftRefIO.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.LiftRefIO">LiftRefIO</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$LiftResultSetIO.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.LiftResultSetIO">LiftResultSetIO</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$LiftSQLDataIO.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.LiftSQLDataIO">LiftSQLDataIO</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$LiftSQLInputIO.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.LiftSQLInputIO">LiftSQLInputIO</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$LiftSQLOutputIO.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.LiftSQLOutputIO">LiftSQLOutputIO</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$LiftStatementIO.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.LiftStatementIO">LiftStatementIO</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$LocatorsUpdateCopy$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.LocatorsUpdateCopy">LocatorsUpdateCopy</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$NullPlusNonNullIsNull$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.NullPlusNonNullIsNull">NullPlusNonNullIsNull</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$NullsAreSortedAtEnd$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.NullsAreSortedAtEnd">NullsAreSortedAtEnd</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$NullsAreSortedAtStart$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.NullsAreSortedAtStart">NullsAreSortedAtStart</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$NullsAreSortedHigh$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.NullsAreSortedHigh">NullsAreSortedHigh</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$NullsAreSortedLow$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.NullsAreSortedLow">NullsAreSortedLow</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$OthersDeletesAreVisible.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.OthersDeletesAreVisible">OthersDeletesAreVisible</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$OthersInsertsAreVisible.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.OthersInsertsAreVisible">OthersInsertsAreVisible</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$OthersUpdatesAreVisible.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.OthersUpdatesAreVisible">OthersUpdatesAreVisible</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$OwnDeletesAreVisible.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.OwnDeletesAreVisible">OwnDeletesAreVisible</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$OwnInsertsAreVisible.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.OwnInsertsAreVisible">OwnInsertsAreVisible</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$OwnUpdatesAreVisible.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.OwnUpdatesAreVisible">OwnUpdatesAreVisible</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$Pure.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.Pure">Pure</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$StoresLowerCaseIdentifiers$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.StoresLowerCaseIdentifiers">StoresLowerCaseIdentifiers</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$StoresLowerCaseQuotedIdentifiers$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.StoresLowerCaseQuotedIdentifiers">StoresLowerCaseQuotedIdentifiers</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$StoresMixedCaseIdentifiers$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.StoresMixedCaseIdentifiers">StoresMixedCaseIdentifiers</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$StoresMixedCaseQuotedIdentifiers$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.StoresMixedCaseQuotedIdentifiers">StoresMixedCaseQuotedIdentifiers</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$StoresUpperCaseIdentifiers$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.StoresUpperCaseIdentifiers">StoresUpperCaseIdentifiers</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$StoresUpperCaseQuotedIdentifiers$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.StoresUpperCaseQuotedIdentifiers">StoresUpperCaseQuotedIdentifiers</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsANSI92EntryLevelSQL$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsANSI92EntryLevelSQL">SupportsANSI92EntryLevelSQL</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsANSI92FullSQL$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsANSI92FullSQL">SupportsANSI92FullSQL</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsANSI92IntermediateSQL$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsANSI92IntermediateSQL">SupportsANSI92IntermediateSQL</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsAlterTableWithAddColumn$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsAlterTableWithAddColumn">SupportsAlterTableWithAddColumn</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsAlterTableWithDropColumn$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsAlterTableWithDropColumn">SupportsAlterTableWithDropColumn</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsBatchUpdates$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsBatchUpdates">SupportsBatchUpdates</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsCatalogsInDataManipulation$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsCatalogsInDataManipulation">SupportsCatalogsInDataManipulation</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsCatalogsInIndexDefinitions$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsCatalogsInIndexDefinitions">SupportsCatalogsInIndexDefinitions</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsCatalogsInPrivilegeDefinitions$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsCatalogsInPrivilegeDefinitions">SupportsCatalogsInPrivilegeDefinitions</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsCatalogsInProcedureCalls$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsCatalogsInProcedureCalls">SupportsCatalogsInProcedureCalls</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsCatalogsInTableDefinitions$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsCatalogsInTableDefinitions">SupportsCatalogsInTableDefinitions</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsColumnAliasing$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsColumnAliasing">SupportsColumnAliasing</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsConvert.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsConvert">SupportsConvert</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsConvert1$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsConvert1">SupportsConvert1</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsCoreSQLGrammar$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsCoreSQLGrammar">SupportsCoreSQLGrammar</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsCorrelatedSubqueries$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsCorrelatedSubqueries">SupportsCorrelatedSubqueries</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsDataDefinitionAndDataManipulationTransactions$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsDataDefinitionAndDataManipulationTransactions">SupportsDataDefinitionAndDataManipulationTransactions</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsDataManipulationTransactionsOnly$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsDataManipulationTransactionsOnly">SupportsDataManipulationTransactionsOnly</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsDifferentTableCorrelationNames$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsDifferentTableCorrelationNames">SupportsDifferentTableCorrelationNames</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsExpressionsInOrderBy$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsExpressionsInOrderBy">SupportsExpressionsInOrderBy</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsExtendedSQLGrammar$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsExtendedSQLGrammar">SupportsExtendedSQLGrammar</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsFullOuterJoins$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsFullOuterJoins">SupportsFullOuterJoins</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsGetGeneratedKeys$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsGetGeneratedKeys">SupportsGetGeneratedKeys</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsGroupBy$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsGroupBy">SupportsGroupBy</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsGroupByBeyondSelect$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsGroupByBeyondSelect">SupportsGroupByBeyondSelect</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsGroupByUnrelated$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsGroupByUnrelated">SupportsGroupByUnrelated</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsIntegrityEnhancementFacility$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsIntegrityEnhancementFacility">SupportsIntegrityEnhancementFacility</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsLikeEscapeClause$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsLikeEscapeClause">SupportsLikeEscapeClause</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsLimitedOuterJoins$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsLimitedOuterJoins">SupportsLimitedOuterJoins</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsMinimumSQLGrammar$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsMinimumSQLGrammar">SupportsMinimumSQLGrammar</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsMixedCaseIdentifiers$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsMixedCaseIdentifiers">SupportsMixedCaseIdentifiers</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsMixedCaseQuotedIdentifiers$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsMixedCaseQuotedIdentifiers">SupportsMixedCaseQuotedIdentifiers</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsMultipleOpenResults$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsMultipleOpenResults">SupportsMultipleOpenResults</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsMultipleResultSets$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsMultipleResultSets">SupportsMultipleResultSets</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsMultipleTransactions$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsMultipleTransactions">SupportsMultipleTransactions</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsNamedParameters$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsNamedParameters">SupportsNamedParameters</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsNonNullableColumns$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsNonNullableColumns">SupportsNonNullableColumns</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsOpenCursorsAcrossCommit$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsOpenCursorsAcrossCommit">SupportsOpenCursorsAcrossCommit</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsOpenCursorsAcrossRollback$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsOpenCursorsAcrossRollback">SupportsOpenCursorsAcrossRollback</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsOpenStatementsAcrossCommit$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsOpenStatementsAcrossCommit">SupportsOpenStatementsAcrossCommit</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsOpenStatementsAcrossRollback$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsOpenStatementsAcrossRollback">SupportsOpenStatementsAcrossRollback</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsOrderByUnrelated$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsOrderByUnrelated">SupportsOrderByUnrelated</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsOuterJoins$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsOuterJoins">SupportsOuterJoins</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsPositionedDelete$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsPositionedDelete">SupportsPositionedDelete</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsPositionedUpdate$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsPositionedUpdate">SupportsPositionedUpdate</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsResultSetConcurrency.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsResultSetConcurrency">SupportsResultSetConcurrency</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsResultSetHoldability.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsResultSetHoldability">SupportsResultSetHoldability</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsResultSetType.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsResultSetType">SupportsResultSetType</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsSavepoints$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsSavepoints">SupportsSavepoints</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsSchemasInDataManipulation$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsSchemasInDataManipulation">SupportsSchemasInDataManipulation</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsSchemasInIndexDefinitions$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsSchemasInIndexDefinitions">SupportsSchemasInIndexDefinitions</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsSchemasInPrivilegeDefinitions$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsSchemasInPrivilegeDefinitions">SupportsSchemasInPrivilegeDefinitions</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsSchemasInProcedureCalls$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsSchemasInProcedureCalls">SupportsSchemasInProcedureCalls</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsSchemasInTableDefinitions$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsSchemasInTableDefinitions">SupportsSchemasInTableDefinitions</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsSelectForUpdate$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsSelectForUpdate">SupportsSelectForUpdate</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsStatementPooling$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsStatementPooling">SupportsStatementPooling</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsStoredFunctionsUsingCallSyntax$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsStoredFunctionsUsingCallSyntax">SupportsStoredFunctionsUsingCallSyntax</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsStoredProcedures$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsStoredProcedures">SupportsStoredProcedures</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsSubqueriesInComparisons$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsSubqueriesInComparisons">SupportsSubqueriesInComparisons</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsSubqueriesInExists$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsSubqueriesInExists">SupportsSubqueriesInExists</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsSubqueriesInIns$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsSubqueriesInIns">SupportsSubqueriesInIns</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsSubqueriesInQuantifieds$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsSubqueriesInQuantifieds">SupportsSubqueriesInQuantifieds</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsTableCorrelationNames$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsTableCorrelationNames">SupportsTableCorrelationNames</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsTransactionIsolationLevel.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsTransactionIsolationLevel">SupportsTransactionIsolationLevel</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsTransactions$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsTransactions">SupportsTransactions</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsUnion$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsUnion">SupportsUnion</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$SupportsUnionAll$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.SupportsUnionAll">SupportsUnionAll</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$Unwrap.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.Unwrap">Unwrap</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$UpdatesAreDetected.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.UpdatesAreDetected">UpdatesAreDetected</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$UsesLocalFilePerTable$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.UsesLocalFilePerTable">UsesLocalFilePerTable</a>, <a href="databasemetadata$$DatabaseMetaDataOp$$UsesLocalFiles$.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp.UsesLocalFiles">UsesLocalFiles</a></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="doobie.free.databasemetadata.DatabaseMetaDataOp"><span>DatabaseMetaDataOp</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show all</span></li>
+            </ol>
+            <a href="http://docs.scala-lang.org/overviews/scaladoc/usage.html#members" target="_blank">Learn more about member selection</a>
+          </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="scala.AnyRef#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="!=(x$1:AnyRef):Boolean"></a>
+      <a id="!=(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.Any#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="!=(x$1:Any):Boolean"></a>
+      <a id="!=(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="scala.AnyRef###" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="##():Int"></a>
+      <a id="##():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#==" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="==(x$1:AnyRef):Boolean"></a>
+      <a id="==(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.Any#==" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="==(x$1:Any):Boolean"></a>
+      <a id="==(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asInstanceOf[T0]:T0"></a>
+      <a id="asInstanceOf[T0]:T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clone():Object"></a>
+      <a id="clone():AnyRef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clone</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.CloneNotSupportedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="eq(x$1:AnyRef):Boolean"></a>
+      <a id="eq(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#equals" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="equals(x$1:Any):Boolean"></a>
+      <a id="equals(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="finalize():Unit"></a>
+      <a id="finalize():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="symbol">classOf[java.lang.Throwable]</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getClass():Class[_]"></a>
+      <a id="getClass():Class[_]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="hashCode():Int"></a>
+      <a id="hashCode():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ne(x$1:AnyRef):Boolean"></a>
+      <a id="ne(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notify():Unit"></a>
+      <a id="notify():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notifyAll" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notifyAll():Unit"></a>
+      <a id="notifyAll():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
+      <a id="synchronized[T0](⇒T0):T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#toString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toString():String"></a>
+      <a id="toString():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait():Unit"></a>
+      <a id="wait():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long,x$2:Int):Unit"></a>
+      <a id="wait(Long,Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long):Unit"></a>
+      <a id="wait(Long):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+      <script defer="defer" type="text/javascript" id="jquery-js" src="../../lib/jquery.js"></script><script defer="defer" type="text/javascript" id="jquery-ui-js" src="../../lib/jquery-ui.js"></script><script defer="defer" type="text/javascript" id="tools-tooltip-js" src="../../lib/tools.tooltip.js"></script><script defer="defer" type="text/javascript" id="template-js" src="../../lib/template.js"></script>
+    </body>
+      </html>

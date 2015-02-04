@@ -1,0 +1,301 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+        <head>
+          <title>hi - doobie.hi</title>
+          <meta name="description" content="hi - doobie.hi" />
+          <meta name="keywords" content="hi doobie.hi" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../index.html';
+            var hash = 'doobie.hi.package';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="value">
+      <div id="definition">
+        <img src="../../lib/package_big.png" />
+        <p id="owner"><a href="../package.html" class="extype" name="doobie">doobie</a></p>
+        <h1>hi</h1>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hi</span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>High-level database API. The constructors here are defined
+in terms of those in <code>doobie.free.connection</code> but differ in the following ways:</p><ul><li>Enumerated values represented by <code>Int</code> values in JDBC are mapped to one of the proper types
+   defined in <code>doobie.enum</code>.</li><li>Nullable values are represented in terms of <code>Option</code>.</li><li>Java collection types are translated to immutable Scala equivalents.</li><li>Actions that compute liftime-managed resources do not return the resource directly, but rather
+   take a continuation in the resource's monad.</li><li>Actions that compute values of impure types (<code>CLOB</code>, <code>InputStream</code>, etc.) do not appear in this API.
+   They are available in the low-level API but must be used with considerable caution.</li><li>An exception to the above rule is that actions consuming or returning Scala <code>Array</code> are available
+   here but use <code>scalaz.ImmutableArray</code> or <code>List</code>, depending on usage.</li><li>Lifting actions, low-level type mapping actions, and resource management actions do not appear
+   in this API.
+</li></ul></div><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/tpolecat/doobie/tree/master/core/src/main/scala/doobie/hi/package.scala" target="_blank">package.scala</a></dd></dl><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                <li class="group out"><span>Grouped</span></li>
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="doobie.hi"><span>hi</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show all</span></li>
+            </ol>
+            <a href="http://docs.scala-lang.org/overviews/scaladoc/usage.html#members" target="_blank">Learn more about member selection</a>
+          </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="doobie.hi.CallableStatementIO" visbl="pub" data-isabs="false" fullComment="no" group="Aliases">
+      <a id="CallableStatementIO[A]=doobie.free.callablestatement.CallableStatementIO[A]"></a>
+      <a id="CallableStatementIO[A]:CallableStatementIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">type</span>
+      </span>
+      <span class="symbol">
+        <span class="name">CallableStatementIO</span><span class="tparams">[<span name="A">A</span>]</span><span class="result"> = <span class="extype" name="scalaz.Free">Free</span>[[x]<span class="extype" name="scalaz.Coyoneda">Coyoneda</span>[<a href="../free/callablestatement$$CallableStatementOp.html" class="extype" name="doobie.free.callablestatement.CallableStatementOp">CallableStatementOp</a>, <span class="extype" name="scalaz.Free.&lt;refinement&gt;.f.x">x</span>], <span class="extype" name="doobie.hi.CallableStatementIO.A">A</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.hi.ConnectionIO" visbl="pub" data-isabs="false" fullComment="no" group="Aliases">
+      <a id="ConnectionIO[A]=doobie.free.connection.ConnectionIO[A]"></a>
+      <a id="ConnectionIO[A]:ConnectionIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">type</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ConnectionIO</span><span class="tparams">[<span name="A">A</span>]</span><span class="result"> = <span class="extype" name="scalaz.Free">Free</span>[[x]<span class="extype" name="scalaz.Coyoneda">Coyoneda</span>[<a href="../free/connection$$ConnectionOp.html" class="extype" name="doobie.free.connection.ConnectionOp">ConnectionOp</a>, <span class="extype" name="scalaz.Free.&lt;refinement&gt;.f.x">x</span>], <span class="extype" name="doobie.hi.ConnectionIO.A">A</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.hi.DatabaseMetaDataIO" visbl="pub" data-isabs="false" fullComment="no" group="Aliases">
+      <a id="DatabaseMetaDataIO[A]=doobie.free.databasemetadata.DatabaseMetaDataIO[A]"></a>
+      <a id="DatabaseMetaDataIO[A]:DatabaseMetaDataIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">type</span>
+      </span>
+      <span class="symbol">
+        <span class="name">DatabaseMetaDataIO</span><span class="tparams">[<span name="A">A</span>]</span><span class="result"> = <span class="extype" name="scalaz.Free">Free</span>[[x]<span class="extype" name="scalaz.Coyoneda">Coyoneda</span>[<a href="../free/databasemetadata$$DatabaseMetaDataOp.html" class="extype" name="doobie.free.databasemetadata.DatabaseMetaDataOp">DatabaseMetaDataOp</a>, <span class="extype" name="scalaz.Free.&lt;refinement&gt;.f.x">x</span>], <span class="extype" name="doobie.hi.DatabaseMetaDataIO.A">A</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.hi.DriverIO" visbl="pub" data-isabs="false" fullComment="no" group="Aliases">
+      <a id="DriverIO[A]=doobie.free.driver.DriverIO[A]"></a>
+      <a id="DriverIO[A]:DriverIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">type</span>
+      </span>
+      <span class="symbol">
+        <span class="name">DriverIO</span><span class="tparams">[<span name="A">A</span>]</span><span class="result"> = <span class="extype" name="scalaz.Free">Free</span>[[x]<span class="extype" name="scalaz.Coyoneda">Coyoneda</span>[<a href="../free/driver$$DriverOp.html" class="extype" name="doobie.free.driver.DriverOp">DriverOp</a>, <span class="extype" name="scalaz.Free.&lt;refinement&gt;.f.x">x</span>], <span class="extype" name="doobie.hi.DriverIO.A">A</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.hi.DriverManagerIO" visbl="pub" data-isabs="false" fullComment="no" group="Aliases">
+      <a id="DriverManagerIO[A]=doobie.free.drivermanager.DriverManagerIO[A]"></a>
+      <a id="DriverManagerIO[A]:DriverManagerIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">type</span>
+      </span>
+      <span class="symbol">
+        <span class="name">DriverManagerIO</span><span class="tparams">[<span name="A">A</span>]</span><span class="result"> = <span class="extype" name="scalaz.Free">Free</span>[[x]<span class="extype" name="scalaz.Coyoneda">Coyoneda</span>[<a href="../free/drivermanager$$DriverManagerOp.html" class="extype" name="doobie.free.drivermanager.DriverManagerOp">DriverManagerOp</a>, <span class="extype" name="scalaz.Free.&lt;refinement&gt;.f.x">x</span>], <span class="extype" name="doobie.hi.DriverManagerIO.A">A</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.hi.PreparedStatementIO" visbl="pub" data-isabs="false" fullComment="no" group="Aliases">
+      <a id="PreparedStatementIO[A]=doobie.free.preparedstatement.PreparedStatementIO[A]"></a>
+      <a id="PreparedStatementIO[A]:PreparedStatementIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">type</span>
+      </span>
+      <span class="symbol">
+        <span class="name">PreparedStatementIO</span><span class="tparams">[<span name="A">A</span>]</span><span class="result"> = <span class="extype" name="scalaz.Free">Free</span>[[x]<span class="extype" name="scalaz.Coyoneda">Coyoneda</span>[<a href="../free/preparedstatement$$PreparedStatementOp.html" class="extype" name="doobie.free.preparedstatement.PreparedStatementOp">PreparedStatementOp</a>, <span class="extype" name="scalaz.Free.&lt;refinement&gt;.f.x">x</span>], <span class="extype" name="doobie.hi.PreparedStatementIO.A">A</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.hi.ResultSetIO" visbl="pub" data-isabs="false" fullComment="no" group="Aliases">
+      <a id="ResultSetIO[A]=doobie.free.resultset.ResultSetIO[A]"></a>
+      <a id="ResultSetIO[A]:ResultSetIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">type</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ResultSetIO</span><span class="tparams">[<span name="A">A</span>]</span><span class="result"> = <span class="extype" name="scalaz.Free">Free</span>[[x]<span class="extype" name="scalaz.Coyoneda">Coyoneda</span>[<a href="../free/resultset$$ResultSetOp.html" class="extype" name="doobie.free.resultset.ResultSetOp">ResultSetOp</a>, <span class="extype" name="scalaz.Free.&lt;refinement&gt;.f.x">x</span>], <span class="extype" name="doobie.hi.ResultSetIO.A">A</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.hi.StatementIO" visbl="pub" data-isabs="false" fullComment="no" group="Aliases">
+      <a id="StatementIO[A]=doobie.free.statement.StatementIO[A]"></a>
+      <a id="StatementIO[A]:StatementIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">type</span>
+      </span>
+      <span class="symbol">
+        <span class="name">StatementIO</span><span class="tparams">[<span name="A">A</span>]</span><span class="result"> = <span class="extype" name="scalaz.Free">Free</span>[[x]<span class="extype" name="scalaz.Coyoneda">Coyoneda</span>[<a href="../free/statement$$StatementOp.html" class="extype" name="doobie.free.statement.StatementOp">StatementOp</a>, <span class="extype" name="scalaz.Free.&lt;refinement&gt;.f.x">x</span>], <span class="extype" name="doobie.hi.StatementIO.A">A</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt"></p>
+    </li></ol>
+            </div>
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="doobie.hi.connection" visbl="pub" data-isabs="false" fullComment="no" group="Modules">
+      <a id="connection"></a>
+      <a id="connection:connection"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="connection$.html"><span class="name">connection</span></a>
+      </span>
+      </h4>
+      <p class="comment cmt">Module of high-level constructors for <code>ConnectionIO</code> actions.</p>
+    </li><li name="doobie.hi.drivermanager" visbl="pub" data-isabs="false" fullComment="no" group="Modules">
+      <a id="drivermanager"></a>
+      <a id="drivermanager:drivermanager"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="drivermanager$.html"><span class="name">drivermanager</span></a>
+      </span>
+      </h4>
+      <p class="comment cmt">Module of high-level constructors for <code>DriverManagerIO</code> actions.</p>
+    </li><li name="doobie.hi.preparedstatement" visbl="pub" data-isabs="false" fullComment="no" group="Modules">
+      <a id="preparedstatement"></a>
+      <a id="preparedstatement:preparedstatement"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="preparedstatement$.html"><span class="name">preparedstatement</span></a>
+      </span>
+      </h4>
+      <p class="comment cmt">Module of high-level constructors for <code>PreparedStatementIO</code> actions.</p>
+    </li><li name="doobie.hi.resultset" visbl="pub" data-isabs="false" fullComment="no" group="Modules">
+      <a id="resultset"></a>
+      <a id="resultset:resultset"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="resultset$.html"><span class="name">resultset</span></a>
+      </span>
+      </h4>
+      <p class="comment cmt">Module of high-level constructors for <code>ResultSetIO</code> actions.</p>
+    </li><li name="doobie.hi.statement" visbl="pub" data-isabs="false" fullComment="no" group="Modules">
+      <a id="statement"></a>
+      <a id="statement:statement"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="statement$.html"><span class="name">statement</span></a>
+      </span>
+      </h4>
+      <p class="comment cmt">Module of high-level constructors for <code>StatementIO</code> actions.</p>
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Aliases">
+              <h3>Aliases</h3>
+              
+            </div><div class="group" name="Modules">
+              <h3>Modules</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+      <script defer="defer" type="text/javascript" id="jquery-js" src="../../lib/jquery.js"></script><script defer="defer" type="text/javascript" id="jquery-ui-js" src="../../lib/jquery-ui.js"></script><script defer="defer" type="text/javascript" id="tools-tooltip-js" src="../../lib/tools.tooltip.js"></script><script defer="defer" type="text/javascript" id="template-js" src="../../lib/template.js"></script>
+    </body>
+      </html>

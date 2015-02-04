@@ -5,7 +5,7 @@ exclude: [LICENSE, CNAME, README.md, .gitignore]
 markdown: redcarpet
 
 collections:
-  doobie-0.2.0-SNAPSHOT:
+  doobie-0.2.0:
     output: true
     title: "book of doobie"
     index: "00-index.html"
