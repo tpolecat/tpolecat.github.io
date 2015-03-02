@@ -120,7 +120,23 @@ scala> (sql"select code, name, population, gnp from country"
   (ALB,Albania,3401200,Some(3205.0))
   (DZA,Algeria,31471000,Some(49982.0))
 ```
-**doobie** automatically supports row mappings for atomic column types, as well as options, tuples, and case classes thereof. So let's try the same query, mapping rows to a case class.
+**doobie** automatically supports row mappings for atomic column types, as well as options, tuples, `HList`s and case classes thereof. So let's try the same query with an `HList`:
+
+```scala
+scala> import shapeless._
+import shapeless._
+
+scala> (sql"select code, name, population, gnp from country"
+     |   .query[String :: String :: Int :: Option[Double] :: HNil]
+     |   .process.take(5).quick.run)
+  AFG :: Afghanistan :: 22720000 :: Some(5976.0) :: HNil
+  NLD :: Netherlands :: 15864000 :: Some(371362.0) :: HNil
+  ANT :: Netherlands Antilles :: 217000 :: Some(1941.0) :: HNil
+  ALB :: Albania :: 3401200 :: Some(3205.0) :: HNil
+  DZA :: Algeria :: 31471000 :: Some(49982.0) :: HNil
+```
+
+And again, mapping rows to a case class.
 
 ```scala
 case class Country(code: String, name: String, pop: Int, gnp: Option[Double])
@@ -137,7 +153,7 @@ scala> (sql"select code, name, population, gnp from country"
   Country(DZA,Algeria,31471000,Some(49982.0))
 ```
 
-You can also nest case classes and/or tuples arbitrarily as long as the eventual members are of supported columns types. For instance, here we map the same set of columns to a tuple of two case classes:
+You can also nest case classes, `HList`s, and/or tuples arbitrarily as long as the eventual members are of supported columns types. For instance, here we map the same set of columns to a tuple of two case classes:
 
 ```scala
 case class Code(code: String)
@@ -181,7 +197,7 @@ scala> val p = {
      |     .process         // Process[ConnectionIO, Country]
      |     .transact(xa)    // Process[Task, Country]
      |  }
-p: scalaz.stream.Process[scalaz.concurrent.Task,Country] = Await(scalaz.concurrent.Task@92a72e4,<function1>)
+p: scalaz.stream.Process[scalaz.concurrent.Task,Country] = Await(scalaz.concurrent.Task@42bf4e63,<function1>)
 
 scala> p.take(5).runLog.run.foreach(println)
 Country(Afghanistan,22720000,Some(5976.0))
