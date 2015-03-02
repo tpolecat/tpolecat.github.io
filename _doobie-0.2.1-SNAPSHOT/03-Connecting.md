@@ -41,9 +41,13 @@ val xa = DriverManagerTransactor[Task](
 
 A `Transactor` is simply a structure that knows how to connect to a database, hand out connections, and clean them up; and with this knowledge it can transform `ConnectionIO ~> Task`, which gives us something we can run. Specifically it gives us a `Task` that, when run, will connect to the database and run our program in a single transaction.
 
+The `DriverManagerTransactor` simply delegates to the `java.sql.DriverManager` to allocate connections, which is fine for development but inefficient for production use. In a later chapter we discuss other approaches for connection management.
+
+Right, so let's do this.
+
 ```scala
 scala> val task = program1.transact(xa)
-task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@6d1f5591
+task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@387a062e
 
 scala> task.run
 res0: Int = 42
@@ -64,7 +68,7 @@ scala> val program2 = sql"select 42".query[Int].unique
 program2: doobie.hi.ConnectionIO[Int] = Gosub()
 
 scala> val task2 = program2.transact(xa)
-task2: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@6022889d
+task2: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@58ce8125
 
 scala> task2.run
 res1: Int = 42
@@ -89,7 +93,7 @@ And behold!
 
 ```scala
 scala> program3.transact(xa).run
-res2: (Int, Double) = (42,0.6653087227605283)
+res2: (Int, Double) = (42,0.07168357679620385)
 ```
 
 The astute among you will note that we don't actually need a monad to do this; an applicative functor is all we need here. So we could also write `program3` as:
@@ -106,18 +110,18 @@ And lo, it was good:
 
 ```scala
 scala> program3a.transact(xa).run
-res3: (Int, Double) = (42,0.34334697015583515)
+res3: (Int, Double) = (42,0.8978790836408734)
 ```
 
 And of course this composition can continue indefinitely.
 
 ```scala
 scala> List.fill(5)(program3a).sequenceU.transact(xa).run.foreach(println)
-(42,0.8703768691048026)
-(42,0.6675783898681402)
-(42,0.6095271315425634)
-(42,0.479735653847456)
-(42,0.6813180209137499)
+(42,0.7191624287515879)
+(42,0.9752439712174237)
+(42,0.924436685629189)
+(42,0.6339034801349044)
+(42,0.7959558544680476)
 ```
 
 
@@ -134,7 +138,7 @@ scala> val kleisli = program1.transK[Task]
 kleisli: scalaz.Kleisli[scalaz.concurrent.Task,java.sql.Connection,Int] = Kleisli(<function1>)
 
 scala> val task = Task.delay(null: java.sql.Connection) >>= kleisli
-task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@640db55e
+task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@1f076c19
 
 scala> task.run // sneaky; program1 never looks at the connection
 res5: Int = 42
