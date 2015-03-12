@@ -8,15 +8,13 @@ A common question on the `#scala` IRC channel is
 
 > I have a type hierarchy ... how do I declare a supertype method that returns the "current" type?
 
-This question comes up a lot because Scala encourages immutability, and methods that return a modified copy of `this` are quite common. The standard approach (and the one used by stdlib collections for example) is to use an **F-bounded type**, which *mostly* works, but can't fully enforce the constraint we're after (it still takes some discipline and leaves room for error). A better approach in many cases is to use a **typeclass**, which solves the problem neatly and leaves little room for worry. We will examine the problem and both solutions.
+This question comes up a lot because Scala encourages immutability, and methods that return a modified copy of `this` are quite common. The closest thing to a "standard" approach (and the one used by stdlib collections for example) is to use an **F-bounded type**, which *mostly* works, but can't fully enforce the constraint we're after (it still takes some discipline and leaves room for error). A better approach in many cases is to use a **typeclass**, which solves the problem neatly and leaves little room for worry. We will examine the problem and both solutions.
 
 ### The Problem
 
 Say we have an open trait for pets, with an unknown number of implementations. Let's say every type of `Pet` has a name, as well as a method that returns an otherwise identical copy with a new name. 
 
 > **Our problem is this:** for any expression `x` with type `A <: Pet`, ensure that `x.renamed(...)` also has type `A`. To be clear: this is a *static* guarantee that we want, not a runtime property.
-
-And for the "actually..." crowd, no, we're not talking about singleton types today.
 
 Right. So here is our first attempt, and one implementation.
 
@@ -31,7 +29,7 @@ case class Fish(name: String, age: Int) extends Pet {
 }
 ```
 
-Note that `name` is implemented via a case class field. The `renamed` method simply delegates to the generated `copy` method, but note that it returns a `Fish` rather than a `Pet`. This is allowed because return types are in covariant position; it's always ok to return something **more specific** than what is asked for.
+In our `Fish` implementation `name` is implemented via a case class field, and the `renamed` method simply delegates to the generated `copy` method ... but note that it returns a `Fish` rather than a `Pet`. This is allowed because return types are in covariant position; it's always ok to return something **more specific** than what is promised.
 
 Just as a sanity check, we can create a `Fish` and rename it and all is well; the static type of the returned value is what we want. In simple cases this may be good enough, so keep in mind that this does work.
 
@@ -121,7 +119,7 @@ case class Kitty(name: String, color: Color) extends Pet[Fish] { // oops
 Rats. What we need is a way to restrict the implementing class *claiming* to be an `A` to *actually* be an `A`. And it turns out that Scala does give us a way to do that: a **self-type** annotation.
 
 ```scala
-trait Pet[A <: Pet[A]] { this: A => 
+trait Pet[A <: Pet[A]] { this: A => // self-type
   def name: String
   def renamed(newName: String): A 
 }
