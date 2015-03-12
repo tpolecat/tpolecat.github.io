@@ -4,7 +4,7 @@ number: 12
 title: Managing Connections
 ---
 
-
+In this chapter we discuss several ways to manage connections in applications that use **doobie**, including managed/pooled connections and re-use of existing connections. For this chapter we have a few imports and no other setup.
 
 ```scala
 import doobie.imports._, scalaz._, Scalaz._, scalaz.concurrent.Task
@@ -12,9 +12,24 @@ import doobie.imports._, scalaz._, Scalaz._, scalaz.concurrent.Task
 
 ### Using Transactors
 
-A `Transactor` is ...
+Most **doobie** programs are values of type `ConnectionIO[A]` or `Process[ConnnectionIO, A]` that describe computations requiring a database connection. By providing a means of acquiring a connection we can transform these programs into computations that can actually be executed. The most common way of performing this transformation is via a `Transactor`.
 
-The `transact` method does the following...
+A `Transactor` is a parameterized by some target monad `M` and closes over some source of connections (and configuration information, as needed) yielding a pair of natural transformations:
+
+```scala
+ConnectionIO ~> M
+Process[ConnectionIO, ?] ~> Process[M, ?]
+```
+
+So once you have a `Transactor[M]` you have a way of discharging `ConnectionIO` and replacing it with some effectful `M` like `Task` or `IO`. In effect this turns a **doobie** program into a "real" program value that you can integrate with the rest of your application; all doobieness is left behind.
+
+In addition to simply supplying a connection, a `Transactor` (by default) wraps the transformed `ConnectionIO` as follows:
+
+- The connection is configured with `setAutoCommit(false)`
+- The program is followed by `commit` if it completes normally, or `rollback` is an exception escapes.
+- In all cases the connection is cleaned up with `close`.
+
+**doobie** provides several implementations, described below.
 
 
 
@@ -72,7 +87,7 @@ scala> val prog = 42.point[ConnectionIO]      // ConnectionIO[Int]
 prog: doobie.imports.ConnectionIO[Int] = Return(42)
 
 scala> val task = prog.transK[Task].run(conn) // Task[Int]
-task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@e507e37
+task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@5d378946
 ```
 
 As an aside, this technique works for programs written in *any* of the provided contexts. For example, here we run a program in `ResultSetIO`.
@@ -85,7 +100,7 @@ scala> val prog = 42.point[ResultSetIO]     // ResultSetIO[Int]
 prog: doobie.imports.ResultSetIO[Int] = Return(42)
 
 scala> val task = prog.transK[Task].run(rs) // Task[Int]
-task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@c0ddef5
+task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@7d369f4
 ```
 
 This facility allows you to mix **doobie** programs into existing JDBC applications in a fine-grained manner if this meets your needs.

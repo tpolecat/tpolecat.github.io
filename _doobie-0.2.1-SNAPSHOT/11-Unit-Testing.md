@@ -126,7 +126,7 @@ Update0 defined at <console>:18
 + P02 String  →  VARCHAR (text)
 
 Total for specification $line12.$read$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$AnalysisTestSpec$
-Finished in 28 ms
+Finished in 22 ms
 11 examples, 5 failures, 0 error
 ```
 
