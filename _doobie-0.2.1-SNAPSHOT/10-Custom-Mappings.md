@@ -8,7 +8,7 @@ In this chapter we learn how to use custom `Meta` instances to map arbitrary dat
 
 ### Setting Up
 
-The examples in this chapter require the `contrib-postgresql` add-on, as well as the [argonaut](http://argonaut.io/) JSON library, which you can to your build thus:
+The examples in this chapter require the `contrib-postgresql` add-on, as well as the [argonaut](http://argonaut.io/) JSON library, which you can add to your build thus:
 
 ```scala
 libraryDependencies += "io.argonaut" %% "argonaut" % "6.1-M4" // as of date of publication
@@ -105,7 +105,7 @@ Now it compiles as a column value and as a `Composite` that maps to a *single* c
 
 ```scala
 scala> sql"select * from person where id = $pid"
-res10: doobie.syntax.string.SqlInterpolator#Builder[shapeless.::[PersonId,shapeless.HNil]] = doobie.syntax.string$SqlInterpolator$Builder@2781f294
+res10: doobie.syntax.string.SqlInterpolator#Builder[shapeless.::[PersonId,shapeless.HNil]] = doobie.syntax.string$SqlInterpolator$Builder@14765f72
 
 scala> Composite[PersonId].length
 res11: Int = 1
@@ -177,8 +177,11 @@ scala> sql"select owner from pet".query[Int].check.run
 
   select owner from pet
 
-  ✕ SQL Compiles and Typechecks
-    - The parameter index is out of range: 1, number of parameters: 0.
+  ✓ SQL Compiles and Typechecks
+  ✕ C01 owner OTHER (json) NOT NULL  →  Int
+    - OTHER (json) is not coercible to Int according to the JDBC specification or any
+      defined mapping. Fix this by changing the schema type to INTEGER, or the Scala
+      type to Person or Json or PGobject.
 ```
 
 And we can now use `Person` as a parameter type and as a column type.
