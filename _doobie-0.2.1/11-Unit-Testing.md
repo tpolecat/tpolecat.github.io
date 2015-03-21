@@ -85,9 +85,9 @@ $line12.$read$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$AnalysisTestSpec$
 Query0[(Int, String)] defined at <console>:18
   
   select 42, 'foo'::varchar
-x SQL Compiles and Typechecks
-   x The parameter index is out of range: 1, number of parameters: 0. (specs2.scala:60)
-
++ SQL Compiles and Typechecks
++ C01 ?column? INTEGER (int4)    NULL?  →  Int
++ C02 varchar  VARCHAR (varchar) NULL?  →  String
 
 Query0[Country] defined at <console>:20
   
@@ -126,8 +126,8 @@ Update0 defined at <console>:18
 + P02 String  →  VARCHAR (text)
 
 Total for specification $line12.$read$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$AnalysisTestSpec$
-Finished in 66 ms
-11 examples, 5 failures, 0 error
+Finished in 31 ms
+13 examples, 4 failures, 0 error
 ```
 
 

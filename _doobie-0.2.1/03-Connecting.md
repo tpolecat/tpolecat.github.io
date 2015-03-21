@@ -47,7 +47,7 @@ Right, so let's do this.
 
 ```scala
 scala> val task = program1.transact(xa)
-task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@5b36efcf
+task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@54781229
 
 scala> task.run
 res0: Int = 42
@@ -68,7 +68,7 @@ scala> val program2 = sql"select 42".query[Int].unique
 program2: doobie.hi.ConnectionIO[Int] = Gosub()
 
 scala> val task2 = program2.transact(xa)
-task2: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@5901bf61
+task2: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@1930a99e
 
 scala> task2.run
 res1: Int = 42
@@ -93,7 +93,7 @@ And behold!
 
 ```scala
 scala> program3.transact(xa).run
-res2: (Int, Double) = (42,0.32343660574406385)
+res2: (Int, Double) = (42,0.014549991115927696)
 ```
 
 The astute among you will note that we don't actually need a monad to do this; an applicative functor is all we need here. So we could also write `program3` as:
@@ -110,18 +110,18 @@ And lo, it was good:
 
 ```scala
 scala> program3a.transact(xa).run
-res3: (Int, Double) = (42,0.5415936578065157)
+res3: (Int, Double) = (42,0.008984508458524942)
 ```
 
 And of course this composition can continue indefinitely.
 
 ```scala
 scala> List.fill(5)(program3a).sequenceU.transact(xa).run.foreach(println)
-(42,0.7283761817961931)
-(42,0.7246014424599707)
-(42,0.3468911307863891)
-(42,0.005326501559466124)
-(42,0.2841473422013223)
+(42,0.9545318763703108)
+(42,0.3081228523515165)
+(42,0.340813216753304)
+(42,0.027612002100795507)
+(42,0.37165090860798955)
 ```
 
 
@@ -138,7 +138,7 @@ scala> val kleisli = program1.transK[Task]
 kleisli: scalaz.Kleisli[scalaz.concurrent.Task,java.sql.Connection,Int] = Kleisli(<function1>)
 
 scala> val task = Task.delay(null: java.sql.Connection) >>= kleisli
-task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@29754f7b
+task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@450c7a80
 
 scala> task.run // sneaky; program1 never looks at the connection
 res5: Int = 42
