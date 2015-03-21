@@ -1,0 +1,973 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>ref - doobie.free.ref</title>
+          <meta name="description" content="ref - doobie.free.ref" />
+          <meta name="keywords" content="ref doobie.free.ref" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../lib/template.js"></script>
+      <script type="text/javascript" src="../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../index.html';
+            var hash = 'doobie.free.ref$';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="value">
+      <div id="definition">
+        <img src="../../lib/object_big.png" />
+        <p id="owner"><a href="../package.html" class="extype" name="doobie">doobie</a>.<a href="package.html" class="extype" name="doobie.free">free</a></p>
+        <h1>ref</h1><h3><span class="morelinks"><div>Related Doc:
+            <a href="package.html" class="extype" name="doobie.free">package free</a>
+          </div></span></h3><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ref</span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Algebra and free monad for primitive operations over a <code>java.sql.Ref</code>. This is
+a low-level API that exposes lifecycle-managed JDBC objects directly and is intended mainly
+for library developers. End users will prefer a safer, higher-level API such as that provided
+in the <code>doobie.hi</code> package.</p><p><code>RefIO</code> is a free monad that must be run via an interpreter, most commonly via
+natural transformation of its underlying algebra <code>RefOp</code> to another monad via
+<code>Free.runFC</code>.</p><p>The library provides a natural transformation to <code>Kleisli[M, Ref, A]</code> for any
+exception-trapping (<code>Catchable</code>) and effect-capturing (<code>Capture</code>) monad <code>M</code>. Such evidence is
+provided for <code>Task</code>, <code>IO</code>, and stdlib <code>Future</code>; and <code>transK[M]</code> is provided as syntax.</p><pre><span class="cmt">// An action to run</span>
+<span class="kw">val</span> a: RefIO[Foo] = ...
+
+<span class="cmt">// A JDBC object</span>
+<span class="kw">val</span> s: Ref = ...
+
+<span class="cmt">// Unfolding into a Task</span>
+<span class="kw">val</span> ta: Task[A] = a.transK[Task].run(s)</pre></div><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/tpolecat/doobie/tree/0.2.1/core/src/main/scala/doobie/free/ref.scala" target="_blank">ref.scala</a></dd></dl><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                <li class="group out"><span>Grouped</span></li>
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="doobie.free.ref"><span>ref</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show all</span></li>
+            </ol>
+            <a href="http://docs.scala-lang.org/overviews/scaladoc/usage.html#members" target="_blank">Learn more about member selection</a>
+          </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="doobie.free.ref.RefIO" visbl="pub" data-isabs="false" fullComment="no" group="Algebra">
+      <a id="RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]"></a>
+      <a id="RefIO[A]:RefIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">type</span>
+      </span>
+      <span class="symbol">
+        <span class="name">RefIO</span><span class="tparams">[<span name="A">A</span>]</span><span class="result"> = <span class="extype" name="scalaz.Free">Free</span>[[x]<span class="extype" name="scalaz.Coyoneda">Coyoneda</span>[<a href="ref$$RefOp.html" class="extype" name="doobie.free.ref.RefOp">RefOp</a>, <span class="extype" name="scalaz.Free.&lt;refinement&gt;.f.x">x</span>], <span class="extype" name="doobie.free.ref.RefIO.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Free monad over a free functor of <a href="ref$$RefOp.html" class="extype" name="doobie.free.ref.RefOp">RefOp</a>; abstractly, a computation that consumes
+a <code>java.sql.Ref</code> and produces a value of type <code>A</code>.</p>
+    </li><li name="doobie.free.ref.RefIOOps" visbl="pub" data-isabs="false" fullComment="no" group="Algebra">
+      <a id="RefIOOps[A]extendsAnyRef"></a>
+      <a id="RefIOOps[A]:RefIOOps[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="ref$$RefIOOps.html"><span class="name">RefIOOps</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@RefIOOps[A]extendsAnyRef" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Syntax for <code>RefIO</code>.</p>
+    </li><li name="doobie.free.ref.RefOp" visbl="pub" data-isabs="true" fullComment="no" group="Algebra">
+      <a id="RefOp[A]extendsAnyRef"></a>
+      <a id="RefOp[A]:RefOp[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">sealed </span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="ref$$RefOp.html"><span class="name">RefOp</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@RefOp[A]extendsAnyRef" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Sum type of primitive operations over a <code>java.sql.Ref</code>.</p>
+    </li></ol>
+            </div>
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="scala.AnyRef#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="!=(x$1:Any):Boolean"></a>
+      <a id="!=(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@!=(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef###" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="##():Int"></a>
+      <a id="##():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@##():Int" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#==" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="==(x$1:Any):Boolean"></a>
+      <a id="==(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@==(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="doobie.free.ref#CaptureRefIO" visbl="pub" data-isabs="false" fullComment="no" group="Typeclass Instances">
+      <a id="CaptureRefIO:doobie.util.capture.Capture[doobie.free.ref.RefIO]"></a>
+      <a id="CaptureRefIO:Capture[RefIO]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">CaptureRefIO</span><span class="result">: <a href="../util/capture$$Capture.html" class="extype" name="doobie.util.capture.Capture">Capture</a>[<a href="#RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" class="extmbr" name="doobie.free.ref.RefIO">RefIO</a>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@CaptureRefIO:doobie.util.capture.Capture[doobie.free.ref.RefIO]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Capture instance for <a href="#RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" class="extmbr" name="doobie.free.ref.RefIO">RefIO</a>.</p>
+    </li><li name="doobie.free.ref#CatchableRefIO" visbl="pub" data-isabs="false" fullComment="no" group="Typeclass Instances">
+      <a id="CatchableRefIO:scalaz.Catchable[doobie.free.ref.RefIO]"></a>
+      <a id="CatchableRefIO:Catchable[RefIO]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">CatchableRefIO</span><span class="result">: <span class="extype" name="scalaz.Catchable">Catchable</span>[<a href="#RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" class="extmbr" name="doobie.free.ref.RefIO">RefIO</a>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@CatchableRefIO:scalaz.Catchable[doobie.free.ref.RefIO]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Catchable instance for <a href="#RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" class="extmbr" name="doobie.free.ref.RefIO">RefIO</a>.</p>
+    </li><li name="doobie.free.ref#MonadRefIO" visbl="pub" data-isabs="false" fullComment="no" group="Typeclass Instances">
+      <a id="MonadRefIO:scalaz.Monad[doobie.free.ref.RefIO]"></a>
+      <a id="MonadRefIO:Monad[RefIO]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">MonadRefIO</span><span class="result">: <span class="extype" name="scalaz.Monad">Monad</span>[<a href="#RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" class="extmbr" name="doobie.free.ref.RefIO">RefIO</a>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@MonadRefIO:scalaz.Monad[doobie.free.ref.RefIO]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Monad instance for <a href="#RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" class="extmbr" name="doobie.free.ref.RefIO">RefIO</a> (can't be inferred).</p>
+    </li><li name="doobie.free.ref.RefOp" visbl="pub" data-isabs="false" fullComment="yes" group="Algebra">
+      <a id="RefOp"></a>
+      <a id="RefOp:RefOp"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="ref$$RefOp$.html"><span class="name">RefOp</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@RefOp" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Module of constructors for <code>RefOp</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Module of constructors for <code>RefOp</code>. These are rarely useful outside of the implementation;
+prefer the smart constructors provided by the <code>ref</code> module.</p></div></div>
+    </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asInstanceOf[T0]:T0"></a>
+      <a id="asInstanceOf[T0]:T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@asInstanceOf[T0]:T0" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="doobie.free.ref#attempt" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Lifting)">
+      <a id="attempt[A](a:doobie.free.ref.RefIO[A]):doobie.free.ref.RefIO[scalaz.\/[Throwable,A]]"></a>
+      <a id="attempt[A](RefIO[A]):RefIO[\/[Throwable,A]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">attempt</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="a">a: <a href="#RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" class="extmbr" name="doobie.free.ref.RefIO">RefIO</a>[<span class="extype" name="doobie.free.ref.attempt.A">A</span>]</span>)</span><span class="result">: <a href="#RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" class="extmbr" name="doobie.free.ref.RefIO">RefIO</a>[<span class="extype" name="scalaz.\/">\/</span>[<span class="extype" name="scala.Throwable">Throwable</span>, <span class="extype" name="doobie.free.ref.attempt.A">A</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@attempt[A](a:doobie.free.ref.RefIO[A]):doobie.free.ref.RefIO[scalaz.\/[Throwable,A]]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Lift a RefIO[A] into an exception-capturing RefIO[Throwable \/ A].</p>
+    </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clone():Object"></a>
+      <a id="clone():AnyRef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clone</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@clone():Object" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.CloneNotSupportedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="doobie.free.ref#delay" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Lifting)">
+      <a id="delay[A](a:=&gt;A):doobie.free.ref.RefIO[A]"></a>
+      <a id="delay[A](⇒A):RefIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">delay</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="a">a: ⇒ <span class="extype" name="doobie.free.ref.delay.A">A</span></span>)</span><span class="result">: <a href="#RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" class="extmbr" name="doobie.free.ref.RefIO">RefIO</a>[<span class="extype" name="doobie.free.ref.delay.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@delay[A](a:=&gt;A):doobie.free.ref.RefIO[A]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Non-strict unit for capturing effects.</p>
+    </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="eq(x$1:AnyRef):Boolean"></a>
+      <a id="eq(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#equals" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="equals(x$1:Any):Boolean"></a>
+      <a id="equals(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@equals(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="finalize():Unit"></a>
+      <a id="finalize():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@finalize():Unit" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="symbol">classOf[java.lang.Throwable]</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="doobie.free.ref#getBaseTypeName" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Primitives)">
+      <a id="getBaseTypeName:doobie.free.ref.RefIO[String]"></a>
+      <a id="getBaseTypeName:RefIO[String]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getBaseTypeName</span><span class="result">: <a href="#RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" class="extmbr" name="doobie.free.ref.RefIO">RefIO</a>[<span class="extype" name="java.lang.String">String</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@getBaseTypeName:doobie.free.ref.RefIO[String]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p>
+    </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getClass():Class[_]"></a>
+      <a id="getClass():Class[_]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@getClass():Class[_]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="doobie.free.ref#getObject" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Primitives)">
+      <a id="getObject(a:java.util.Map[String,Class[_]]):doobie.free.ref.RefIO[Object]"></a>
+      <a id="getObject(Map[String,Class[_]]):RefIO[AnyRef]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getObject</span><span class="params">(<span name="a">a: <span class="extype" name="java.util.Map">Map</span>[<span class="extype" name="java.lang.String">String</span>, <span class="extype" name="scala.Predef.Class">Class</span>[_]]</span>)</span><span class="result">: <a href="#RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" class="extmbr" name="doobie.free.ref.RefIO">RefIO</a>[<span class="extype" name="scala.AnyRef">AnyRef</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@getObject(a:java.util.Map[String,Class[_]]):doobie.free.ref.RefIO[Object]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.free.ref#getObject" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Primitives)">
+      <a id="getObject:doobie.free.ref.RefIO[Object]"></a>
+      <a id="getObject:RefIO[AnyRef]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getObject</span><span class="result">: <a href="#RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" class="extmbr" name="doobie.free.ref.RefIO">RefIO</a>[<span class="extype" name="scala.AnyRef">AnyRef</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@getObject:doobie.free.ref.RefIO[Object]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p>
+    </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="hashCode():Int"></a>
+      <a id="hashCode():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@hashCode():Int" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="doobie.free.ref#kleisliTrans" visbl="pub" data-isabs="false" fullComment="no" group="Algebra">
+      <a id="kleisliTrans[M[_]](implicitevidence$1:scalaz.Monad[M],implicitevidence$2:scalaz.Catchable[M],implicitevidence$3:doobie.util.capture.Capture[M]):scalaz.~&gt;[doobie.free.ref.RefOp,[a]scalaz.Kleisli[M,java.sql.Ref,a]]"></a>
+      <a id="kleisliTrans[M[_]](Monad[M],Catchable[M],Capture[M]):~&gt;[RefOp,[a]Kleisli[M,Ref,a]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">kleisliTrans</span><span class="tparams">[<span name="M">M<span class="tparams">[<span name="_">_</span>]</span></span>]</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scalaz.Monad">Monad</span>[<span class="extype" name="doobie.free.ref.kleisliTrans.M">M</span>]</span>, <span name="arg1">arg1: <span class="extype" name="scalaz.Catchable">Catchable</span>[<span class="extype" name="doobie.free.ref.kleisliTrans.M">M</span>]</span>, <span name="arg2">arg2: <a href="../util/capture$$Capture.html" class="extype" name="doobie.util.capture.Capture">Capture</a>[<span class="extype" name="doobie.free.ref.kleisliTrans.M">M</span>]</span>)</span><span class="result">: <span class="extype" name="scalaz.~&gt;">~&gt;</span>[<a href="ref$$RefOp.html" class="extype" name="doobie.free.ref.RefOp">RefOp</a>, [a]<span class="extype" name="scalaz.Kleisli">Kleisli</span>[<span class="extype" name="doobie.free.ref.kleisliTrans.M">M</span>, <span class="extype" name="java.sql.Ref">Ref</span>, <span class="extype" name="doobie.free.ref.&lt;refinement&gt;.l.a">a</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@kleisliTrans[M[_]](implicitevidence$1:scalaz.Monad[M],implicitevidence$2:scalaz.Catchable[M],implicitevidence$3:doobie.util.capture.Capture[M]):scalaz.~&gt;[doobie.free.ref.RefOp,[a]scalaz.Kleisli[M,java.sql.Ref,a]]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Natural transformation from <code>RefOp</code> to <code>Kleisli</code> for the given <code>M</code>, consuming a <code>java.sql.Ref</code>.</p>
+    </li><li name="doobie.free.ref#liftBlob" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Lifting)">
+      <a id="liftBlob[A](s:java.sql.Blob,k:doobie.free.blob.BlobIO[A]):doobie.free.ref.RefIO[A]"></a>
+      <a id="liftBlob[A](Blob,BlobIO[A]):RefIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">liftBlob</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.Blob">Blob</span></span>, <span name="k">k: <a href="blob$.html#BlobIO[A]=scalaz.Free.FreeC[doobie.free.blob.BlobOp,A]" class="extmbr" name="doobie.free.blob.BlobIO">BlobIO</a>[<span class="extype" name="doobie.free.ref.liftBlob.A">A</span>]</span>)</span><span class="result">: <a href="#RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" class="extmbr" name="doobie.free.ref.RefIO">RefIO</a>[<span class="extype" name="doobie.free.ref.liftBlob.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@liftBlob[A](s:java.sql.Blob,k:doobie.free.blob.BlobIO[A]):doobie.free.ref.RefIO[A]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.free.ref#liftCallableStatement" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Lifting)">
+      <a id="liftCallableStatement[A](s:java.sql.CallableStatement,k:doobie.free.callablestatement.CallableStatementIO[A]):doobie.free.ref.RefIO[A]"></a>
+      <a id="liftCallableStatement[A](CallableStatement,CallableStatementIO[A]):RefIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">liftCallableStatement</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.CallableStatement">CallableStatement</span></span>, <span name="k">k: <a href="callablestatement$.html#CallableStatementIO[A]=scalaz.Free.FreeC[doobie.free.callablestatement.CallableStatementOp,A]" class="extmbr" name="doobie.free.callablestatement.CallableStatementIO">CallableStatementIO</a>[<span class="extype" name="doobie.free.ref.liftCallableStatement.A">A</span>]</span>)</span><span class="result">: <a href="#RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" class="extmbr" name="doobie.free.ref.RefIO">RefIO</a>[<span class="extype" name="doobie.free.ref.liftCallableStatement.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@liftCallableStatement[A](s:java.sql.CallableStatement,k:doobie.free.callablestatement.CallableStatementIO[A]):doobie.free.ref.RefIO[A]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.free.ref#liftClob" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Lifting)">
+      <a id="liftClob[A](s:java.sql.Clob,k:doobie.free.clob.ClobIO[A]):doobie.free.ref.RefIO[A]"></a>
+      <a id="liftClob[A](Clob,ClobIO[A]):RefIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">liftClob</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.Clob">Clob</span></span>, <span name="k">k: <a href="clob$.html#ClobIO[A]=scalaz.Free.FreeC[doobie.free.clob.ClobOp,A]" class="extmbr" name="doobie.free.clob.ClobIO">ClobIO</a>[<span class="extype" name="doobie.free.ref.liftClob.A">A</span>]</span>)</span><span class="result">: <a href="#RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" class="extmbr" name="doobie.free.ref.RefIO">RefIO</a>[<span class="extype" name="doobie.free.ref.liftClob.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@liftClob[A](s:java.sql.Clob,k:doobie.free.clob.ClobIO[A]):doobie.free.ref.RefIO[A]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.free.ref#liftConnection" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Lifting)">
+      <a id="liftConnection[A](s:java.sql.Connection,k:doobie.free.connection.ConnectionIO[A]):doobie.free.ref.RefIO[A]"></a>
+      <a id="liftConnection[A](Connection,ConnectionIO[A]):RefIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">liftConnection</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.Connection">Connection</span></span>, <span name="k">k: <a href="connection$.html#ConnectionIO[A]=scalaz.Free.FreeC[doobie.free.connection.ConnectionOp,A]" class="extmbr" name="doobie.free.connection.ConnectionIO">ConnectionIO</a>[<span class="extype" name="doobie.free.ref.liftConnection.A">A</span>]</span>)</span><span class="result">: <a href="#RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" class="extmbr" name="doobie.free.ref.RefIO">RefIO</a>[<span class="extype" name="doobie.free.ref.liftConnection.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@liftConnection[A](s:java.sql.Connection,k:doobie.free.connection.ConnectionIO[A]):doobie.free.ref.RefIO[A]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.free.ref#liftDatabaseMetaData" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Lifting)">
+      <a id="liftDatabaseMetaData[A](s:java.sql.DatabaseMetaData,k:doobie.free.databasemetadata.DatabaseMetaDataIO[A]):doobie.free.ref.RefIO[A]"></a>
+      <a id="liftDatabaseMetaData[A](DatabaseMetaData,DatabaseMetaDataIO[A]):RefIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">liftDatabaseMetaData</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.DatabaseMetaData">DatabaseMetaData</span></span>, <span name="k">k: <a href="databasemetadata$.html#DatabaseMetaDataIO[A]=scalaz.Free.FreeC[doobie.free.databasemetadata.DatabaseMetaDataOp,A]" class="extmbr" name="doobie.free.databasemetadata.DatabaseMetaDataIO">DatabaseMetaDataIO</a>[<span class="extype" name="doobie.free.ref.liftDatabaseMetaData.A">A</span>]</span>)</span><span class="result">: <a href="#RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" class="extmbr" name="doobie.free.ref.RefIO">RefIO</a>[<span class="extype" name="doobie.free.ref.liftDatabaseMetaData.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@liftDatabaseMetaData[A](s:java.sql.DatabaseMetaData,k:doobie.free.databasemetadata.DatabaseMetaDataIO[A]):doobie.free.ref.RefIO[A]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.free.ref#liftDriver" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Lifting)">
+      <a id="liftDriver[A](s:java.sql.Driver,k:doobie.free.driver.DriverIO[A]):doobie.free.ref.RefIO[A]"></a>
+      <a id="liftDriver[A](Driver,DriverIO[A]):RefIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">liftDriver</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.Driver">Driver</span></span>, <span name="k">k: <a href="driver$.html#DriverIO[A]=scalaz.Free.FreeC[doobie.free.driver.DriverOp,A]" class="extmbr" name="doobie.free.driver.DriverIO">DriverIO</a>[<span class="extype" name="doobie.free.ref.liftDriver.A">A</span>]</span>)</span><span class="result">: <a href="#RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" class="extmbr" name="doobie.free.ref.RefIO">RefIO</a>[<span class="extype" name="doobie.free.ref.liftDriver.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@liftDriver[A](s:java.sql.Driver,k:doobie.free.driver.DriverIO[A]):doobie.free.ref.RefIO[A]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.free.ref#liftNClob" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Lifting)">
+      <a id="liftNClob[A](s:java.sql.NClob,k:doobie.free.nclob.NClobIO[A]):doobie.free.ref.RefIO[A]"></a>
+      <a id="liftNClob[A](NClob,NClobIO[A]):RefIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">liftNClob</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.NClob">NClob</span></span>, <span name="k">k: <a href="nclob$.html#NClobIO[A]=scalaz.Free.FreeC[doobie.free.nclob.NClobOp,A]" class="extmbr" name="doobie.free.nclob.NClobIO">NClobIO</a>[<span class="extype" name="doobie.free.ref.liftNClob.A">A</span>]</span>)</span><span class="result">: <a href="#RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" class="extmbr" name="doobie.free.ref.RefIO">RefIO</a>[<span class="extype" name="doobie.free.ref.liftNClob.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@liftNClob[A](s:java.sql.NClob,k:doobie.free.nclob.NClobIO[A]):doobie.free.ref.RefIO[A]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.free.ref#liftPreparedStatement" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Lifting)">
+      <a id="liftPreparedStatement[A](s:java.sql.PreparedStatement,k:doobie.free.preparedstatement.PreparedStatementIO[A]):doobie.free.ref.RefIO[A]"></a>
+      <a id="liftPreparedStatement[A](PreparedStatement,PreparedStatementIO[A]):RefIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">liftPreparedStatement</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.PreparedStatement">PreparedStatement</span></span>, <span name="k">k: <a href="preparedstatement$.html#PreparedStatementIO[A]=scalaz.Free.FreeC[doobie.free.preparedstatement.PreparedStatementOp,A]" class="extmbr" name="doobie.free.preparedstatement.PreparedStatementIO">PreparedStatementIO</a>[<span class="extype" name="doobie.free.ref.liftPreparedStatement.A">A</span>]</span>)</span><span class="result">: <a href="#RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" class="extmbr" name="doobie.free.ref.RefIO">RefIO</a>[<span class="extype" name="doobie.free.ref.liftPreparedStatement.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@liftPreparedStatement[A](s:java.sql.PreparedStatement,k:doobie.free.preparedstatement.PreparedStatementIO[A]):doobie.free.ref.RefIO[A]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.free.ref#liftResultSet" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Lifting)">
+      <a id="liftResultSet[A](s:java.sql.ResultSet,k:doobie.free.resultset.ResultSetIO[A]):doobie.free.ref.RefIO[A]"></a>
+      <a id="liftResultSet[A](ResultSet,ResultSetIO[A]):RefIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">liftResultSet</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.ResultSet">ResultSet</span></span>, <span name="k">k: <a href="resultset$.html#ResultSetIO[A]=scalaz.Free.FreeC[doobie.free.resultset.ResultSetOp,A]" class="extmbr" name="doobie.free.resultset.ResultSetIO">ResultSetIO</a>[<span class="extype" name="doobie.free.ref.liftResultSet.A">A</span>]</span>)</span><span class="result">: <a href="#RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" class="extmbr" name="doobie.free.ref.RefIO">RefIO</a>[<span class="extype" name="doobie.free.ref.liftResultSet.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@liftResultSet[A](s:java.sql.ResultSet,k:doobie.free.resultset.ResultSetIO[A]):doobie.free.ref.RefIO[A]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.free.ref#liftSQLData" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Lifting)">
+      <a id="liftSQLData[A](s:java.sql.SQLData,k:doobie.free.sqldata.SQLDataIO[A]):doobie.free.ref.RefIO[A]"></a>
+      <a id="liftSQLData[A](SQLData,SQLDataIO[A]):RefIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">liftSQLData</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.SQLData">SQLData</span></span>, <span name="k">k: <a href="sqldata$.html#SQLDataIO[A]=scalaz.Free.FreeC[doobie.free.sqldata.SQLDataOp,A]" class="extmbr" name="doobie.free.sqldata.SQLDataIO">SQLDataIO</a>[<span class="extype" name="doobie.free.ref.liftSQLData.A">A</span>]</span>)</span><span class="result">: <a href="#RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" class="extmbr" name="doobie.free.ref.RefIO">RefIO</a>[<span class="extype" name="doobie.free.ref.liftSQLData.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@liftSQLData[A](s:java.sql.SQLData,k:doobie.free.sqldata.SQLDataIO[A]):doobie.free.ref.RefIO[A]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.free.ref#liftSQLInput" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Lifting)">
+      <a id="liftSQLInput[A](s:java.sql.SQLInput,k:doobie.free.sqlinput.SQLInputIO[A]):doobie.free.ref.RefIO[A]"></a>
+      <a id="liftSQLInput[A](SQLInput,SQLInputIO[A]):RefIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">liftSQLInput</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.SQLInput">SQLInput</span></span>, <span name="k">k: <a href="sqlinput$.html#SQLInputIO[A]=scalaz.Free.FreeC[doobie.free.sqlinput.SQLInputOp,A]" class="extmbr" name="doobie.free.sqlinput.SQLInputIO">SQLInputIO</a>[<span class="extype" name="doobie.free.ref.liftSQLInput.A">A</span>]</span>)</span><span class="result">: <a href="#RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" class="extmbr" name="doobie.free.ref.RefIO">RefIO</a>[<span class="extype" name="doobie.free.ref.liftSQLInput.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@liftSQLInput[A](s:java.sql.SQLInput,k:doobie.free.sqlinput.SQLInputIO[A]):doobie.free.ref.RefIO[A]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.free.ref#liftSQLOutput" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Lifting)">
+      <a id="liftSQLOutput[A](s:java.sql.SQLOutput,k:doobie.free.sqloutput.SQLOutputIO[A]):doobie.free.ref.RefIO[A]"></a>
+      <a id="liftSQLOutput[A](SQLOutput,SQLOutputIO[A]):RefIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">liftSQLOutput</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.SQLOutput">SQLOutput</span></span>, <span name="k">k: <a href="sqloutput$.html#SQLOutputIO[A]=scalaz.Free.FreeC[doobie.free.sqloutput.SQLOutputOp,A]" class="extmbr" name="doobie.free.sqloutput.SQLOutputIO">SQLOutputIO</a>[<span class="extype" name="doobie.free.ref.liftSQLOutput.A">A</span>]</span>)</span><span class="result">: <a href="#RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" class="extmbr" name="doobie.free.ref.RefIO">RefIO</a>[<span class="extype" name="doobie.free.ref.liftSQLOutput.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@liftSQLOutput[A](s:java.sql.SQLOutput,k:doobie.free.sqloutput.SQLOutputIO[A]):doobie.free.ref.RefIO[A]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.free.ref#liftStatement" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Lifting)">
+      <a id="liftStatement[A](s:java.sql.Statement,k:doobie.free.statement.StatementIO[A]):doobie.free.ref.RefIO[A]"></a>
+      <a id="liftStatement[A](Statement,StatementIO[A]):RefIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">liftStatement</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.Statement">Statement</span></span>, <span name="k">k: <a href="statement$.html#StatementIO[A]=scalaz.Free.FreeC[doobie.free.statement.StatementOp,A]" class="extmbr" name="doobie.free.statement.StatementIO">StatementIO</a>[<span class="extype" name="doobie.free.ref.liftStatement.A">A</span>]</span>)</span><span class="result">: <a href="#RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" class="extmbr" name="doobie.free.ref.RefIO">RefIO</a>[<span class="extype" name="doobie.free.ref.liftStatement.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@liftStatement[A](s:java.sql.Statement,k:doobie.free.statement.StatementIO[A]):doobie.free.ref.RefIO[A]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p>
+    </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ne(x$1:AnyRef):Boolean"></a>
+      <a id="ne(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notify():Unit"></a>
+      <a id="notify():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@notify():Unit" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notifyAll" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notifyAll():Unit"></a>
+      <a id="notifyAll():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@notifyAll():Unit" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="doobie.free.ref#setObject" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Primitives)">
+      <a id="setObject(a:Object):doobie.free.ref.RefIO[Unit]"></a>
+      <a id="setObject(AnyRef):RefIO[Unit]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setObject</span><span class="params">(<span name="a">a: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <a href="#RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" class="extmbr" name="doobie.free.ref.RefIO">RefIO</a>[<span class="extype" name="scala.Unit">Unit</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@setObject(a:Object):doobie.free.ref.RefIO[Unit]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p>
+    </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
+      <a id="synchronized[T0](⇒T0):T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#toString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toString():String"></a>
+      <a id="toString():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@toString():String" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait():Unit"></a>
+      <a id="wait():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@wait():Unit" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long,x$2:Int):Unit"></a>
+      <a id="wait(Long,Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long):Unit"></a>
+      <a id="wait(Long):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.ref$@wait(x$1:Long):Unit" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Algebra">
+              <h3>Algebra</h3>
+              
+            </div><div class="group" name="Constructors (Lifting)">
+              <h3>Constructors (Lifting)</h3>
+              
+            </div><div class="group" name="Constructors (Primitives)">
+              <h3>Constructors (Primitives)</h3>
+              
+            </div><div class="group" name="Typeclass Instances">
+              <h3>Typeclass Instances</h3>
+              
+            </div><div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>

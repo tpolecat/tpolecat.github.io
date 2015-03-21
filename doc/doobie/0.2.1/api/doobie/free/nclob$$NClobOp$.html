@@ -1,0 +1,965 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>NClobOp - doobie.free.nclob.NClobOp</title>
+          <meta name="description" content="NClobOp - doobie.free.nclob.NClobOp" />
+          <meta name="keywords" content="NClobOp doobie.free.nclob.NClobOp" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../lib/template.js"></script>
+      <script type="text/javascript" src="../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../index.html';
+            var hash = 'doobie.free.nclob$$NClobOp$';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="value">
+      <div id="definition">
+        <a href="nclob$$NClobOp.html" title="See companion trait"><img src="../../lib/object_to_trait_big.png" /></a>
+        <p id="owner"><a href="../package.html" class="extype" name="doobie">doobie</a>.<a href="package.html" class="extype" name="doobie.free">free</a>.<a href="nclob$.html" class="extype" name="doobie.free.nclob">nclob</a></p>
+        <h1><a href="nclob$$NClobOp.html" title="See companion trait">NClobOp</a></h1><h3><span class="morelinks"><div>
+            Related Docs:
+            <a href="nclob$$NClobOp.html" title="See companion trait">trait NClobOp</a>
+            | <a href="nclob$.html" class="extype" name="doobie.free.nclob">package nclob</a>
+          </div></span></h3><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <span class="name">NClobOp</span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Module of constructors for <code>NClobOp</code>. These are rarely useful outside of the implementation;
+prefer the smart constructors provided by the <code>nclob</code> module.</p></div><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/tpolecat/doobie/tree/0.2.1/core/src/main/scala/doobie/free/nclob.scala" target="_blank">nclob.scala</a></dd></dl><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="doobie.free.nclob.NClobOp"><span>NClobOp</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show all</span></li>
+            </ol>
+            <a href="http://docs.scala-lang.org/overviews/scaladoc/usage.html#members" target="_blank">Learn more about member selection</a>
+          </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="doobie.free.nclob.NClobOp.Attempt" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Attempt[A]extendsnclob.NClobOp[scalaz.\/[Throwable,A]]withProductwithSerializable"></a>
+      <a id="Attempt[A]:Attempt[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$Attempt.html"><span class="name">Attempt</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="action">action: <a href="nclob$.html#NClobIO[A]=scalaz.Free.FreeC[doobie.free.nclob.NClobOp,A]" class="extmbr" name="doobie.free.nclob.NClobIO">NClobIO</a>[<span class="extype" name="doobie.free.nclob.NClobOp.Attempt.A">A</span>]</span>)</span><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="scalaz.\/">\/</span>[<span class="extype" name="scala.Throwable">Throwable</span>, <span class="extype" name="doobie.free.nclob.NClobOp.Attempt.A">A</span>]] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@Attempt[A]extendsnclob.NClobOp[scalaz.\/[Throwable,A]]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.nclob.NClobOp.GetCharacterStream" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="GetCharacterStreamextendsnclob.NClobOp[java.io.Reader]withProductwithSerializable"></a>
+      <a id="GetCharacterStream:GetCharacterStream"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$GetCharacterStream.html"><span class="name">GetCharacterStream</span></a><span class="params">(<span name="a">a: <span class="extype" name="scala.Long">Long</span></span>, <span name="b">b: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="java.io.Reader">Reader</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@GetCharacterStreamextendsnclob.NClobOp[java.io.Reader]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.nclob.NClobOp.GetSubString" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="GetSubStringextendsnclob.NClobOp[String]withProductwithSerializable"></a>
+      <a id="GetSubString:GetSubString"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$GetSubString.html"><span class="name">GetSubString</span></a><span class="params">(<span name="a">a: <span class="extype" name="scala.Long">Long</span></span>, <span name="b">b: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="java.lang.String">String</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@GetSubStringextendsnclob.NClobOp[String]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.nclob.NClobOp.LiftBlobIO" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="LiftBlobIO[A]extendsnclob.NClobOp[A]withProductwithSerializable"></a>
+      <a id="LiftBlobIO[A]:LiftBlobIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$LiftBlobIO.html"><span class="name">LiftBlobIO</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.Blob">Blob</span></span>, <span name="action">action: <a href="blob$.html#BlobIO[A]=scalaz.Free.FreeC[doobie.free.blob.BlobOp,A]" class="extmbr" name="doobie.free.blob.BlobIO">BlobIO</a>[<span class="extype" name="doobie.free.nclob.NClobOp.LiftBlobIO.A">A</span>]</span>)</span><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="doobie.free.nclob.NClobOp.LiftBlobIO.A">A</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@LiftBlobIO[A]extendsnclob.NClobOp[A]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.nclob.NClobOp.LiftCallableStatementIO" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="LiftCallableStatementIO[A]extendsnclob.NClobOp[A]withProductwithSerializable"></a>
+      <a id="LiftCallableStatementIO[A]:LiftCallableStatementIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$LiftCallableStatementIO.html"><span class="name">LiftCallableStatementIO</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.CallableStatement">CallableStatement</span></span>, <span name="action">action: <a href="callablestatement$.html#CallableStatementIO[A]=scalaz.Free.FreeC[doobie.free.callablestatement.CallableStatementOp,A]" class="extmbr" name="doobie.free.callablestatement.CallableStatementIO">CallableStatementIO</a>[<span class="extype" name="doobie.free.nclob.NClobOp.LiftCallableStatementIO.A">A</span>]</span>)</span><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="doobie.free.nclob.NClobOp.LiftCallableStatementIO.A">A</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@LiftCallableStatementIO[A]extendsnclob.NClobOp[A]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.nclob.NClobOp.LiftClobIO" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="LiftClobIO[A]extendsnclob.NClobOp[A]withProductwithSerializable"></a>
+      <a id="LiftClobIO[A]:LiftClobIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$LiftClobIO.html"><span class="name">LiftClobIO</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.Clob">Clob</span></span>, <span name="action">action: <a href="clob$.html#ClobIO[A]=scalaz.Free.FreeC[doobie.free.clob.ClobOp,A]" class="extmbr" name="doobie.free.clob.ClobIO">ClobIO</a>[<span class="extype" name="doobie.free.nclob.NClobOp.LiftClobIO.A">A</span>]</span>)</span><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="doobie.free.nclob.NClobOp.LiftClobIO.A">A</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@LiftClobIO[A]extendsnclob.NClobOp[A]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.nclob.NClobOp.LiftConnectionIO" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="LiftConnectionIO[A]extendsnclob.NClobOp[A]withProductwithSerializable"></a>
+      <a id="LiftConnectionIO[A]:LiftConnectionIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$LiftConnectionIO.html"><span class="name">LiftConnectionIO</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.Connection">Connection</span></span>, <span name="action">action: <a href="connection$.html#ConnectionIO[A]=scalaz.Free.FreeC[doobie.free.connection.ConnectionOp,A]" class="extmbr" name="doobie.free.connection.ConnectionIO">ConnectionIO</a>[<span class="extype" name="doobie.free.nclob.NClobOp.LiftConnectionIO.A">A</span>]</span>)</span><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="doobie.free.nclob.NClobOp.LiftConnectionIO.A">A</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@LiftConnectionIO[A]extendsnclob.NClobOp[A]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.nclob.NClobOp.LiftDatabaseMetaDataIO" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="LiftDatabaseMetaDataIO[A]extendsnclob.NClobOp[A]withProductwithSerializable"></a>
+      <a id="LiftDatabaseMetaDataIO[A]:LiftDatabaseMetaDataIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$LiftDatabaseMetaDataIO.html"><span class="name">LiftDatabaseMetaDataIO</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.DatabaseMetaData">DatabaseMetaData</span></span>, <span name="action">action: <a href="databasemetadata$.html#DatabaseMetaDataIO[A]=scalaz.Free.FreeC[doobie.free.databasemetadata.DatabaseMetaDataOp,A]" class="extmbr" name="doobie.free.databasemetadata.DatabaseMetaDataIO">DatabaseMetaDataIO</a>[<span class="extype" name="doobie.free.nclob.NClobOp.LiftDatabaseMetaDataIO.A">A</span>]</span>)</span><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="doobie.free.nclob.NClobOp.LiftDatabaseMetaDataIO.A">A</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@LiftDatabaseMetaDataIO[A]extendsnclob.NClobOp[A]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.nclob.NClobOp.LiftDriverIO" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="LiftDriverIO[A]extendsnclob.NClobOp[A]withProductwithSerializable"></a>
+      <a id="LiftDriverIO[A]:LiftDriverIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$LiftDriverIO.html"><span class="name">LiftDriverIO</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.Driver">Driver</span></span>, <span name="action">action: <a href="driver$.html#DriverIO[A]=scalaz.Free.FreeC[doobie.free.driver.DriverOp,A]" class="extmbr" name="doobie.free.driver.DriverIO">DriverIO</a>[<span class="extype" name="doobie.free.nclob.NClobOp.LiftDriverIO.A">A</span>]</span>)</span><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="doobie.free.nclob.NClobOp.LiftDriverIO.A">A</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@LiftDriverIO[A]extendsnclob.NClobOp[A]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.nclob.NClobOp.LiftPreparedStatementIO" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="LiftPreparedStatementIO[A]extendsnclob.NClobOp[A]withProductwithSerializable"></a>
+      <a id="LiftPreparedStatementIO[A]:LiftPreparedStatementIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$LiftPreparedStatementIO.html"><span class="name">LiftPreparedStatementIO</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.PreparedStatement">PreparedStatement</span></span>, <span name="action">action: <a href="preparedstatement$.html#PreparedStatementIO[A]=scalaz.Free.FreeC[doobie.free.preparedstatement.PreparedStatementOp,A]" class="extmbr" name="doobie.free.preparedstatement.PreparedStatementIO">PreparedStatementIO</a>[<span class="extype" name="doobie.free.nclob.NClobOp.LiftPreparedStatementIO.A">A</span>]</span>)</span><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="doobie.free.nclob.NClobOp.LiftPreparedStatementIO.A">A</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@LiftPreparedStatementIO[A]extendsnclob.NClobOp[A]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.nclob.NClobOp.LiftRefIO" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="LiftRefIO[A]extendsnclob.NClobOp[A]withProductwithSerializable"></a>
+      <a id="LiftRefIO[A]:LiftRefIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$LiftRefIO.html"><span class="name">LiftRefIO</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.Ref">Ref</span></span>, <span name="action">action: <a href="ref$.html#RefIO[A]=scalaz.Free.FreeC[doobie.free.ref.RefOp,A]" class="extmbr" name="doobie.free.ref.RefIO">RefIO</a>[<span class="extype" name="doobie.free.nclob.NClobOp.LiftRefIO.A">A</span>]</span>)</span><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="doobie.free.nclob.NClobOp.LiftRefIO.A">A</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@LiftRefIO[A]extendsnclob.NClobOp[A]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.nclob.NClobOp.LiftResultSetIO" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="LiftResultSetIO[A]extendsnclob.NClobOp[A]withProductwithSerializable"></a>
+      <a id="LiftResultSetIO[A]:LiftResultSetIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$LiftResultSetIO.html"><span class="name">LiftResultSetIO</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.ResultSet">ResultSet</span></span>, <span name="action">action: <a href="resultset$.html#ResultSetIO[A]=scalaz.Free.FreeC[doobie.free.resultset.ResultSetOp,A]" class="extmbr" name="doobie.free.resultset.ResultSetIO">ResultSetIO</a>[<span class="extype" name="doobie.free.nclob.NClobOp.LiftResultSetIO.A">A</span>]</span>)</span><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="doobie.free.nclob.NClobOp.LiftResultSetIO.A">A</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@LiftResultSetIO[A]extendsnclob.NClobOp[A]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.nclob.NClobOp.LiftSQLDataIO" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="LiftSQLDataIO[A]extendsnclob.NClobOp[A]withProductwithSerializable"></a>
+      <a id="LiftSQLDataIO[A]:LiftSQLDataIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$LiftSQLDataIO.html"><span class="name">LiftSQLDataIO</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.SQLData">SQLData</span></span>, <span name="action">action: <a href="sqldata$.html#SQLDataIO[A]=scalaz.Free.FreeC[doobie.free.sqldata.SQLDataOp,A]" class="extmbr" name="doobie.free.sqldata.SQLDataIO">SQLDataIO</a>[<span class="extype" name="doobie.free.nclob.NClobOp.LiftSQLDataIO.A">A</span>]</span>)</span><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="doobie.free.nclob.NClobOp.LiftSQLDataIO.A">A</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@LiftSQLDataIO[A]extendsnclob.NClobOp[A]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.nclob.NClobOp.LiftSQLInputIO" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="LiftSQLInputIO[A]extendsnclob.NClobOp[A]withProductwithSerializable"></a>
+      <a id="LiftSQLInputIO[A]:LiftSQLInputIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$LiftSQLInputIO.html"><span class="name">LiftSQLInputIO</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.SQLInput">SQLInput</span></span>, <span name="action">action: <a href="sqlinput$.html#SQLInputIO[A]=scalaz.Free.FreeC[doobie.free.sqlinput.SQLInputOp,A]" class="extmbr" name="doobie.free.sqlinput.SQLInputIO">SQLInputIO</a>[<span class="extype" name="doobie.free.nclob.NClobOp.LiftSQLInputIO.A">A</span>]</span>)</span><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="doobie.free.nclob.NClobOp.LiftSQLInputIO.A">A</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@LiftSQLInputIO[A]extendsnclob.NClobOp[A]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.nclob.NClobOp.LiftSQLOutputIO" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="LiftSQLOutputIO[A]extendsnclob.NClobOp[A]withProductwithSerializable"></a>
+      <a id="LiftSQLOutputIO[A]:LiftSQLOutputIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$LiftSQLOutputIO.html"><span class="name">LiftSQLOutputIO</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.SQLOutput">SQLOutput</span></span>, <span name="action">action: <a href="sqloutput$.html#SQLOutputIO[A]=scalaz.Free.FreeC[doobie.free.sqloutput.SQLOutputOp,A]" class="extmbr" name="doobie.free.sqloutput.SQLOutputIO">SQLOutputIO</a>[<span class="extype" name="doobie.free.nclob.NClobOp.LiftSQLOutputIO.A">A</span>]</span>)</span><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="doobie.free.nclob.NClobOp.LiftSQLOutputIO.A">A</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@LiftSQLOutputIO[A]extendsnclob.NClobOp[A]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.nclob.NClobOp.LiftStatementIO" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="LiftStatementIO[A]extendsnclob.NClobOp[A]withProductwithSerializable"></a>
+      <a id="LiftStatementIO[A]:LiftStatementIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$LiftStatementIO.html"><span class="name">LiftStatementIO</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: <span class="extype" name="java.sql.Statement">Statement</span></span>, <span name="action">action: <a href="statement$.html#StatementIO[A]=scalaz.Free.FreeC[doobie.free.statement.StatementOp,A]" class="extmbr" name="doobie.free.statement.StatementIO">StatementIO</a>[<span class="extype" name="doobie.free.nclob.NClobOp.LiftStatementIO.A">A</span>]</span>)</span><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="doobie.free.nclob.NClobOp.LiftStatementIO.A">A</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@LiftStatementIO[A]extendsnclob.NClobOp[A]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.nclob.NClobOp.Position" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Positionextendsnclob.NClobOp[Long]withProductwithSerializable"></a>
+      <a id="Position:Position"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$Position.html"><span class="name">Position</span></a><span class="params">(<span name="a">a: <span class="extype" name="java.lang.String">String</span></span>, <span name="b">b: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="scala.Long">Long</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@Positionextendsnclob.NClobOp[Long]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.nclob.NClobOp.Position1" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Position1extendsnclob.NClobOp[Long]withProductwithSerializable"></a>
+      <a id="Position1:Position1"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$Position1.html"><span class="name">Position1</span></a><span class="params">(<span name="a">a: <span class="extype" name="java.sql.Clob">Clob</span></span>, <span name="b">b: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="scala.Long">Long</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@Position1extendsnclob.NClobOp[Long]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.nclob.NClobOp.Pure" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Pure[A]extendsnclob.NClobOp[A]withProductwithSerializable"></a>
+      <a id="Pure[A]:Pure[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$Pure.html"><span class="name">Pure</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="a">a: () ⇒ <span class="extype" name="doobie.free.nclob.NClobOp.Pure.A">A</span></span>)</span><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="doobie.free.nclob.NClobOp.Pure.A">A</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@Pure[A]extendsnclob.NClobOp[A]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.nclob.NClobOp.SetAsciiStream" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="SetAsciiStreamextendsnclob.NClobOp[java.io.OutputStream]withProductwithSerializable"></a>
+      <a id="SetAsciiStream:SetAsciiStream"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$SetAsciiStream.html"><span class="name">SetAsciiStream</span></a><span class="params">(<span name="a">a: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="java.io.OutputStream">OutputStream</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@SetAsciiStreamextendsnclob.NClobOp[java.io.OutputStream]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.nclob.NClobOp.SetCharacterStream" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="SetCharacterStreamextendsnclob.NClobOp[java.io.Writer]withProductwithSerializable"></a>
+      <a id="SetCharacterStream:SetCharacterStream"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$SetCharacterStream.html"><span class="name">SetCharacterStream</span></a><span class="params">(<span name="a">a: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="java.io.Writer">Writer</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@SetCharacterStreamextendsnclob.NClobOp[java.io.Writer]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.nclob.NClobOp.SetString" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="SetStringextendsnclob.NClobOp[Int]withProductwithSerializable"></a>
+      <a id="SetString:SetString"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$SetString.html"><span class="name">SetString</span></a><span class="params">(<span name="a">a: <span class="extype" name="scala.Long">Long</span></span>, <span name="b">b: <span class="extype" name="java.lang.String">String</span></span>, <span name="c">c: <span class="extype" name="scala.Int">Int</span></span>, <span name="d">d: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="scala.Int">Int</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@SetStringextendsnclob.NClobOp[Int]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.nclob.NClobOp.SetString1" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="SetString1extendsnclob.NClobOp[Int]withProductwithSerializable"></a>
+      <a id="SetString1:SetString1"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$SetString1.html"><span class="name">SetString1</span></a><span class="params">(<span name="a">a: <span class="extype" name="scala.Long">Long</span></span>, <span name="b">b: <span class="extype" name="java.lang.String">String</span></span>)</span><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="scala.Int">Int</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@SetString1extendsnclob.NClobOp[Int]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.nclob.NClobOp.Truncate" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Truncateextendsnclob.NClobOp[Unit]withProductwithSerializable"></a>
+      <a id="Truncate:Truncate"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$Truncate.html"><span class="name">Truncate</span></a><span class="params">(<span name="a">a: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="scala.Unit">Unit</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@Truncateextendsnclob.NClobOp[Unit]withProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="scala.AnyRef#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="!=(x$1:Any):Boolean"></a>
+      <a id="!=(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@!=(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef###" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="##():Int"></a>
+      <a id="##():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@##():Int" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#==" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="==(x$1:Any):Boolean"></a>
+      <a id="==(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@==(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="doobie.free.nclob.NClobOp.Free" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Free"></a>
+      <a id="Free:Free"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$Free$.html"><span class="name">Free</span></a><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="scala.Unit">Unit</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@Free" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.nclob.NClobOp.GetAsciiStream" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="GetAsciiStream"></a>
+      <a id="GetAsciiStream:GetAsciiStream"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$GetAsciiStream$.html"><span class="name">GetAsciiStream</span></a><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="java.io.InputStream">InputStream</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@GetAsciiStream" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.nclob.NClobOp.GetCharacterStream1" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="GetCharacterStream1"></a>
+      <a id="GetCharacterStream1:GetCharacterStream1"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$GetCharacterStream1$.html"><span class="name">GetCharacterStream1</span></a><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="java.io.Reader">Reader</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@GetCharacterStream1" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.nclob.NClobOp.Length" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Length"></a>
+      <a id="Length:Length"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$$NClobOp$$Length$.html"><span class="name">Length</span></a><span class="result"> extends <a href="nclob$$NClobOp.html" class="extype" name="doobie.free.nclob.NClobOp">NClobOp</a>[<span class="extype" name="scala.Long">Long</span>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@Length" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      
+    </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asInstanceOf[T0]:T0"></a>
+      <a id="asInstanceOf[T0]:T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@asInstanceOf[T0]:T0" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clone():Object"></a>
+      <a id="clone():AnyRef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clone</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@clone():Object" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.CloneNotSupportedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="eq(x$1:AnyRef):Boolean"></a>
+      <a id="eq(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#equals" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="equals(x$1:Any):Boolean"></a>
+      <a id="equals(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@equals(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="finalize():Unit"></a>
+      <a id="finalize():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@finalize():Unit" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="symbol">classOf[java.lang.Throwable]</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getClass():Class[_]"></a>
+      <a id="getClass():Class[_]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@getClass():Class[_]" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="hashCode():Int"></a>
+      <a id="hashCode():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@hashCode():Int" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ne(x$1:AnyRef):Boolean"></a>
+      <a id="ne(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notify():Unit"></a>
+      <a id="notify():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@notify():Unit" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notifyAll" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notifyAll():Unit"></a>
+      <a id="notifyAll():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@notifyAll():Unit" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
+      <a id="synchronized[T0](⇒T0):T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#toString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toString():String"></a>
+      <a id="toString():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@toString():String" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait():Unit"></a>
+      <a id="wait():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@wait():Unit" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long,x$2:Int):Unit"></a>
+      <a id="wait(Long,Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long):Unit"></a>
+      <a id="wait(Long):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.nclob$$NClobOp$@wait(x$1:Long):Unit" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>
