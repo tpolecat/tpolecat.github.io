@@ -10,7 +10,7 @@ In this chapter we discuss the extended support that **doobie** offers for users
 libraryDependencies += "org.tpolecat" %% "doobie-contrib-postgresql" % "0.2.2"
 ```
 
-This library pulls in [PostgreSQL JDBC Driver 9.3](https://jdbc.postgresql.org/documentation/93/index.html) as a transitive dependency.
+This library pulls in [PostgreSQL JDBC Driver 9.4](https://jdbc.postgresql.org/documentation/94/index.html) as a transitive dependency.
 
 ### Setting Up
 
@@ -154,7 +154,36 @@ In addition to the general types above, **doobie** provides mappings for the fol
 
 ### Extended Error Handling
 
-A complete table of SQLSTATE values is provided in the `doobie.contrib.postgresql.sqlstate` module, and recovery combinators for each of these (`onUniqueViolation` for example) are provided in `doobie.contrib.postgresql.syntax`. 
+A complete table of SQLSTATE values is provided in the `doobie.contrib.postgresql.sqlstate` module. Recovery combinators for each of these states (`onUniqueViolation` for example) are provided in `doobie.contrib.postgresql.syntax`.
+
+```scala
+scala> import doobie.contrib.postgresql.sqlstate, doobie.contrib.postgresql.syntax._
+import doobie.contrib.postgresql.sqlstate
+import doobie.contrib.postgresql.syntax._
+
+scala> val p = sql"oops".query[String].unique // this won't work
+p: doobie.hi.ConnectionIO[String] = Gosub()
+
+scala> p.attempt.quick.run // attempt provided by Catchable instance
+  -\/(org.postgresql.util.PSQLException: ERROR: syntax error at or near "oops"
+  Position: 1)
+
+scala> p.attemptSqlState.quick.run // this catches only SQL exceptions
+  -\/(SqlState(42601))
+
+scala> p.attemptSomeSqlState { case SqlState("42601") => "caught!" } .quick.run // catch it
+  -\/(caught!)
+
+scala> p.attemptSomeSqlState { case sqlstate.class42.SYNTAX_ERROR => "caught!" } .quick.run // same, w/constant
+  -\/(caught!)
+
+scala> p.exceptSomeSqlState { case sqlstate.class42.SYNTAX_ERROR => "caught!".point[ConnectionIO] } .quick.run // recover
+  caught!
+
+scala> p.onSyntaxError("caught!".point[ConnectionIO]).quick.run // using recovery combinator
+  caught!
+```
+
 
 ### Server-Side Statements
 
