@@ -105,7 +105,7 @@ Now it compiles as a column value and as a `Composite` that maps to a *single* c
 
 ```scala
 scala> sql"select * from person where id = $pid"
-res10: doobie.syntax.string.SqlInterpolator#Builder[shapeless.::[PersonId,shapeless.HNil]] = doobie.syntax.string$SqlInterpolator$Builder@5a4d26ac
+res10: doobie.syntax.string.SqlInterpolator#Builder[shapeless.::[PersonId,shapeless.HNil]] = doobie.syntax.string$SqlInterpolator$Builder@d5ceba7
 
 scala> Composite[PersonId].length
 res11: Int = 1
