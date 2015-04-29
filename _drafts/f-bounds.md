@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Talking About the "Current" Type in Scala
+title: Returning the "Current" Type in Scala
 tags: scala
 ---
 
@@ -8,13 +8,19 @@ A common question on the `#scala` IRC channel is
 
 > I have a type hierarchy ... how do I declare a supertype method that returns the "current" type?
 
-This question comes up a lot because Scala encourages immutability, and methods that return a modified copy of `this` are quite common. The closest thing to a "standard" approach (and the one used by stdlib collections for example) is to use an **F-bounded type**, which *mostly* works, but can't fully enforce the constraint we're after (it still takes some discipline and leaves room for error). A better approach in many cases is to use a **typeclass**, which solves the problem neatly and leaves little room for worry. We will examine the problem and both solutions.
+This question comes up a lot because Scala encourages immutability, so methods that return a modified copy of `this` are quite common. Making the return type of such methods sufficiently precise is tricky, and is the subject of this article.
+
+The closest thing to a "standard" approach (and the one used by stdlib collections, for example) is to use an **F-bounded type**, which *mostly* works, but can't fully enforce the constraint we're after (it still takes some discipline and leaves room for error). I must pause to offer a hat-tip to [@nuttycom](https://twitter.com/nuttycom) for his [prior work](http://logji.blogspot.com/2012/11/f-bounded-type-polymorphism-give-up-now.html) exploring the pitfalls of this approach.
+
+A better approach is to use a **typeclass**, which solves the problem neatly and leaves little room for worry. In fact it's worth considering abandoning subtype polymorphism altogether in these situations.
+
+We will examine the problem and both solutions, and finish up by exploring **heterogeneous collections** of these beasties, which involves some pleasantly fancy types. But first let's talk about...
 
 ### The Problem
 
 Say we have an open trait for pets, with an unknown number of implementations. Let's say every type of `Pet` has a name, as well as a method that returns an otherwise identical copy with a new name. 
 
-> **Our problem is this:** for any expression `x` with type `A <: Pet`, ensure that `x.renamed(...)` also has type `A`. To be clear: this is a *static* guarantee that we want, not a runtime property.
+> **Our problem is this:** for any expression `x` with some type `A <: Pet`, ensure that `x.renamed(...)` also has type `A`. To be clear: this is a *static* guarantee that we want, not a runtime property.
 
 Right. So here is our first attempt, and one implementation.
 
@@ -31,7 +37,7 @@ case class Fish(name: String, age: Int) extends Pet {
 
 In our `Fish` implementation `name` is implemented via a case class field, and the `renamed` method simply delegates to the generated `copy` method ... but note that it returns a `Fish` rather than a `Pet`. This is allowed because return types are in covariant position; it's always ok to return something **more specific** than what is promised.
 
-Just as a sanity check, we can create a `Fish` and rename it and all is well; the static type of the returned value is what we want. In simple cases this may be good enough, so keep in mind that this does work.
+Just as a sanity check, we can create a `Fish` and rename it and all is well; the static type of the returned value is what we want.
 
 ```scala
 scala> val a = Fish("Jimmy", 2)
@@ -49,7 +55,7 @@ case class Kitty(name: String, color: Color) {
 }
 ```
 
-We also run into problems trying to abstract over renaming. For example, this attempt at a general renaming mechanism fails to compile because the return type of `renamed` for an unknown `A <: Pet` is not specific enough; the best we can do is return `Pet`.
+We also run into problems trying to abstract over renaming. For example, this attempt at a general renaming method fails to compile because the return type of `renamed` for an arbitrary `A <: Pet` is not specific enough; the best we can do is return `Pet`.
 
 ```scala
 def esquire[A <: Pet](a: A): A = a.renamed(a.name + ", Esq.")
@@ -62,13 +68,13 @@ def esquire[A <: Pet](a: A): A = a.renamed(a.name + ", Esq.")
                                                  ^
 ```
 
-So this approach doesn't meet our stated goal of requiring that `renamed` return the same type, and we can't abstract over our renaming operation. So let's see what we can do if we make our types a bit fancier.
+So this approach doesn't meet our stated goal of requiring that `renamed` return the same type as its receiver, and we can't abstract over our renaming operation. So let's see what we can do if we make our types a bit fancier.
 
 
 
 ### F-Bounded Types
 
-An F-bounded type is parameterized over its own subtypes, which gives us a means to "pass" the implementing type as an argument that we can use in the trait definition. The self-referential nature of `Pet[A <: Pet[A]]` is puzzling when you first see it; if it doesn't click for you just keep on reading and it should start making more sense.
+An F-bounded type is **parameterized over its own subtypes**, which allows us to "pass" the implementing type as an argument to the superclass. The self-referential nature of `Pet[A <: Pet[A]]` is puzzling when you first see it; if it doesn't click for you just keep on reading and it should start making more sense.
 
 ```scala
 trait Pet[A <: Pet[A]] {
@@ -77,16 +83,16 @@ trait Pet[A <: Pet[A]] {
 }
 ```
 
-Ok, so any subtype of `Pet` needs to pass "itself" as a parameter.
+Ok, so any subtype of `Pet` needs to pass "itself" as a type argument.
 
 ```scala
-case class Fish(name: String, age: Int) extends Pet[Fish] {
+case class Fish(name: String, age: Int) extends Pet[Fish] { // note the type argument
   def renamed(newName: String) = copy(name = newName)
 }
 
 ```
 
-Again, all is well.
+And all is well.
 
 ```scala
 scala> val a = Fish("Jimmy", 2)
@@ -96,7 +102,7 @@ scala> val b = a.renamed("Bob")
 b: Fish = Fish(Bob,2)
 ```
 
-And now we **can** write our generic renaming method because we now have a more specific return type for `renamed`: any `Pet[A]` will return an `A`.
+This time we **can** write our generic renaming method because we now have a more specific return type for `renamed`: any `Pet[A]` will return an `A`.
 
 ```scala
 scala> def esquire[A <: Pet[A]](a: A): A = a.renamed(a.name + ", Esq.")
@@ -140,7 +146,7 @@ case class Kitty(name: String, color: Color) extends Pet[Fish] {
                                                             ^
 ```
 
-This boxes us in considerably, and we may think we have won. But alas it turns out that we can still lie about the "current" type by extending another type that correctly meets the constraint. Subtyping has provided an unwanted loophole.
+This boxes us in considerably, and we may think we have won. But alas it turns out that we can still lie about the "current" type by extending *another* type that correctly meets the constraint. Subtyping has provided an unwanted loophole.
 
 ```scala
 class Mammal(val name: String) extends Pet[Mammal] {
@@ -171,7 +177,7 @@ trait Rename[A <: Pet] {
 We can now define `Fish` and an *instance* of `Rename[Fish]`. We make the instance implicit and place it on the companion object so it will be available during implicit search.
 
 ```scala
-case class Fish(name: String, age: Int) extends Pete
+case class Fish(name: String, age: Int) extends Pet
 
 object Fish {
   implicit val FishRename = new Rename[Fish] {
@@ -183,8 +189,8 @@ object Fish {
 And we can use an implicit class to make this operation act like a method as before. With this extra help any `Pet` with a `Rename` intance will automatically gain a `renamed` method by implicit conversion.
 
 ```scala
-implicit class RenameOps[A <: Pet](a: A)(implicit ev: Rename[A]) {
-  def renamed(newName: String) = ev.renamed(a, newName)
+implicit class PetOps[A <: Pet](a: A) {
+  def renamed(newName: String)(implicit ev: Rename[A]) = ev.renamed(a, newName)
 }
 ```
 
@@ -212,13 +218,117 @@ blah blah awkward splitting of concerns
 
 ### How about *only* a Typeclass?
 
+```scala
+trait Pet[A] {
+  def name(a: A): String
+  def renamed(a: A, newName: String): A
+}
+
+implicit class PetOps[A](a: A)(implicit ev: Pet[A]) {
+  def name = ev.name(a)
+  def renamed(newName: String): A = ev.renamed(a, newName)
+}
+```
 
 
-### How do we deal with collections?
+```scala
+case class Fish(name: String, age: Int)
 
-existentials
+object Fish {
+  implicit val FishPet = new Pet[Fish] {
+    def name(a: Fish) = a.name
+    def renamed(a: Fish, newName: String) = a.copy(name = newName)
+  }
+}
+```
 
-hlists
+```scala
+scala> Fish("Bob", 42).renamed("Steve")
+res0: Fish = Fish(Steve,42)
+```  
+
+
+### Bonus Round: How do we deal with collections?
+
+An interesting exercise is to consider the case where we have a heterogeneous collection of pets. Specifically, how might we map `esquire` over a `List[Pet]`?
+
+
+```scala
+trait Pet[A <: Pet[A]] {
+  def name: String
+  def renamed(newName: String): A 
+}
+
+case class Fish(name: String, age: Int) extends Pet[Fish] { 
+  def renamed(newName: String) = copy(name = newName)
+}
+
+case class Kitty(name: String, color: Color) extends Pet[Kitty] {
+  def renamed(newName: String) = copy(name = newName)
+}
+
+def esquire[A <: Pet[A]](a: A): A = a.renamed(a.name + ", Esq.")
+
+val bob  = Fish("Bob", 12)
+val thor = Kitty("Thor", Color.ORANGE)
+```
+
+```scala
+type AnyPet = A forSome { type A <: Pet[A] }
+```
+
+```
+scala> List[AnyPet](bob, thor).map { case a => esquire(a) }
+res0: List[A forSome { type A <: Pet[A] }] = List(Fish(Bob, Esq.,12), Kitty(Thor, Esq.,java.awt.Color[r=255,g=200,b=0]))
+```
+
+> **Pro Tip:** use pattern matching to preserve existentials.
+
+```scala
+trait Pet[A] {
+  def name(a: A): String
+  def renamed(a: A, newName: String): A
+}
+
+implicit class PetOps[A](a: A)(implicit ev: Pet[A]) {
+  def name = ev.name(a)
+  def renamed(newName: String): A = ev.renamed(a, newName)
+}
+
+case class Fish(name: String, age: Int)
+
+object Fish {
+  implicit object FishPet extends Pet[Fish] {
+    def name(a: Fish) = a.name
+    def renamed(a: Fish, newName: String) = a.copy(name = newName)
+  }
+}
+
+case class Kitty(name: String, color: Color)
+
+object Kitty {
+  implicit object KittyPet extends Pet[Kitty] {
+    def name(a: Kitty) = a.name
+    def renamed(a: Kitty, newName: String) = a.copy(name = newName)
+  }
+}
+
+def esquire[A: Pet](a: A): A = a.renamed(a.name + ", Esq.")
+
+val bob  = Fish("Bob", 12)
+val thor = Kitty("Thor", Color.ORANGE)
+```
+
+
+```scala
+def sig[A: Pet](a: A): (A, Pet[A]) = (a, implicitly)
+```
+
+```
+scala> List[(A, Pet[A]) forSome { type A }](sig(bob), sig(thor)).map { case (p, r) => (esquire(p)(r), r) }
+warning: there was one feature warning; re-run with -feature for details
+res6: List[(A, Pet[A]) forSome { type A }] = List((Fish(Bob, Esq.,12),Fish$$anon$1@1b65f66), (Kitty(Thor, Esq.,java.awt.Color[r=255,g=200,b=0]),Kitty$$anon$2@4b140630))
+```
 
 ### Wrapping Up
 
