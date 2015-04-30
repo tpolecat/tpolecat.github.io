@@ -10,9 +10,9 @@ A common question on the `#scala` IRC channel is
 
 This question comes up a lot because Scala encourages immutability, so methods that return a modified copy of `this` are quite common. Making the return type of such methods sufficiently precise is tricky, and is the subject of this article.
 
-The closest thing to a "standard" approach (and the one used by stdlib collections, for example) is to use an **F-bounded type**, which *mostly* works, but can't fully enforce the constraint we're after (it still takes some discipline and leaves room for error). I must pause to offer a hat-tip to [@nuttycom](https://twitter.com/nuttycom) for his [prior work](http://logji.blogspot.com/2012/11/f-bounded-type-polymorphism-give-up-now.html) exploring the pitfalls of this approach.
+The closest thing to a "standard" approach (as seen in stdlib collections, for example) is to use an **F-bounded type**, which *mostly* works, but cannot fully enforce the constraint we're after (it still takes some discipline and leaves room for error). Shout-out here to [@nuttycom](https://twitter.com/nuttycom) for his [prior work](http://logji.blogspot.com/2012/11/f-bounded-type-polymorphism-give-up-now.html) exploring the pitfalls of this approach.
 
-A better approach is to use a **typeclass**, which solves the problem neatly and leaves little room for worry. In fact it's worth considering abandoning subtype polymorphism altogether in these situations.
+A better strategy is to use a **typeclass**, which solves the problem neatly and leaves little room for worry. In fact it's worth considering abandoning subtype polymorphism altogether in these situations.
 
 We will examine the problem and both solutions, and finish up by exploring **heterogeneous collections** of these beasties, which involves some pleasantly fancy types. But first let's talk about...
 
@@ -47,7 +47,7 @@ scala> val b = a.renamed("Bob")
 b: Fish = Fish(Bob,2)
 ```
 
-However a limitation of this approach is that our trait doesn't actually constrain the implementation very much; you are simply required to return a `Pet`, not necessarily the *same type* of pet. So here is a `Kitty` that turns into a `Fish` when you rename it.
+However a limitation of this approach is that our trait doesn't actually constrain the implementation very much; we are simply required to return a `Pet`, not necessarily the *same type* of pet. So here is a `Kitty` that turns into a `Fish` when we rename it.
 
 ```scala
 case class Kitty(name: String, color: Color) {
@@ -169,8 +169,8 @@ trait Pet {
   def name: String
 }
 
-trait Rename[A <: Pet] {
-  def renamed(a: A, newName: String): A
+trait Rename[A] {
+  def rename(a: A, newName: String): A
 }
 ```
 
@@ -189,8 +189,8 @@ object Fish {
 And we can use an implicit class to make this operation act like a method as before. With this extra help any `Pet` with a `Rename` intance will automatically gain a `renamed` method by implicit conversion.
 
 ```scala
-implicit class PetOps[A <: Pet](a: A) {
-  def renamed(newName: String)(implicit ev: Rename[A]) = ev.renamed(a, newName)
+implicit class RenameOps[A](a: A)(implicit ev: Rename[A]) {
+  def renamed(newName: String) = ev.renamed(a, newName)
 }
 ```
 
@@ -214,9 +214,13 @@ scala> esquire(a)
 res10: Fish = Fish(Jimmy, Esq.,2)e
 ```
 
-blah blah awkward splitting of concerns
+This is a **general strategy**. By identifying methods that require us to return the "current" type and moving them to a typeclass we can guarantee that our desired constraint is met. However it does have a bit of a smell: functionality is divided between trait and typeclass, and there is nothing requiring that all `Pet` implementations have a `Rename` instance (we had to specify both an upper bound *and* a context bound in `esquire` above).
+
+So what if we abandon the super-trait altogether?
 
 ### How about *only* a Typeclass?
+
+Consider the following implementation, where `Pet` is a typeclass with associated syntax. We have abandoned sutype polymorphism altogether and are defining pets via *ad-hoc* polymorphism: any type `A` can act as a `Pet`, given an instance of `Pet[A]`.
 
 ```scala
 trait Pet[A] {
@@ -230,6 +234,7 @@ implicit class PetOps[A](a: A)(implicit ev: Pet[A]) {
 }
 ```
 
+Here is our `Fish` class, now without an interesting superclass, and an implicit instance `Pet[Fish]` on its companion object.
 
 ```scala
 case class Fish(name: String, age: Int)
@@ -242,19 +247,33 @@ object Fish {
 }
 ```
 
+And the `renamed` method works by implicit application of `PetOps`.
+
 ```scala
 scala> Fish("Bob", 42).renamed("Steve")
 res0: Fish = Fish(Steve,42)
 ```  
 
+There is an informal conjecture that *ad-hoc* and parametric polymorphism are really all we need in a programming language; we can get along just fine without subtyping. Haskell is the prime example of such a language, and it's an interesting exercise to take this approach in Scala, or at least making it part of our design space. In my experience I have never regretted replacing a superclass with a typeclass.
+
+----
+
+This is probably a good place to end this post, but I'm going to press on a bit further. Because once we have answered the lead-in question at the top of the page, the inevitable next question is:
+
+> Ok cool, I have an F-bounded type (or a typeclass) working, but I can't figure out how to put a bunch of instances in a list without losing all my type information.
+
+So let's chase that down.
 
 ### Bonus Round: How do we deal with collections?
 
-An interesting exercise is to consider the case where we have a heterogeneous collection of pets. Specifically, how might we map `esquire` over a `List[Pet]`?
+An interesting exercise is to consider the case where we have a heterogeneous collection of pets. Specifically, how might we map `esquire` over a list of them? I should note that at least for me this is an academic exercise; I have never had to do this in real life.
 
+Let's consider the F-bounded case first. Here is our full implementation:
 
 ```scala
-trait Pet[A <: Pet[A]] {
+import java.awt.Color
+
+trait Pet[A <: Pet[A]] { this: A =>
   def name: String
   def renamed(newName: String): A 
 }
@@ -273,18 +292,21 @@ val bob  = Fish("Bob", 12)
 val thor = Kitty("Thor", Color.ORANGE)
 ```
 
-```scala
-type AnyPet = A forSome { type A <: Pet[A] }
-```
+Mapping `esquire` over a list containing both `bob` and `thor` is tricker than you might expect, but it *is* representable in Scala. You might want to **stop here** and try it out in the REPL (you can `:paste` the block above) ... `List(bob, thor).map(esquire)` is a reasonable place to start, although it doesn't come close to compiling.
 
-```
-scala> List[AnyPet](bob, thor).map { case a => esquire(a) }
-res0: List[A forSome { type A <: Pet[A] }] = List(Fish(Bob, Esq.,12), Kitty(Thor, Esq.,java.awt.Color[r=255,g=200,b=0]))
-```
+So it turns out that the properly quantified element type for such a list is `A forSome { A <: Pet[A] }`, meaning that each element is a distinct, properly f-bounded subtype of `Pet`. Furthermore, the type of the default η-expanded `esquire` is not precise enough; this is a rare case where `foo _` and `foo(_)` are not equivalent. In any case, behold:
 
-> **Pro Tip:** use pattern matching to preserve existentials.
 
 ```scala
+scala> List[A forSome { type A <: Pet[A] }](bob, thor).map(esquire(_))
+res18: List[A forSome { type A <: Pet[A] }] = List(Fish(Bob, Esq.,12), Kitty(Thor, Esq.,java.awt.Color[r=255,g=200,b=0]))
+```
+
+In the *ad-hoc* implementation we have a different problem. For reference, here is our full implementation.
+
+```scala
+import java.awt.Color
+
 trait Pet[A] {
   def name(a: A): String
   def renamed(a: A, newName: String): A
@@ -319,19 +341,40 @@ val bob  = Fish("Bob", 12)
 val thor = Kitty("Thor", Color.ORANGE)
 ```
 
+Here we have a challenge because it's not clear at all what the element type of a list containing `bob` and `thor` should be. They have no common supertype, and the existence of `Pet` instances is not something we can express as a type argument; `List[A: Pet]` is not a valid type.
+
+In order to map `esquire` over our list we must remember that it actually takes *two* arguments: an `A` and a `Pet[A]`. And indeed each list element will need to carry its `Pet` instance along. So the type of the list needs to be `(A, Pet[A]) forSome { type A }`, meaning that each element has a distinct type `A` but is paired with a corresponding `Pet` instance.
 
 ```scala
-def sig[A: Pet](a: A): (A, Pet[A]) = (a, implicitly)
+scala> val pets = List[(A, Pet[A]) forSome { type A }]((bob, implicitly[Pet[Fish]]), (thor, implicitly[Pet[Kitty]]))
+pets: List[(A, Pet[A]) forSome { type A }] = List((Fish(Bob,12),Fish$FishPet$@1d4c9cde), (Kitty(Thor,java.awt.Color[r=255,g=200,b=0]),Kitty$KittyPet$@31f63352))
 ```
 
+Mapping over this list should be easy, right?
+
+```scala
+scala> pets.map(p => esquire(p._1)(p._2))
+<console>:23: error: type mismatch;
+ found   : Pet[(some other)A(in value pets)]
+ required: Pet[A(in value pets)]
+              pets.map(p => esquire(p._1)(p._2))
+                                            ^
 ```
-scala> List[(A, Pet[A]) forSome { type A }](sig(bob), sig(thor)).map { case (p, r) => (esquire(p)(r), r) }
-warning: there was one feature warning; re-run with -feature for details
-res6: List[(A, Pet[A]) forSome { type A }] = List((Fish(Bob, Esq.,12),Fish$$anon$1@1b65f66), (Kitty(Thor, Esq.,java.awt.Color[r=255,g=200,b=0]),Kitty$$anon$2@4b140630))
+
+Uhhh. Okay? The problem here is that the connection between the types of `p._1` and `p._2` is lost in this context, so the compiler no longer knows that they line up correctly. The way to fix this, and **in general** the way to prevent the loss of existentials, is to use a pattern match.
+
+```scala
+scala> pets.map { case (a, pa)  => esquire(a)(pa) }
+res6: List[Any] = List(Fish(Bob, Esq.,12), Kitty(Thor, Esq.,java.awt.Color[r=255,g=200,b=0]))
 ```
+
+So there you go. You should be unsettled at this point. Sorry about that.
+
 
 ### Wrapping Up
 
+Right. So we have explored two ways to return the "current" type in Scala, touched on the tension between subtyping and *ad-hoc* polymorphism, and gotten slightly bloodied playing with existential types. I hope this answered some questions and opened new avenues of exploration.
 
+If you have any questions or comments, or wish to argue about anything above, please find me on IRC or Twitter.
 
 
