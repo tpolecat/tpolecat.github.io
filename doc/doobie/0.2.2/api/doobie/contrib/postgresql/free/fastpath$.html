@@ -1,0 +1,820 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>fastpath - doobie.contrib.postgresql.free.fastpath</title>
+          <meta name="description" content="fastpath - doobie.contrib.postgresql.free.fastpath" />
+          <meta name="keywords" content="fastpath doobie.contrib.postgresql.free.fastpath" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../../../index.html';
+            var hash = 'doobie.contrib.postgresql.free.fastpath$';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="value">
+      <div id="definition">
+        <img src="../../../../lib/object_big.png" />
+        <p id="owner"><a href="../../../package.html" class="extype" name="doobie">doobie</a>.<a href="../../package.html" class="extype" name="doobie.contrib">contrib</a>.<a href="../package.html" class="extype" name="doobie.contrib.postgresql">postgresql</a>.<a href="package.html" class="extype" name="doobie.contrib.postgresql.free">free</a></p>
+        <h1>fastpath</h1><h3><span class="morelinks"><div>Related Doc:
+            <a href="package.html" class="extype" name="doobie.contrib.postgresql.free">package free</a>
+          </div></span></h3><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fastpath</span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Algebra and free monad for primitive operations over a <code>org.postgresql.fastpath.Fastpath</code>. This is
+a low-level API that exposes lifecycle-managed JDBC objects directly and is intended mainly
+for library developers. End users will prefer a safer, higher-level API such as that provided
+in the <code>doobie.hi</code> package.</p><p><code>FastpathIO</code> is a free monad that must be run via an interpreter, most commonly via
+natural transformation of its underlying algebra <code>FastpathOp</code> to another monad via
+<code>Free.runFC</code>.</p><p>The library provides a natural transformation to <code>Kleisli[M, Fastpath, A]</code> for any
+exception-trapping (<code>Catchable</code>) and effect-capturing (<code>Capture</code>) monad <code>M</code>. Such evidence is
+provided for <code>Task</code>, <code>IO</code>, and stdlib <code>Future</code>; and <code>transK[M]</code> is provided as syntax.</p><pre><span class="cmt">// An action to run</span>
+<span class="kw">val</span> a: FastpathIO[Foo] = ...
+
+<span class="cmt">// A JDBC object</span>
+<span class="kw">val</span> s: Fastpath = ...
+
+<span class="cmt">// Unfolding into a Task</span>
+<span class="kw">val</span> ta: Task[A] = a.transK[Task].run(s)</pre></div><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/tpolecat/doobie/tree/v0.2.2/contrib/postgresql/src/main/scala/doobie/contrib/postgresql/free/fastpath.scala" target="_blank">fastpath.scala</a></dd></dl><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                <li class="group out"><span>Grouped</span></li>
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="doobie.contrib.postgresql.free.fastpath"><span>fastpath</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show all</span></li>
+            </ol>
+            <a href="http://docs.scala-lang.org/overviews/scaladoc/usage.html#members" target="_blank">Learn more about member selection</a>
+          </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="doobie.contrib.postgresql.free.fastpath.FastpathIO" visbl="pub" data-isabs="false" fullComment="no" group="Algebra">
+      <a id="FastpathIO[A]=scalaz.Free.FreeC[doobie.contrib.postgresql.free.fastpath.FastpathOp,A]"></a>
+      <a id="FastpathIO[A]:FastpathIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">type</span>
+      </span>
+      <span class="symbol">
+        <span class="name">FastpathIO</span><span class="tparams">[<span name="A">A</span>]</span><span class="result"> = <span class="extype" name="scalaz.Free">Free</span>[[x]<span class="extype" name="scalaz.Coyoneda">Coyoneda</span>[<a href="fastpath$$FastpathOp.html" class="extype" name="doobie.contrib.postgresql.free.fastpath.FastpathOp">FastpathOp</a>, <span class="extype" name="scalaz.Free.&lt;refinement&gt;.f.x">x</span>], <span class="extype" name="doobie.contrib.postgresql.free.fastpath.FastpathIO.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@FastpathIO[A]=scalaz.Free.FreeC[doobie.contrib.postgresql.free.fastpath.FastpathOp,A]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Free monad over a free functor of <a href="fastpath$$FastpathOp.html" class="extype" name="doobie.contrib.postgresql.free.fastpath.FastpathOp">FastpathOp</a>; abstractly, a computation that consumes
+a <code>org.postgresql.fastpath.Fastpath</code> and produces a value of type <code>A</code>.</p>
+    </li><li name="doobie.contrib.postgresql.free.fastpath.FastpathIOOps" visbl="pub" data-isabs="false" fullComment="no" group="Algebra">
+      <a id="FastpathIOOps[A]extendsAnyRef"></a>
+      <a id="FastpathIOOps[A]:FastpathIOOps[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="fastpath$$FastpathIOOps.html"><span class="name">FastpathIOOps</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@FastpathIOOps[A]extendsAnyRef" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Syntax for <code>FastpathIO</code>.</p>
+    </li><li name="doobie.contrib.postgresql.free.fastpath.FastpathOp" visbl="pub" data-isabs="true" fullComment="no" group="Algebra">
+      <a id="FastpathOp[A]extendsAnyRef"></a>
+      <a id="FastpathOp[A]:FastpathOp[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">sealed </span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="fastpath$$FastpathOp.html"><span class="name">FastpathOp</span></a><span class="tparams">[<span name="A">A</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@FastpathOp[A]extendsAnyRef" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Sum type of primitive operations over a <code>org.postgresql.fastpath.Fastpath</code>.</p>
+    </li></ol>
+            </div>
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="scala.AnyRef#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="!=(x$1:Any):Boolean"></a>
+      <a id="!=(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@!=(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef###" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="##():Int"></a>
+      <a id="##():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@##():Int" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#==" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="==(x$1:Any):Boolean"></a>
+      <a id="==(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@==(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="doobie.contrib.postgresql.free.fastpath#CaptureFastpathIO" visbl="pub" data-isabs="false" fullComment="no" group="Typeclass Instances">
+      <a id="CaptureFastpathIO:doobie.util.capture.Capture[doobie.contrib.postgresql.free.fastpath.FastpathIO]"></a>
+      <a id="CaptureFastpathIO:Capture[FastpathIO]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">CaptureFastpathIO</span><span class="result">: <a href="../../../util/capture$$Capture.html" class="extype" name="doobie.util.capture.Capture">Capture</a>[<a href="#FastpathIO[A]=scalaz.Free.FreeC[doobie.contrib.postgresql.free.fastpath.FastpathOp,A]" class="extmbr" name="doobie.contrib.postgresql.free.fastpath.FastpathIO">FastpathIO</a>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@CaptureFastpathIO:doobie.util.capture.Capture[doobie.contrib.postgresql.free.fastpath.FastpathIO]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Capture instance for <a href="#FastpathIO[A]=scalaz.Free.FreeC[doobie.contrib.postgresql.free.fastpath.FastpathOp,A]" class="extmbr" name="doobie.contrib.postgresql.free.fastpath.FastpathIO">FastpathIO</a>.</p>
+    </li><li name="doobie.contrib.postgresql.free.fastpath#CatchableFastpathIO" visbl="pub" data-isabs="false" fullComment="no" group="Typeclass Instances">
+      <a id="CatchableFastpathIO:scalaz.Catchable[doobie.contrib.postgresql.free.fastpath.FastpathIO]"></a>
+      <a id="CatchableFastpathIO:Catchable[FastpathIO]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">CatchableFastpathIO</span><span class="result">: <span class="extype" name="scalaz.Catchable">Catchable</span>[<a href="#FastpathIO[A]=scalaz.Free.FreeC[doobie.contrib.postgresql.free.fastpath.FastpathOp,A]" class="extmbr" name="doobie.contrib.postgresql.free.fastpath.FastpathIO">FastpathIO</a>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@CatchableFastpathIO:scalaz.Catchable[doobie.contrib.postgresql.free.fastpath.FastpathIO]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Catchable instance for <a href="#FastpathIO[A]=scalaz.Free.FreeC[doobie.contrib.postgresql.free.fastpath.FastpathOp,A]" class="extmbr" name="doobie.contrib.postgresql.free.fastpath.FastpathIO">FastpathIO</a>.</p>
+    </li><li name="doobie.contrib.postgresql.free.fastpath.FastpathOp" visbl="pub" data-isabs="false" fullComment="yes" group="Algebra">
+      <a id="FastpathOp"></a>
+      <a id="FastpathOp:FastpathOp"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="fastpath$$FastpathOp$.html"><span class="name">FastpathOp</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@FastpathOp" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Module of constructors for <code>FastpathOp</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Module of constructors for <code>FastpathOp</code>. These are rarely useful outside of the implementation;
+prefer the smart constructors provided by the <code>fastpath</code> module.</p></div></div>
+    </li><li name="doobie.contrib.postgresql.free.fastpath#MonadFastpathIO" visbl="pub" data-isabs="false" fullComment="no" group="Typeclass Instances">
+      <a id="MonadFastpathIO:scalaz.Monad[doobie.contrib.postgresql.free.fastpath.FastpathIO]"></a>
+      <a id="MonadFastpathIO:Monad[FastpathIO]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">MonadFastpathIO</span><span class="result">: <span class="extype" name="scalaz.Monad">Monad</span>[<a href="#FastpathIO[A]=scalaz.Free.FreeC[doobie.contrib.postgresql.free.fastpath.FastpathOp,A]" class="extmbr" name="doobie.contrib.postgresql.free.fastpath.FastpathIO">FastpathIO</a>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@MonadFastpathIO:scalaz.Monad[doobie.contrib.postgresql.free.fastpath.FastpathIO]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Monad instance for <a href="#FastpathIO[A]=scalaz.Free.FreeC[doobie.contrib.postgresql.free.fastpath.FastpathOp,A]" class="extmbr" name="doobie.contrib.postgresql.free.fastpath.FastpathIO">FastpathIO</a> (can't be inferred).</p>
+    </li><li name="doobie.contrib.postgresql.free.fastpath#addFunction" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Primitives)">
+      <a id="addFunction(a:String,b:Int):doobie.contrib.postgresql.free.fastpath.FastpathIO[Unit]"></a>
+      <a id="addFunction(String,Int):FastpathIO[Unit]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">addFunction</span><span class="params">(<span name="a">a: <span class="extype" name="java.lang.String">String</span></span>, <span name="b">b: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <a href="#FastpathIO[A]=scalaz.Free.FreeC[doobie.contrib.postgresql.free.fastpath.FastpathOp,A]" class="extmbr" name="doobie.contrib.postgresql.free.fastpath.FastpathIO">FastpathIO</a>[<span class="extype" name="scala.Unit">Unit</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@addFunction(a:String,b:Int):doobie.contrib.postgresql.free.fastpath.FastpathIO[Unit]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.contrib.postgresql.free.fastpath#addFunctions" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Primitives)">
+      <a id="addFunctions(a:java.sql.ResultSet):doobie.contrib.postgresql.free.fastpath.FastpathIO[Unit]"></a>
+      <a id="addFunctions(ResultSet):FastpathIO[Unit]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">addFunctions</span><span class="params">(<span name="a">a: <span class="extype" name="java.sql.ResultSet">ResultSet</span></span>)</span><span class="result">: <a href="#FastpathIO[A]=scalaz.Free.FreeC[doobie.contrib.postgresql.free.fastpath.FastpathOp,A]" class="extmbr" name="doobie.contrib.postgresql.free.fastpath.FastpathIO">FastpathIO</a>[<span class="extype" name="scala.Unit">Unit</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@addFunctions(a:java.sql.ResultSet):doobie.contrib.postgresql.free.fastpath.FastpathIO[Unit]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p>
+    </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asInstanceOf[T0]:T0"></a>
+      <a id="asInstanceOf[T0]:T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@asInstanceOf[T0]:T0" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="doobie.contrib.postgresql.free.fastpath#attempt" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Lifting)">
+      <a id="attempt[A](a:doobie.contrib.postgresql.free.fastpath.FastpathIO[A]):doobie.contrib.postgresql.free.fastpath.FastpathIO[scalaz.\/[Throwable,A]]"></a>
+      <a id="attempt[A](FastpathIO[A]):FastpathIO[\/[Throwable,A]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">attempt</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="a">a: <a href="#FastpathIO[A]=scalaz.Free.FreeC[doobie.contrib.postgresql.free.fastpath.FastpathOp,A]" class="extmbr" name="doobie.contrib.postgresql.free.fastpath.FastpathIO">FastpathIO</a>[<span class="extype" name="doobie.contrib.postgresql.free.fastpath.attempt.A">A</span>]</span>)</span><span class="result">: <a href="#FastpathIO[A]=scalaz.Free.FreeC[doobie.contrib.postgresql.free.fastpath.FastpathOp,A]" class="extmbr" name="doobie.contrib.postgresql.free.fastpath.FastpathIO">FastpathIO</a>[<span class="extype" name="scalaz.\/">\/</span>[<span class="extype" name="scala.Throwable">Throwable</span>, <span class="extype" name="doobie.contrib.postgresql.free.fastpath.attempt.A">A</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@attempt[A](a:doobie.contrib.postgresql.free.fastpath.FastpathIO[A]):doobie.contrib.postgresql.free.fastpath.FastpathIO[scalaz.\/[Throwable,A]]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Lift a FastpathIO[A] into an exception-capturing FastpathIO[Throwable \/ A].</p>
+    </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clone():Object"></a>
+      <a id="clone():AnyRef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clone</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@clone():Object" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.CloneNotSupportedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="doobie.contrib.postgresql.free.fastpath#delay" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Lifting)">
+      <a id="delay[A](a:=&gt;A):doobie.contrib.postgresql.free.fastpath.FastpathIO[A]"></a>
+      <a id="delay[A](⇒A):FastpathIO[A]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">delay</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="a">a: ⇒ <span class="extype" name="doobie.contrib.postgresql.free.fastpath.delay.A">A</span></span>)</span><span class="result">: <a href="#FastpathIO[A]=scalaz.Free.FreeC[doobie.contrib.postgresql.free.fastpath.FastpathOp,A]" class="extmbr" name="doobie.contrib.postgresql.free.fastpath.FastpathIO">FastpathIO</a>[<span class="extype" name="doobie.contrib.postgresql.free.fastpath.delay.A">A</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@delay[A](a:=&gt;A):doobie.contrib.postgresql.free.fastpath.FastpathIO[A]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Non-strict unit for capturing effects.</p>
+    </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="eq(x$1:AnyRef):Boolean"></a>
+      <a id="eq(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#equals" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="equals(x$1:Any):Boolean"></a>
+      <a id="equals(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@equals(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="doobie.contrib.postgresql.free.fastpath#fastpath" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Primitives)">
+      <a id="fastpath(a:Int,b:Boolean,c:Array[org.postgresql.fastpath.FastpathArg]):doobie.contrib.postgresql.free.fastpath.FastpathIO[Object]"></a>
+      <a id="fastpath(Int,Boolean,Array[FastpathArg]):FastpathIO[AnyRef]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fastpath</span><span class="params">(<span name="a">a: <span class="extype" name="scala.Int">Int</span></span>, <span name="b">b: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="c">c: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="org.postgresql.fastpath.FastpathArg">FastpathArg</span>]</span>)</span><span class="result">: <a href="#FastpathIO[A]=scalaz.Free.FreeC[doobie.contrib.postgresql.free.fastpath.FastpathOp,A]" class="extmbr" name="doobie.contrib.postgresql.free.fastpath.FastpathIO">FastpathIO</a>[<span class="extype" name="scala.AnyRef">AnyRef</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@fastpath(a:Int,b:Boolean,c:Array[org.postgresql.fastpath.FastpathArg]):doobie.contrib.postgresql.free.fastpath.FastpathIO[Object]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.contrib.postgresql.free.fastpath#fastpath" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Primitives)">
+      <a id="fastpath(a:String,b:Boolean,c:Array[org.postgresql.fastpath.FastpathArg]):doobie.contrib.postgresql.free.fastpath.FastpathIO[Object]"></a>
+      <a id="fastpath(String,Boolean,Array[FastpathArg]):FastpathIO[AnyRef]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fastpath</span><span class="params">(<span name="a">a: <span class="extype" name="java.lang.String">String</span></span>, <span name="b">b: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="c">c: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="org.postgresql.fastpath.FastpathArg">FastpathArg</span>]</span>)</span><span class="result">: <a href="#FastpathIO[A]=scalaz.Free.FreeC[doobie.contrib.postgresql.free.fastpath.FastpathOp,A]" class="extmbr" name="doobie.contrib.postgresql.free.fastpath.FastpathIO">FastpathIO</a>[<span class="extype" name="scala.AnyRef">AnyRef</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@fastpath(a:String,b:Boolean,c:Array[org.postgresql.fastpath.FastpathArg]):doobie.contrib.postgresql.free.fastpath.FastpathIO[Object]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p>
+    </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="finalize():Unit"></a>
+      <a id="finalize():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@finalize():Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="symbol">classOf[java.lang.Throwable]</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getClass():Class[_]"></a>
+      <a id="getClass():Class[_]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@getClass():Class[_]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="doobie.contrib.postgresql.free.fastpath#getData" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Primitives)">
+      <a id="getData(a:String,b:Array[org.postgresql.fastpath.FastpathArg]):doobie.contrib.postgresql.free.fastpath.FastpathIO[Array[Byte]]"></a>
+      <a id="getData(String,Array[FastpathArg]):FastpathIO[Array[Byte]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getData</span><span class="params">(<span name="a">a: <span class="extype" name="java.lang.String">String</span></span>, <span name="b">b: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="org.postgresql.fastpath.FastpathArg">FastpathArg</span>]</span>)</span><span class="result">: <a href="#FastpathIO[A]=scalaz.Free.FreeC[doobie.contrib.postgresql.free.fastpath.FastpathOp,A]" class="extmbr" name="doobie.contrib.postgresql.free.fastpath.FastpathIO">FastpathIO</a>[<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@getData(a:String,b:Array[org.postgresql.fastpath.FastpathArg]):doobie.contrib.postgresql.free.fastpath.FastpathIO[Array[Byte]]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.contrib.postgresql.free.fastpath#getID" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Primitives)">
+      <a id="getID(a:String):doobie.contrib.postgresql.free.fastpath.FastpathIO[Int]"></a>
+      <a id="getID(String):FastpathIO[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getID</span><span class="params">(<span name="a">a: <span class="extype" name="java.lang.String">String</span></span>)</span><span class="result">: <a href="#FastpathIO[A]=scalaz.Free.FreeC[doobie.contrib.postgresql.free.fastpath.FastpathOp,A]" class="extmbr" name="doobie.contrib.postgresql.free.fastpath.FastpathIO">FastpathIO</a>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@getID(a:String):doobie.contrib.postgresql.free.fastpath.FastpathIO[Int]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.contrib.postgresql.free.fastpath#getInteger" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Primitives)">
+      <a id="getInteger(a:String,b:Array[org.postgresql.fastpath.FastpathArg]):doobie.contrib.postgresql.free.fastpath.FastpathIO[Int]"></a>
+      <a id="getInteger(String,Array[FastpathArg]):FastpathIO[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getInteger</span><span class="params">(<span name="a">a: <span class="extype" name="java.lang.String">String</span></span>, <span name="b">b: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="org.postgresql.fastpath.FastpathArg">FastpathArg</span>]</span>)</span><span class="result">: <a href="#FastpathIO[A]=scalaz.Free.FreeC[doobie.contrib.postgresql.free.fastpath.FastpathOp,A]" class="extmbr" name="doobie.contrib.postgresql.free.fastpath.FastpathIO">FastpathIO</a>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@getInteger(a:String,b:Array[org.postgresql.fastpath.FastpathArg]):doobie.contrib.postgresql.free.fastpath.FastpathIO[Int]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p>
+    </li><li name="doobie.contrib.postgresql.free.fastpath#getOID" visbl="pub" data-isabs="false" fullComment="no" group="Constructors (Primitives)">
+      <a id="getOID(a:String,b:Array[org.postgresql.fastpath.FastpathArg]):doobie.contrib.postgresql.free.fastpath.FastpathIO[Long]"></a>
+      <a id="getOID(String,Array[FastpathArg]):FastpathIO[Long]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getOID</span><span class="params">(<span name="a">a: <span class="extype" name="java.lang.String">String</span></span>, <span name="b">b: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="org.postgresql.fastpath.FastpathArg">FastpathArg</span>]</span>)</span><span class="result">: <a href="#FastpathIO[A]=scalaz.Free.FreeC[doobie.contrib.postgresql.free.fastpath.FastpathOp,A]" class="extmbr" name="doobie.contrib.postgresql.free.fastpath.FastpathIO">FastpathIO</a>[<span class="extype" name="scala.Long">Long</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@getOID(a:String,b:Array[org.postgresql.fastpath.FastpathArg]):doobie.contrib.postgresql.free.fastpath.FastpathIO[Long]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p>
+    </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="hashCode():Int"></a>
+      <a id="hashCode():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@hashCode():Int" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="doobie.contrib.postgresql.free.fastpath#kleisliTrans" visbl="pub" data-isabs="false" fullComment="no" group="Algebra">
+      <a id="kleisliTrans[M[_]](implicitevidence$1:scalaz.Monad[M],implicitevidence$2:scalaz.Catchable[M],implicitevidence$3:doobie.util.capture.Capture[M]):scalaz.~&gt;[doobie.contrib.postgresql.free.fastpath.FastpathOp,[a]scalaz.Kleisli[M,org.postgresql.fastpath.Fastpath,a]]"></a>
+      <a id="kleisliTrans[M[_]](Monad[M],Catchable[M],Capture[M]):~&gt;[FastpathOp,[a]Kleisli[M,Fastpath,a]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">kleisliTrans</span><span class="tparams">[<span name="M">M<span class="tparams">[<span name="_">_</span>]</span></span>]</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scalaz.Monad">Monad</span>[<span class="extype" name="doobie.contrib.postgresql.free.fastpath.kleisliTrans.M">M</span>]</span>, <span name="arg1">arg1: <span class="extype" name="scalaz.Catchable">Catchable</span>[<span class="extype" name="doobie.contrib.postgresql.free.fastpath.kleisliTrans.M">M</span>]</span>, <span name="arg2">arg2: <a href="../../../util/capture$$Capture.html" class="extype" name="doobie.util.capture.Capture">Capture</a>[<span class="extype" name="doobie.contrib.postgresql.free.fastpath.kleisliTrans.M">M</span>]</span>)</span><span class="result">: <span class="extype" name="scalaz.~&gt;">~&gt;</span>[<a href="fastpath$$FastpathOp.html" class="extype" name="doobie.contrib.postgresql.free.fastpath.FastpathOp">FastpathOp</a>, [a]<span class="extype" name="scalaz.Kleisli">Kleisli</span>[<span class="extype" name="doobie.contrib.postgresql.free.fastpath.kleisliTrans.M">M</span>, <span class="extype" name="org.postgresql.fastpath.Fastpath">Fastpath</span>, <span class="extype" name="doobie.contrib.postgresql.free.fastpath.&lt;refinement&gt;.l.a">a</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@kleisliTrans[M[_]](implicitevidence$1:scalaz.Monad[M],implicitevidence$2:scalaz.Catchable[M],implicitevidence$3:doobie.util.capture.Capture[M]):scalaz.~&gt;[doobie.contrib.postgresql.free.fastpath.FastpathOp,[a]scalaz.Kleisli[M,org.postgresql.fastpath.Fastpath,a]]" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Natural transformation from <code>FastpathOp</code> to <code>Kleisli</code> for the given <code>M</code>, consuming a <code>org.postgresql.fastpath.Fastpath</code>.</p>
+    </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ne(x$1:AnyRef):Boolean"></a>
+      <a id="ne(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notify():Unit"></a>
+      <a id="notify():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@notify():Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notifyAll" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notifyAll():Unit"></a>
+      <a id="notifyAll():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@notifyAll():Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
+      <a id="synchronized[T0](⇒T0):T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#toString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toString():String"></a>
+      <a id="toString():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@toString():String" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait():Unit"></a>
+      <a id="wait():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@wait():Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long,x$2:Int):Unit"></a>
+      <a id="wait(Long,Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long):Unit"></a>
+      <a id="wait(Long):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.fastpath$@wait(x$1:Long):Unit" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Algebra">
+              <h3>Algebra</h3>
+              
+            </div><div class="group" name="Constructors (Lifting)">
+              <h3>Constructors (Lifting)</h3>
+              
+            </div><div class="group" name="Constructors (Primitives)">
+              <h3>Constructors (Primitives)</h3>
+              
+            </div><div class="group" name="Typeclass Instances">
+              <h3>Typeclass Instances</h3>
+              
+            </div><div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>
