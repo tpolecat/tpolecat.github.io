@@ -10,16 +10,12 @@ In this chapter we start from the beginning. First we write a program that conne
 
 ### Our First Program
 
-Before we can use **doobie** we need to import some symbols. We will use the `doobie.imports` module here as a convenience; it exposes the most commonly-used symbols when working with the high-level API.
+Before we can use **doobie** we need to import some symbols. We will use the `doobie.imports` module here as a convenience; it exposes the most commonly-used symbols when working with the high-level API. We will also import the [scalaz](https://github.com/scalaz/scalaz) core, as well as `Task` from scalaz-concurrent.
 
 ```scala
 import doobie.imports._
-```
-
-We will also import the [scalaz](https://github.com/scalaz/scalaz) core, as well as `Task` from scalaz-concurrent.
-
-```scala
-import scalaz._, Scalaz._, scalaz.concurrent.Task
+import scalaz._, Scalaz._
+import scalaz.concurrent.Task
 ```
 
 In the **doobie** high level API the most common types we will deal with have the form `ConnectionIO[A]`, specifying computations that take place in a context where a `java.sql.Connection` is available, ultimately producing a value of type `A`.
@@ -47,7 +43,7 @@ Right, so let's do this.
 
 ```scala
 scala> val task = program1.transact(xa)
-task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@5134d4a9
+task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@35317904
 
 scala> task.run
 res0: Int = 42
@@ -68,7 +64,7 @@ scala> val program2 = sql"select 42".query[Int].unique
 program2: doobie.imports.ConnectionIO[Int] = Gosub()
 
 scala> val task2 = program2.transact(xa)
-task2: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@5a5a4d9a
+task2: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@2c9a292
 
 scala> task2.run
 res1: Int = 42
@@ -93,7 +89,7 @@ And behold!
 
 ```scala
 scala> program3.transact(xa).run
-res2: (Int, Double) = (42,0.17723371414467692)
+res2: (Int, Double) = (42,0.25564521504566073)
 ```
 
 The astute among you will note that we don't actually need a monad to do this; an applicative functor is all we need here. So we could also write `program3` as:
@@ -110,18 +106,18 @@ And lo, it was good:
 
 ```scala
 scala> program3a.transact(xa).run
-res3: (Int, Double) = (42,0.4345544329844415)
+res3: (Int, Double) = (42,0.7463739141821861)
 ```
 
 And of course this composition can continue indefinitely.
 
 ```scala
 scala> List.fill(5)(program3a).sequenceU.transact(xa).run.foreach(println)
-(42,0.2546639684587717)
-(42,0.0616511725820601)
-(42,0.9383754720911384)
-(42,0.41533445939421654)
-(42,0.7396504762582481)
+(42,0.13891276950016618)
+(42,0.5086818989366293)
+(42,0.46818383457139134)
+(42,0.19381170067936182)
+(42,0.7749240663833916)
 ```
 
 
@@ -138,7 +134,7 @@ scala> val kleisli = program1.transK[Task]
 kleisli: scalaz.Kleisli[scalaz.concurrent.Task,java.sql.Connection,Int] = Kleisli(<function1>)
 
 scala> val task = Task.delay(null: java.sql.Connection) >>= kleisli
-task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@7ff52896
+task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@4e2475b0
 
 scala> task.run // sneaky; program1 never looks at the connection
 res5: Int = 42

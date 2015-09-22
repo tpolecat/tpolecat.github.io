@@ -89,7 +89,8 @@ If you are not using PostgreSQL you can omit `doobie-contrib-postgresql` and wil
 Each page begins with some imports, like this.
 
 ```scala
-import scalaz._, Scalaz._, doobie.imports._
+import scalaz._, Scalaz._
+import doobie.imports._
 ```
 
 After that there is text interspersed with code examples. Sometimes definitions will stand alone.
@@ -114,9 +115,9 @@ Sometimes we demonstrate that something doesn't compile. In such cases it will b
 
 ```scala
 scala> woozle(nel) // doesn't compile
-<console>:21: error: not found: value woozle
-              woozle(nel) // doesn't compile
-              ^
+<console>:24: error: not found: value woozle
+       woozle(nel) // doesn't compile
+       ^
 ```
 
 ### Feedback and Contributions

@@ -11,10 +11,14 @@ In this chapter we learn how to construct parameterized queries, and introduce t
 Same as last chapter, so if you're still set up you can skip this section. Otherwise let's set up a `Transactor` and YOLO mode.
 
 ```scala
-import doobie.imports._, scalaz._, Scalaz._, scalaz.concurrent.Task
+import doobie.imports._
+import scalaz._, Scalaz._
+import scalaz.concurrent.Task
+
 val xa = DriverManagerTransactor[Task](
   "org.postgresql.Driver", "jdbc:postgresql:world", "postgres", ""
 )
+
 import xa.yolo._
 ```
 
@@ -94,6 +98,38 @@ scala> populationIn(150000000 to 200000000).quick.run
   Country(PAK,Pakistan,156483000,Some(61289.0))
 ```
 
+### Dealing with `IN` Clauses
+
+A common irritant when dealing with SQL literals is the desire to inline a *sequence* of arguments into an `IN` clause, but SQL does not support this notion (nor does JDBC do anything to assist). So as of version 0.2.3 **doobie** provides support in the form of some slightly inconvenient machinery.
+
+```scala
+def populationIn(range: Range, codes: NonEmptyList[String]) = {
+  implicit val codesParam = Param.many(codes)
+  sql"""
+    select code, name, population, gnp 
+    from country
+    where population > ${range.min}
+    and   population < ${range.max}
+    and   code in (${codes : codes.type})
+  """.query[Country]
+}
+```
+
+There are a few things to notice here:
+
+- The `IN` clause must be non-empty, so `codes` is a `NonEmptyList`.
+- We must derive a `Param` instance for the *singleton type* of `codes`, which we do via `Param.many`. This derivation is legal for any `NonEmptyList[A]` given `Atom[A]`. You can have any number of `IN` arguments but each must have its own derived `Param` instance.
+- When interpolating `codes` we must explicitly ascribe its singleton type `codes.type`.
+
+Running this query gives us the desired result.
+
+```scala
+scala> populationIn(100000000 to 300000000, NonEmptyList("USA", "BRA", "PAK", "GBR")).quick.run 
+  Country(BRA,Brazil,170115000,Some(776739.0))
+  Country(PAK,Pakistan,156483000,Some(61289.0))
+  Country(USA,United States,278357000,Some(8510700.0))
+```
+
 ### Diving Deeper
 
 In the previous chapter's *Diving Deeper* we saw how a query constructed with the `sql` interpolator is just sugar for the `process` constructor defined in the `doobie.hi.connection` module (aliased as `HC`). Here we see that the second parameter, a `PreparedStatementIO` program, is used to set the query parameters.
@@ -128,10 +164,10 @@ When reading a row or setting parameters in the high-level API, we require an in
 
 ```scala
 scala> Composite[(String, Boolean)]
-res6: doobie.util.composite.Composite[(String, Boolean)] = doobie.util.composite$Composite$$anon$1@7c771a3d
+res9: doobie.util.composite.Composite[(String, Boolean)] = doobie.util.composite$Composite$$anon$1@4170966
 
 scala> Composite[Country]
-res7: doobie.util.composite.Composite[Country] = doobie.util.composite$Composite$$anon$1@2c8b5358
+res10: doobie.util.composite.Composite[Country] = doobie.util.composite$Composite$$anon$1@60070248
 ```
 
 The `set` constructor takes an argument of any type with a `Composite` instance and returns a program that sets the unrolled sequence of values starting at parameter index 1 by default. Some other variations are shown here.

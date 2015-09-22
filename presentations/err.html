@@ -1,0 +1,955 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+      @import url(http://fonts.googleapis.com/css?family=Droid+Serif);
+      @import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+
+      body {
+        font-family: 'Droid Serif';
+        font-size: 20px;
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+      h1 { font-size: 3em; }
+      h2 { font-size: 2em; }
+      h3 { font-size: 1.6em; }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .large { font-size: 2em; }
+      a, a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+      }
+      code {
+        -moz-border-radius: 5px;
+        -web-border-radius: 5px;
+        background: #e7e8e2;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+      #slideshow .slide .content code {
+        font-size: 0.8em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+      }
+      .inverse {
+        background: #272822;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Welcome to PDXScala!
+
+???
+
+- rob
+- sorry for the mixup
+- thanks to SweetSpot
+
+---
+
+class: center, middle
+
+# Intro to Functional Error Handling in Scala
+Rob Norris / `@tpolecat`
+
+???
+
+```scala
+import scalaz._, Scalaz._
+```
+
+- this is a *beginner* talk, so pls pls ask questions
+- how many totally new to scala?
+
+---
+
+# The Problem
+
+We have as simple domain model:
+
+```scala
+case class Person(name: String, age: Int)
+```
+
+And user input in the form of a `Map[String, String]`. We want to turn this `Map` into a `Person`. How hard could that be?
+
+For convenience we have constants for map keys:
+
+```scala
+object Key {
+  val Name = "NAME"
+  val Age  = "AGE"
+}
+```
+
+---
+
+# The Optimist's Solution
+
+```scala
+// Just assume the input is valid
+def person(m: Map[String, String]): Person =
+  Person(m(Key.Name), m(Key.Age).toInt)
+```
+
+And with good input it works!
+
+```scala
+scala> person(Map("NAME" -> "Bob", "AGE" -> "42"))
+res1: Person = Person(Bob,42)
+```
+
+---
+
+# The Optimist's Solution
+
+```scala
+// Just assume the input is valid
+def person(m: Map[String, String]): Person =
+  Person(m(Key.Name), m(Key.Age).toInt)
+```
+
+With bad input...
+
+```scala
+scala> person(Map("Name" -> "Bob", "Age" -> "42"))
+java.util.NoSuchElementException: key not found: NAME
+  at scala.collection.MapLike$class.default(MapLike.scala:228)
+  at scala.collection.AbstractMap.default(Map.scala:59)
+  at scala.collection.MapLike$class.apply(MapLike.scala:141)
+  at scala.collection.AbstractMap.apply(Map.scala:59)
+  at .person(<console>:22)
+  ... 910 elided
+```
+
+---
+
+# The Optimist's Solution
+
+```scala
+// Just assume the input is valid
+def person(m: Map[String, String]): Person =
+  Person(m(Key.Name), m(Key.Age).toInt)
+```
+
+Problems:
+  - If either key is missing, we get an `NoSuchElementException`
+  - If the age isn't an integer, we get a `NumberFormatException`
+
+???
+
+- Why is this a problem? ... we want to do total programming, without side-effects and without undefined behavior; methods should return a value.
+- This isn't a catastrophic failure; we're not out of memory and the network didn't go down, it just means that we're asking questions that don't always have answers. And I should point out that this is *deterministic*.
+- So Scala has a type for this, right?
+
+---
+
+# Let's talk about Option
+
+The `Option` type represents the result of computations that might not return a value. Unlike `null` we can look at the type and *know* that there may not be an answer, and the compiler forces us to consider this possibility.
+
+```scala
+sealed trait Option[+A]
+case class Some[A](get: A) extends Option[A]
+case object Nothing extends Option[Nothing]
+```
+
+We can pattern-match on an `Option` to see whether it's defined or not:
+
+```scala
+scala> List(1, 2, 3).headOption match {
+     |   case Some(n) => s"The first element is $n."
+     |   case None    =>  "The list is empty."
+     | }
+res5: String = The first element is 1.
+```
+
+---
+
+# Let's talk about Option
+
+Here's a `Map[String, Int]`.
+
+```scala
+val ages = Map("Bob" -> 12, "Steve" -> 66)
+```
+
+We can say `.get(key)` to get an `Option[V]` back. Note that unlike the simple `map(key)` application, this never throws an exception.
+
+```scala
+scala> ages.get("Bob")
+res6: Option[Int] = Some(12)
+
+scala> ages.get("Jimmy")
+res7: Option[Int] = None
+```
+
+---
+
+# Let's talk about Option
+
+What if we want to know how old someone will be next year?
+
+```scala
+def nextYear(m: Map[String, Int], who: String): Option[Int] =
+  m.get(who) match {
+    case Some(n) => Some(n + 1)
+    case None    => None
+  }
+```
+
+Try it!
+
+```scala
+scala> nextYear(ages, "Bob")
+res8: Option[Int] = Some(13)
+
+scala> nextYear(ages, "Jimmy")
+res9: Option[Int] = None
+```
+
+This works fine, but notice the pattern:
+
+- if the result is `None` we just return `None`.
+- if it's `Some(a)` then we apply a function to `a` and wrap it in `Some`.
+
+---
+
+# Let's talk about Option
+
+This is a built-in operation called `map`! Given an `Option[A]` and a function `A => B` we get back an `Option[B]`.
+
+```scala
+def nextYear(m: Map[String, Int], who: String): Option[Int] =
+  m.get(who).map(n => n + 1)
+```
+
+Try it!
+
+```scala
+scala> nextYear(ages, "Bob")
+res10: Option[Int] = Some(13)
+
+scala> nextYear(ages, "Jimmy")
+res11: Option[Int] = None
+```
+
+---
+
+# Let's talk about Option
+
+But what if we want to compose several `Options`?
+
+```scala
+scala> val hmm = ages.get("Bob").map { n1 => 
+     |             ages.get("Steve").map { n2 => 
+     |               s"The ages are $n1 and $n2!"
+     |             }
+     |           }
+hmm: Option[Option[String]] = Some(Some(The ages are 12 and 66!))
+```
+
+Oops, we have an `Option[Option[...]]`.
+
+---
+
+# Let's talk about Option
+
+But what if we want to compose several `Options`?
+
+```scala
+scala> val hmm = ages.get("Bob").map { n1 => 
+     |             ages.get("Steve").map { n2 => 
+     |               s"The ages are $n1 and $n2!"
+     |             }
+     |           }
+hmm: Option[Option[String]] = Some(Some(The ages are 12 and 66!))
+```
+
+Oops, we have an `Option[Option[...]]`. But we can `flatten` it:
+
+```scala
+scala> hmm.flatten
+res12: Option[String] = Some(The ages are 12 and 66!)
+```
+
+---
+
+# Let's talk about Option
+
+It turns out that `map` and then `flatten` is *very* useful, so Scala lets us do it in one step. Remember this identity: `ma.map(f).flatten` is the same thing as `ma.flatMap(f)`
+
+So let's try that again.
+
+```scala
+scala> val hmm = ages.get("Bob").map { n1 => 
+     |             ages.get("Steve").map { n2 => 
+     |               s"The ages are $n1 and $n2!"
+     |             }
+     |           } .flatten
+hmm: Option[String] = Some(The ages are 12 and 66!)
+```
+
+becomes
+
+```scala
+scala> val hmm = ages.get("Bob").flatMap { n1 => 
+     |             ages.get("Steve").map { n2 => 
+     |               s"The ages are $n1 and $n2!"
+     |             }
+     |           }
+hmm: Option[String] = Some(The ages are 12 and 66!)
+```
+
+---
+
+# Let's talk about Option
+
+And Scala gives you a much nicer way of writing this.
+
+```scala
+scala> val hmm = ages.get("Bob").flatMap { n1 => 
+     |             ages.get("Steve").map { n2 => 
+     |               s"The ages are $n1 and $n2!"
+     |             }
+     |           }
+hmm: Option[String] = Some(The ages are 12 and 66!)
+```
+
+becomes
+
+```scala
+scala> val hmm = for {
+     |             n1 <- ages.get("Bob")
+     |             n2 <- ages.get("Steve")
+     |           } yield s"The ages are $n1 and $n2!"
+hmm: Option[String] = Some(The ages are 12 and 66!)
+```
+
+???
+
+- and that's the way you would write this in Scala
+- exactly the same!
+- *all* for comprehensions in Scala work this way. It's not a loop!
+- let's go back to our example.
+
+
+---
+
+# The Option Solution
+
+Try again, with `Option`.
+
+```scala
+def person(m: Map[String, String]): Option[Person] =
+  for {
+    name  <- m.get(Key.Name)
+    age   <- m.get(Key.Age)
+  } yield Person(name, age.toInt)
+```
+
+Ok set aside the `NumberFormatException` for now.
+
+```scala
+scala> person(Map())
+res13: Option[Person] = None
+
+scala> person(Map("NAME" -> "Bob"))
+res14: Option[Person] = None
+
+scala> person(Map("NAME" -> "Bob", "AGE" -> "42"))
+res15: Option[Person] = Some(Person(Bob,42))
+```
+
+???
+
+- Pretty good
+- doesn't work if the number is misformatted
+
+---
+
+# The Option Solution
+
+Let's make a safe `parseInt`.
+
+```scala
+def parseInt(s: String): Option[Int] =
+  try Some(s.toInt) catch {
+    case _: NumberFormatException => None
+  }
+```
+
+Note that we *only* catch the exception we understand.
+
+Try it!
+
+```scala
+scala> parseInt("woozle")
+res16: Option[Int] = None
+
+scala> parseInt("123")
+res17: Option[Int] = Some(123)
+```
+
+---
+
+# The Option Solution
+
+We now have the complete `Option` solution.
+
+```scala
+def person(m: Map[String, String]): Option[Person] =
+  for {
+    name <- m.get(Key.Name)
+    str  <- m.get(Key.Age)
+    age  <- parseInt(str)
+  } yield Person(name, age)
+```
+
+Try it!
+
+```scala
+scala> person(Map())
+res18: Option[Person] = None
+
+scala> person(Map("NAME" -> "Bob"))
+res19: Option[Person] = None
+
+scala> person(Map("NAME" -> "Bob", "AGE" -> "Forty-Two"))
+res20: Option[Person] = None
+
+scala> person(Map("NAME" -> "Bob", "AGE" -> "42"))
+res21: Option[Person] = Some(Person(Bob,42))
+```
+
+???
+
+- you can see how you can have a bunch of `Option` validations, some independent and some depending on earlier ones.
+- so there are no exceptions!
+- what are some downsides of this approach?
+
+---
+
+# Some Possible Failures
+
+If we can enumerate all the things that can go wrong...
+
+```scala
+sealed trait Problem
+case class MissingKey(key: String) extends Problem
+case class NotAnInteger(key: String, value: String) extends Problem
+```
+
+Then maybe we can define something like this:
+
+
+```scala
+def person(m: Map[String, String]) = ??? // either a Problem or a Person
+```
+
+???
+
+- so instead of returning a `None` when there's a problem, we want to return a `Problem` value that we can show to the user.
+- it turns out that scala has a type for this!
+
+---
+
+# Let's talk about Either
+
+The `Either` type also has two constructors. By convention `Left` is for failure and `Right` is for success.
+
+```scala
+sealed trait Either[+A, +B]
+case class Left[A](value: A)  extends Either[A, Nothing]
+case class Right[B](value: B) extends Either[Nothing, B]
+```
+
+So we can examine a value and see whether it's `Left` or `Right`.
+
+```scala
+scala> (Right(42) : Either[String, Int]) match {
+     |   case Left(x)  => s"It's a left and the value is $x"
+     |   case Right(y) => s"It's a right and the value is $y"
+     | }
+res22: String = It's a right and the value is 42
+```
+
+???
+
+- not really how it's defined but it doesn't matter. it's close
+
+---
+
+# Let's talk about Either
+
+What about `map` and `flatMap`?
+
+- They can logically apply to either side.
+- So we must *bias* the operation via `.left` or `.right`.
+- By convention we always bias to the right since this is our success case.
+
+```scala
+scala> val e: Either[String, Int] = Right(42)
+e: Either[String,Int] = Right(42)
+
+scala> e.right.map(_ + 1)
+res23: Product with Serializable with scala.util.Either[String,Int] = Right(43)
+
+scala> e.right.flatMap(n => Right(n + 1))
+res24: scala.util.Either[String,Int] = Right(43)
+
+scala> e.right.flatMap(n => Left("hmm"))
+res25: scala.util.Either[String,Nothing] = Left(hmm)
+```
+
+---
+
+# Let's talk about Either
+
+We can turn a `Option` into an `Either` by supplying the "other" side to use if the `Option` is `None`.
+
+```scala
+scala> Some(42).toRight("Hello")
+res26: Product with Serializable with scala.util.Either[String,Int] = Right(42)
+
+scala> None.toRight("Hello")
+res27: Product with Serializable with scala.util.Either[String,Nothing] = Left(Hello)
+
+scala> None.toLeft("Hello")
+res28: Product with Serializable with scala.util.Either[Nothing,String] = Right(Hello)
+```
+
+---
+
+# The Either Solution
+
+Ok this is ugly but let's try it.
+
+```scala
+def person(m: Map[String, String]): Either[Problem, Person] =
+  for {
+    name <- m.get(Key.Name).toRight(MissingKey(Key.Name))      .right
+    str  <- m.get(Key.Age) .toRight(MissingKey(Key.Age))       .right
+    age  <- parseInt(str)  .toRight(NotAnInteger(Key.Age, str)).right
+  } yield Person(name, age)
+```
+
+Try it!
+
+```scala
+scala> person(Map())
+res29: Either[Problem,Person] = Left(MissingKey(NAME))
+
+scala> person(Map("NAME" -> "Bob"))
+res30: Either[Problem,Person] = Left(MissingKey(AGE))
+
+scala> person(Map("NAME" -> "Bob", "AGE" -> "Forty-Two"))
+res31: Either[Problem,Person] = Left(NotAnInteger(AGE,Forty-Two))
+
+scala> person(Map("NAME" -> "Bob", "AGE" -> "42"))
+res32: Either[Problem,Person] = Right(Person(Bob,42))
+```
+
+???
+
+
+---
+
+# The Either Solution
+
+Factoring out some repeated code. Slightly better.
+
+```scala
+def param(m: Map[String, String], key: String): Either[Problem, String] =
+  m.get(key).toRight(MissingKey(key))
+
+def person(m: Map[String, String]): Either[Problem, Person] =
+  for {
+    name  <- param(m, Key.Name).right
+    str   <- param(m, Key.Age).right
+    age   <- parseInt(str).toRight(NotAnInteger(Key.Age, str)).right
+  } yield Person(name, age)
+```
+
+Still works.
+
+```scala
+scala> person(Map())
+res34: Either[Problem,Person] = Left(MissingKey(NAME))
+
+scala> person(Map("NAME" -> "Bob"))
+res35: Either[Problem,Person] = Left(MissingKey(AGE))
+
+scala> person(Map("NAME" -> "Bob", "AGE" -> "Forty-Two"))
+res36: Either[Problem,Person] = Left(NotAnInteger(AGE,Forty-Two))
+
+scala> person(Map("NAME" -> "Bob", "AGE" -> "42"))
+res37: Either[Problem,Person] = Right(Person(Bob,42))
+```
+
+???
+
+
+---
+
+# Let's talk about Disjunction
+
+The **scalaz** library has a type called `\/` (pronounced "disjunction") that's isomorphic to `Either` but is easier to user because it is *right-biased*.
+
+**Don't fear the symbols!** They really do make things easier.
+
+There is also some nice syntax.
+
+```scala
+scala> 42.right // other side inferred as Nothing
+res38: scalaz.\/[Nothing,Int] = \/-(42)
+
+scala> "foo".left[Int]
+res39: scalaz.\/[String,Int] = -\/(foo)
+```
+
+The `.map` and `.flatMap` methods don't require biasing.
+
+```scala
+scala> val r: String \/ Int = 10.right // note the infix type ctor
+r: scalaz.\/[String,Int] = \/-(10)
+
+scala> r.map(n => "x" * n)
+res40: scalaz.\/[String,String] = \/-(xxxxxxxxxx)
+```
+
+---
+
+# Let's talk about Disjunction
+
+We can turn an `Option` into a disjunction.
+
+```scala
+scala> Some(42).toRightDisjunction("Hello")
+res41: scalaz.\/[String,Int] = \/-(42)
+
+scala> None.toRightDisjunction("Hello")
+res42: scalaz.\/[String,Nothing] = -\/(Hello)
+
+scala> None.toLeftDisjunction("Hello")
+res43: scalaz.\/[Nothing,String] = \/-(Hello)
+```
+
+Yuck. Same thing with better syntax.
+
+```scala
+scala> Some(42) \/> "Hello"
+res44: scalaz.\/[String,Int] = \/-(42)
+
+scala> None \/> "Hello"
+res45: scalaz.\/[String,Nothing] = -\/(Hello)
+
+scala> None <\/ "Hello"
+res46: scalaz.\/[Nothing,String] = \/-(Hello)
+```
+
+
+---
+# The Dijunction Solution
+
+Looks a lot like the `Either` solution, but with less grunt work due to the built-in bias.
+
+```scala
+def person(m: Map[String, String]): Problem \/ Person =
+  for {
+    name <- m.get(Key.Name) \/> MissingKey(Key.Name)
+    str  <- m.get(Key.Age)  \/> MissingKey(Key.Age)
+    age  <- parseInt(str)   \/> NotAnInteger(Key.Age, str)
+  } yield Person(name, age)
+```
+
+Try it!
+
+```scala
+scala> person(Map())
+res47: scalaz.\/[Problem,Person] = -\/(MissingKey(NAME))
+
+scala> person(Map("NAME" -> "Bob"))
+res48: scalaz.\/[Problem,Person] = -\/(MissingKey(AGE))
+
+scala> person(Map("NAME" -> "Bob", "AGE" -> "Forty-Two"))
+res49: scalaz.\/[Problem,Person] = -\/(NotAnInteger(AGE,Forty-Two))
+
+scala> person(Map("NAME" -> "Bob", "AGE" -> "42"))
+res50: scalaz.\/[Problem,Person] = \/-(Person(Bob,42))
+```
+
+???
+
+pros
+  - more readable, once you grok it
+  - helper method no longer needde
+  - not bad really
+
+cons
+  - you only see the first error!
+
+
+---
+
+# Let's talk about Validation
+
+The `Validation` type is isomorphic to `Either` and `\/`.
+
+```scala
+sealed trait Validation[+E, +A]
+case class Success[A] extends Validation[Nothing, A]
+case class Failure[E] extends Validation[E, Nothing]
+```
+
+Again we have syntax.
+
+```scala
+scala> 42.success
+res51: scalaz.Validation[Nothing,Int] = Success(42)
+
+scala> "oops".failure
+res52: scalaz.Validation[String,Nothing] = Failure(oops)
+```
+
+And operations are biased to the `Success` side.
+
+```scala
+scala> 42.success.map(_ + 2)
+res53: scalaz.Validation[Nothing,Int] = Success(44)
+
+scala> "oops".failure[String].map(s => s.length)
+res54: scalaz.Validation[String,Int] = Failure(oops)
+```
+
+---
+
+# Let's talk about Validation
+
+But unlike the other types we have seen, `Validation` is not **fast-fail**: it instead **accumulates** failure and keeps on going.
+
+The cost for this behavior is twofold:
+- there is **no flatMap** (why not?)
+- the failure type must be "addable", so we usually use `NonEmptyList`.
+
+So here's an operation that validates that a number is even.
+
+```scala
+def even(n: Int): Validation[NonEmptyList[String], Int] = {
+  if (n % 2 == 0) n.success 
+  else NonEmptyList(s"$n is odd!").failure
+}
+```
+
+---
+
+# Let's talk about Validation
+
+Try it! The `tuple` combinator lets us combine two `Validation`s into a single `Validation` of the pair. Note that you get *both* errors back!
+
+```scala
+scala> even(2)
+res55: scalaz.Validation[scalaz.NonEmptyList[String],Int] = Success(2)
+
+scala> even(3)
+res56: scalaz.Validation[scalaz.NonEmptyList[String],Int] = Failure(NonEmptyList(3 is odd!))
+
+scala> even(2) tuple even(4)
+res57: scalaz.Validation[scalaz.NonEmptyList[String],(Int, Int)] = Success((2,4))
+
+scala> even(3) tuple even(4)
+res58: scalaz.Validation[scalaz.NonEmptyList[String],(Int, Int)] = Failure(NonEmptyList(3 is odd!))
+
+scala> even(3) tuple even(5)
+res59: scalaz.Validation[scalaz.NonEmptyList[String],(Int, Int)] = Failure(NonEmptyList(3 is odd!, 5 is odd!))
+```
+
+---
+
+# The Validation Solution
+
+So here's a solution using `Validation`.
+
+```scala
+def stringParam(m: Map[String, String], key: String): ValidationNel[Problem, String] =
+  m.get(key).toSuccess(MissingKey(key)).toValidationNel
+
+def intParam(m: Map[String, String], key: String): ValidationNel[Problem, Int] =
+  stringParam(m, key) match {
+    case     Success(s) => parseInt(s).toSuccess(NotAnInteger(key, s)).toValidationNel
+    case f @ Failure(_) => f
+  }
+
+def person(m: Map[String, String]): ValidationNel[Problem, Person] =
+  (stringParam(m, Key.Name) |@| intParam(m, Key.Age))(Person)
+```
+
+---
+
+# The Validation Solution
+
+Let's try it!
+
+```scala
+scala> person(Map())
+res62: scalaz.ValidationNel[Problem,Person] = Failure(NonEmptyList(MissingKey(NAME), MissingKey(AGE)))
+
+scala> person(Map("NAME" -> "Bob"))
+res63: scalaz.ValidationNel[Problem,Person] = Failure(NonEmptyList(MissingKey(AGE)))
+
+scala> person(Map("NAME" -> "Bob", "AGE" -> "Forty-Two"))
+res64: scalaz.ValidationNel[Problem,Person] = Failure(NonEmptyList(NotAnInteger(AGE,Forty-Two)))
+
+scala> person(Map("NAME" -> "Bob", "AGE" -> "42"))
+res65: scalaz.ValidationNel[Problem,Person] = Success(Person(Bob,42))
+```
+
+???
+
+pros
+  - good behavior
+
+cons
+  - still a bit awkward
+
+---
+# The Validation Solution
+
+A bit nicer with some custom syntax.
+
+```scala
+implicit class MoreOptionOps[A](a: Option[A]) {
+  def toSuccessNel[E](e: E): ValidationNel[E, A] =
+    a.toSuccess(e).toValidationNel
+}
+
+implicit class ParamsOps(params: Map[String, String]) {
+
+  def getString(key: String): ValidationNel[Problem, String] =
+    params.get(key).toSuccessNel(MissingKey(key))
+
+  def getInt(key: String): ValidationNel[Problem, Int] =
+    getString(key) match {
+      case     Success(s) => parseInt(s).toSuccessNel(NotAnInteger(key, s))
+      case f @ Failure(_) => f
+    }
+
+}
+
+def person(params: Map[String, String]): ValidationNel[Problem, Person] =
+  (params.getString(Key.Name) |@| params.getInt(Key.Age))(Person)
+```
+
+---
+
+class: center, middle
+
+# Thanks! Questions?
+Rob Norris / `@tpolecat` 
+
+<small>Code will be available soon, watch the tweeter.</small>
+
+
+
+    </textarea>
+    <script src="http://gnab.github.io/remark/downloads/remark-0.6.3.min.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+

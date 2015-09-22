@@ -9,10 +9,14 @@ In this chapter we examine a set of combinators that allow us to construct progr
 ### Setting Up
 
 ```scala
-import doobie.imports._, scalaz._, Scalaz._, scalaz.concurrent.Task
+import doobie.imports._
+import scalaz._, Scalaz._
+import scalaz.concurrent.Task
+
 val xa = DriverManagerTransactor[Task](
   "org.postgresql.Driver", "jdbc:postgresql:world", "postgres", ""
 )
+
 import xa.yolo._
 ```
 
@@ -40,7 +44,7 @@ scala> val p = 42.point[ConnectionIO]
 p: doobie.imports.ConnectionIO[Int] = Return(42)
 
 scala> p.attempt
-res0: doobie.imports.ConnectionIO[scalaz.\/[Throwable,Int]] = Suspend(scalaz.Coyoneda$$anon$22@7d1f176a)
+res2: doobie.imports.ConnectionIO[scalaz.\/[Throwable,Int]] = Suspend(scalaz.Coyoneda$$anon$22@6b640e87)
 ```
 
 From the `.attempt` combinator we derive the following, available as combinators and as syntax:
@@ -85,20 +89,18 @@ Alright, let's define a `Person` data type and a way to insert instances.
 
 
 ```scala
-
 case class Person(id: Int, name: String)
 
 def insert(s: String): ConnectionIO[Person] = {
   sql"insert into person (name) values ($s)"
     .update.withUniqueGeneratedKeys("id", "name")
 }
-
 ```
 
 The first insert will work.
 
 ```scala
-     | insert("bob").quick.run
+scala> insert("bob").quick.run
   Person(1,bob)
 ```
 

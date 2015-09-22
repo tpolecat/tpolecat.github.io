@@ -11,7 +11,10 @@ In this chapter we construct some programs that retrieve data from the database 
 First let's get our imports out of the way and set up a `Transactor` as we did before. You can skip this step if you still have your REPL running from last chapter.
 
 ```scala
-import doobie.imports._, scalaz._, Scalaz._, scalaz.concurrent.Task
+import doobie.imports._
+import scalaz._, Scalaz._
+import scalaz.concurrent.Task
+
 val xa = DriverManagerTransactor[Task](
   "org.postgresql.Driver", "jdbc:postgresql:world", "postgres", ""
 )
@@ -119,7 +122,7 @@ scala> (sql"select code, name, population, gnp from country"
   (ALB,Albania,3401200,Some(3205.0))
   (DZA,Algeria,31471000,Some(49982.0))
 ```
-**doobie** automatically supports row mappings for atomic column types, as well as options, tuples, `HList`s and case classes thereof. So let's try the same query with an `HList`:
+**doobie** automatically supports row mappings for atomic column types, as well as options, tuples, `HList`s, shapeless records, and case classes thereof. So let's try the same query with an `HList`:
 
 ```scala
 scala> import shapeless._
@@ -127,6 +130,25 @@ import shapeless._
 
 scala> (sql"select code, name, population, gnp from country"
      |   .query[String :: String :: Int :: Option[Double] :: HNil]
+     |   .process.take(5).quick.run)
+  AFG :: Afghanistan :: 22720000 :: Some(5976.0) :: HNil
+  NLD :: Netherlands :: 15864000 :: Some(371362.0) :: HNil
+  ANT :: Netherlands Antilles :: 217000 :: Some(1941.0) :: HNil
+  ALB :: Albania :: 3401200 :: Some(3205.0) :: HNil
+  DZA :: Algeria :: 31471000 :: Some(49982.0) :: HNil
+```
+
+And with a shapeless record:
+
+```scala
+scala> import shapeless.record.Record
+import shapeless.record.Record
+
+scala> type Rec = Record.`'code -> String, 'name -> String, 'pop -> Int, 'gnp -> Option[Double]`.T
+defined type alias Rec
+
+scala> (sql"select code, name, population, gnp from country"
+     |   .query[Rec]
      |   .process.take(5).quick.run)
   AFG :: Afghanistan :: 22720000 :: Some(5976.0) :: HNil
   NLD :: Netherlands :: 15864000 :: Some(371362.0) :: HNil
@@ -152,7 +174,7 @@ scala> (sql"select code, name, population, gnp from country"
   Country(DZA,Algeria,31471000,Some(49982.0))
 ```
 
-You can also nest case classes, `HList`s, and/or tuples arbitrarily as long as the eventual members are of supported columns types. For instance, here we map the same set of columns to a tuple of two case classes:
+You can also nest case classes, `HList`s, shapeless records, and/or tuples arbitrarily as long as the eventual members are of supported columns types. For instance, here we map the same set of columns to a tuple of two case classes:
 
 ```scala
 case class Code(code: String)
@@ -195,7 +217,7 @@ scala> val p = {
      |     .process         // Process[ConnectionIO, Country]
      |     .transact(xa)    // Process[Task, Country]
      |  }
-p: scalaz.stream.Process[scalaz.concurrent.Task,Country] = Await(scalaz.concurrent.Task@37e025fc,<function1>)
+p: scalaz.stream.Process[scalaz.concurrent.Task,Country] = Await(scalaz.concurrent.Task@3d4f960e,<function1>)
 
 scala> p.take(5).runLog.run.foreach(println)
 Country(Afghanistan,22720000,Some(5976.0))

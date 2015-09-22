@@ -15,7 +15,10 @@ The YOLO-mode query checking feature demonstated in an earlier chapter is also a
 As with earlier chapters we set up a `Transactor` and YOLO mode. Note that the code in this chapter also requires the `doobie-contrib-specs2` add-on.
 
 ```scala
-import doobie.imports._, scalaz._, Scalaz._, scalaz.concurrent.Task
+import doobie.imports._
+import scalaz._, Scalaz._
+import scalaz.concurrent.Task
+
 val xa = DriverManagerTransactor[Task](
   "org.postgresql.Driver", "jdbc:postgresql:world", "postgres", ""
 )
@@ -81,15 +84,15 @@ When we run the test we get output similar to what we saw in the previous chapte
 
 ```
 scala> { specs2 run AnalysisTestSpec; () } // pretend this is sbt> test
-[info] $line12.$read$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$AnalysisTestSpec$
+[info] $line14.$read$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$AnalysisTestSpec$
 [info] 
-[info] Query0[(Int, String)] defined at <console>:19
+[info] Query0[(Int, String)] defined at <console>:22
   
   select 42, 'foo'::varchar
 [info]   + SQL Compiles and Typechecks
 [info]   + C01 ?column? INTEGER (int4)    NULL?  →  Int
 [info]   + C02 varchar  VARCHAR (varchar) NULL?  →  String
-[info] Query0[Country] defined at <console>:21
+[info] Query0[Country] defined at <console>:24
   
   select code, name, population, gnp, indepyear
   from country
@@ -98,12 +101,12 @@ scala> { specs2 run AnalysisTestSpec; () } // pretend this is sbt> test
 [error]   x P01 Short  →  INTEGER (int4)
 [error]    x Short is not coercible to INTEGER (int4) according to the JDBC specification.
      Fix this by changing the schema type to SMALLINT, or the Scala type to Int or
-     JdbcType. (<console>:21)
+     JdbcType. (<console>:24)
 [info] 
 [error]   x C01 code       CHAR     (bpchar)  NOT NULL  →  Int
 [error]    x CHAR (bpchar) is ostensibly coercible to Int according to the JDBC specification
      but is not a recommended target type. Fix this by changing the schema type to
-     INTEGER; or the Scala type to PersonId or String. (<console>:21)
+     INTEGER; or the Scala type to PersonId or String. (<console>:24)
 [info] 
 [info]   + C02 name       VARCHAR  (varchar) NOT NULL  →  String
 [info]   + C03 population INTEGER  (int4)    NOT NULL  →  Int
@@ -112,20 +115,20 @@ scala> { specs2 run AnalysisTestSpec; () } // pretend this is sbt> test
      specification but is not a recommended target type. Fix this by changing the
      schema type to FLOAT or DOUBLE; or the Scala type to BigDecimal or BigDecimal.
    x Reading a NULL value into Double will result in a runtime failure. Fix this by
-     making the schema type NOT NULL or by changing the Scala type to Option[Double] (<console>:21)
+     making the schema type NOT NULL or by changing the Scala type to Option[Double] (<console>:24)
 [info] 
 [error]   x C05 indepyear  SMALLINT (int2)    NULL      →  
-[error]    x Column is unused. Remove it from the SELECT statement. (<console>:21)
+[error]    x Column is unused. Remove it from the SELECT statement. (<console>:24)
 [info] 
-[info] Update0 defined at <console>:19
+[info] Update0 defined at <console>:22
   
   update country set name = ? where name = ?
 [info]   + SQL Compiles and Typechecks
 [info]   + P01 String  →  VARCHAR (varchar)
 [info]   + P02 String  →  VARCHAR (text)
 [info] 
-[info] Total for specification $line12.$read$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$AnalysisTestSpec$
-[info] Finished in 30 ms
+[info] Total for specification $line14.$read$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$AnalysisTestSpec$
+[info] Finished in 35 ms
 13 examples, 4 failures, 0 error
 [info] 
 ```

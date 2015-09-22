@@ -17,10 +17,14 @@ This library pulls in [PostgreSQL JDBC Driver 9.4](https://jdbc.postgresql.org/d
 The following examples require a few imports.
 
 ```scala
-import doobie.imports._, scalaz._, Scalaz._, scalaz.concurrent.Task
+import doobie.imports._
+import scalaz._, Scalaz._
+import scalaz.concurrent.Task
+
 val xa = DriverManagerTransactor[Task](
   "org.postgresql.Driver", "jdbc:postgresql:world", "postgres", ""
 )
+
 import xa.yolo._
 ```
 
@@ -58,7 +62,10 @@ create type myenum as enum ('foo', 'bar')
 The first option is to map `myenum` to an instance of the execrable `scala.Enumeration` class via the `pgEnum` constructor.
 
 ```scala
-object MyEnum extends Enumeration { val foo, bar = Value }
+object MyEnum extends Enumeration { 
+  val foo, bar = Value 
+}
+
 implicit val MyEnumAtom = pgEnum(MyEnum, "myenum")
 ```
 
@@ -82,6 +89,7 @@ And the final, most general construction simply requires evidence that your tage
 
 ```scala
 sealed trait FooBar
+
 object FooBar {
   
   case object Foo extends FooBar
@@ -158,13 +166,15 @@ In addition to the general types above, **doobie** provides mappings for the fol
 A complete table of SQLSTATE values is provided in the `doobie.contrib.postgresql.sqlstate` module. Recovery combinators for each of these states (`onUniqueViolation` for example) are provided in `doobie.contrib.postgresql.syntax`.
 
 ```scala
-scala> import doobie.contrib.postgresql.sqlstate, doobie.contrib.postgresql.syntax._
 import doobie.contrib.postgresql.sqlstate
 import doobie.contrib.postgresql.syntax._
 
-scala> val p = sql"oops".query[String].unique // this won't work
-p: doobie.imports.ConnectionIO[String] = Gosub()
+val p = sql"oops".query[String].unique // this won't work
+```
 
+Some of the recovery combinators demonstrated:
+
+```scala
 scala> p.attempt.quick.run // attempt provided by Catchable instance
   -\/(org.postgresql.util.PSQLException: ERROR: syntax error at or near "oops"
   Position: 1)

@@ -17,14 +17,19 @@ libraryDependencies += "io.argonaut" %% "argonaut" % "6.1-M4" // as of date of p
 In our REPL we have the same setup as before, plus a few extra imports.
 
 ```scala
-import doobie.imports._, scalaz._, Scalaz._, scalaz.concurrent.Task, java.awt.Point
+import argonaut._, Argonaut._
+import doobie.imports._
+import java.awt.Point
+import org.postgresql.util.PGobject
+import scala.reflect.runtime.universe.TypeTag
+import scalaz._, Scalaz._
+import scalaz.concurrent.Task
+
 val xa = DriverManagerTransactor[Task](
   "org.postgresql.Driver", "jdbc:postgresql:world", "postgres", ""
 )
+
 import xa.yolo._
-import argonaut._, Argonaut._
-import scala.reflect.runtime.universe.TypeTag
-import org.postgresql.util.PGobject
 ```
 
 ### Meta, Atom, and Composite
@@ -47,7 +52,7 @@ HPS.set(("foo", 42))
 Composite[(String,Int)].set(1, ("foo", 42))
 ```
 
-**doobie** can derive `Composite` instances for primitive column types, plus tuples, `HList`s. and case classes whose elements have `Composite` instances. These primitive column types are identified by `Atom` instances, which describe `null`-safe column mappings. These `Atom` instances are almost always derived from lower-level `null`-unsafe mappings specified by the `Meta` typeclass.
+**doobie** can derive `Composite` instances for primitive column types, plus tuples, `HList`s, shapeless records, and case classes whose elements have `Composite` instances. These primitive column types are identified by `Atom` instances, which describe `null`-safe column mappings. These `Atom` instances are almost always derived from lower-level `null`-unsafe mappings specified by the `Meta` typeclass.
 
 So our strategy for mapping custom types is to construct a new `Meta` instance (given `Meta[A]` you get `Atom[A]` and `Atom[Option[A]]` for free); and our strategy for multi-column mappings is to construct a new `Composite` instance. We consider both case below.
 
@@ -59,6 +64,7 @@ Let's say we have a structured value that's represented by a single string in a 
 case class PersonId(department: String, number: Int) {
   def toLegacy = department + ":" + number
 }
+
 object PersonId {
 
   def fromLegacy(s: String): Option[PersonId] =
@@ -71,6 +77,7 @@ object PersonId {
     fromLegacy(s).getOrElse(throw new RuntimeException("Invalid format: " + s))
 
 }
+
 val pid = PersonId.unsafeFromLegacy("sales:42")
 ```
 
@@ -78,14 +85,16 @@ Because `PersonId` is a case class of primitive column values, we can already ma
 
 ```scala
 scala> Composite[PersonId].length
-res11: Int = 2
+res15: Int = 2
 ```
 
 However if we try to use this type for a *single* column value (i.e., as a query parameter, which requires an `Atom` instance), it doesn't compile.
 
 ```scala
 scala> sql"select * from person where id = $pid"
-res12: doobie.syntax.string.SqlInterpolator#Builder[shapeless.::[PersonId,shapeless.HNil]] = doobie.syntax.string$SqlInterpolator$Builder@7928c176
+<console>:40: error: could not find implicit value for parameter ev: doobie.syntax.string.Param[shapeless.::[PersonId,shapeless.HNil]]
+       sql"select * from person where id = $pid"
+       ^
 ```
 
 According to the error message we need a `Meta[PersonId]` instance. So how do we get one? The simplest way is by basing it on an existing instance, using `nxmap`, which is like the invariant functor `xmap` but ensures that `null` values are never observed. So we simply provide `String => PersonId` and vice-versa and we're good to go.
@@ -99,10 +108,10 @@ Now it compiles as a column value and as a `Composite` that maps to a *single* c
 
 ```scala
 scala> sql"select * from person where id = $pid"
-res13: doobie.syntax.string.SqlInterpolator#Builder[shapeless.::[PersonId,shapeless.HNil]] = doobie.syntax.string$SqlInterpolator$Builder@79d9e5fa
+res17: doobie.syntax.string.Builder[shapeless.::[PersonId,shapeless.HNil]] = doobie.syntax.string$Builder@101b3b9a
 
 scala> Composite[PersonId].length
-res14: Int = 1
+res18: Int = 1
 
 scala> sql"select 'podiatry:123'".query[PersonId].quick.run
   PersonId(podiatry,123)
@@ -198,7 +207,7 @@ scala> sql"select name, owner from pet".query[(String,String)].quick.run
 
 ### Composite by Invariant Map
 
-We get `Composite[A]` for free given `Atom[A]`, or for tuples, `HList`s, and case classes whose fields have `Composite` instances. This covers a lot of cases, but we still need a way to map other types. For example, what if we wanted to map a `java.awt.Point` across two columns? Because it's not a tuple or case class we can't do it for free, but we can get there via `xmap`. Here we map `Point` to a pair of `Int` columns.
+We get `Composite[A]` for free given `Atom[A]`, or for tuples, `HList`s, shapeless records, and case classes whose fields have `Composite` instances. This covers a lot of cases, but we still need a way to map other types. For example, what if we wanted to map a `java.awt.Point` across two columns? Because it's not a tuple or case class we can't do it for free, but we can get there via `xmap`. Here we map `Point` to a pair of `Int` columns.
 
 ```scala
 implicit val Point2DComposite: Composite[Point] = 
