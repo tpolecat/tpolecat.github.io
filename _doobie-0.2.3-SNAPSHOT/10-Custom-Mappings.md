@@ -92,7 +92,10 @@ However if we try to use this type for a *single* column value (i.e., as a query
 
 ```scala
 scala> sql"select * from person where id = $pid"
-<console>:40: error: could not find implicit value for parameter ev: doobie.syntax.string.Param[shapeless.::[PersonId,shapeless.HNil]]
+<console>:40: error: Could not find or construct Param[shapeless.::[PersonId,shapeless.HNil]].
+Ensure that this type is an atomic type with an Atom instance in scope, or is an HList whose members
+have Atom instances in scope. You can usually diagnose this problem by trying to summon the Atom
+instance for each element in the REPL. See the FAQ in the Book of Doobie for more hints.
        sql"select * from person where id = $pid"
        ^
 ```
@@ -108,7 +111,7 @@ Now it compiles as a column value and as a `Composite` that maps to a *single* c
 
 ```scala
 scala> sql"select * from person where id = $pid"
-res17: doobie.syntax.string.Builder[shapeless.::[PersonId,shapeless.HNil]] = doobie.syntax.string$Builder@101b3b9a
+res17: doobie.syntax.string.Builder[shapeless.::[PersonId,shapeless.HNil]] = doobie.syntax.string$Builder@355a3b05
 
 scala> Composite[PersonId].length
 res18: Int = 1

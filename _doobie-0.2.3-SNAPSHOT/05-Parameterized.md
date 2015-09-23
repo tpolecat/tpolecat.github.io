@@ -118,7 +118,7 @@ def populationIn(range: Range, codes: NonEmptyList[String]) = {
 There are a few things to notice here:
 
 - The `IN` clause must be non-empty, so `codes` is a `NonEmptyList`.
-- We must derive a `Param` instance for the *singleton type* of `codes`, which we do via `Param.many`. This derivation is legal for any `NonEmptyList[A]` given `Atom[A]`. You can have any number of `IN` arguments but each must have its own derived `Param` instance.
+- We must derive a `Param` instance for the *singleton type* of `codes`, which we do via `Param.many`. This derivation is legal for any `F[A]` given `Foldable1[F]` and `Atom[A]`. You can have any number of `IN` arguments but each must have its own derived `Param` instance.
 - When interpolating `codes` we must explicitly ascribe its singleton type `codes.type`.
 
 Running this query gives us the desired result.
@@ -164,10 +164,10 @@ When reading a row or setting parameters in the high-level API, we require an in
 
 ```scala
 scala> Composite[(String, Boolean)]
-res9: doobie.util.composite.Composite[(String, Boolean)] = doobie.util.composite$Composite$$anon$1@4170966
+res9: doobie.util.composite.Composite[(String, Boolean)] = doobie.util.composite$Composite$$anon$1@42af5cbb
 
 scala> Composite[Country]
-res10: doobie.util.composite.Composite[Country] = doobie.util.composite$Composite$$anon$1@60070248
+res10: doobie.util.composite.Composite[Country] = doobie.util.composite$Composite$$anon$1@7a0f33
 ```
 
 The `set` constructor takes an argument of any type with a `Composite` instance and returns a program that sets the unrolled sequence of values starting at parameter index 1 by default. Some other variations are shown here.
