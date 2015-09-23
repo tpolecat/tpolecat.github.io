@@ -128,7 +128,13 @@ class: center, middle
 
 - rob
 - sorry for the mixup
-- thanks to SweetSpot
+- thanks to SweetSpot and Shane Delmore for hosting
+- we'll be back at Urban Airship next month on the 20th
+- we're always looking for speakers ... if you haven't ever given a talk but you're interested, please talk to me
+  - experience reports
+  - describe a problem you're having
+
+- any other announcements or questions before we get started? this is a really informal meeting so if my talk goes off the rails and we decide to talk about something else, that's fine.
 
 ---
 
@@ -143,14 +149,31 @@ Rob Norris / `@tpolecat`
 import scalaz._, Scalaz._
 ```
 
-- this is a *beginner* talk, so pls pls ask questions
+- apologies for the formatting; i didn't have time to make it pretty
+- this is a *beginner* talk, so pls pls interrupt me and ask questions
+- we may not get through the whole thing (or i may not, i'm getting a cold)
 - how many totally new to scala?
+
+---
+
+# The Big Picture
+
+Functional languages are *really* good at manipulating data. So our approach is going to be:
+
+- Turn failure into a **value**.
+- Frees us up to use many approaches!
+- There is no one true and holy way to handle failure in functional programs!
+
+???
+
+This can be frustrating at first if you're used to a language that only gives you one way to do it (i.e., most of them).
+
 
 ---
 
 # The Problem
 
-We have as simple domain model:
+We have a simple domain model:
 
 ```scala
 case class Person(name: String, age: Int)
@@ -166,6 +189,12 @@ object Key {
   val Age  = "AGE"
 }
 ```
+
+???
+
+- seems like a really simple example
+- and it is, but this is the only thing we're going to talk about
+- we're going to look at five differen ways to do this. time permitting.
 
 ---
 
@@ -204,7 +233,7 @@ java.util.NoSuchElementException: key not found: NAME
   at scala.collection.MapLike$class.apply(MapLike.scala:141)
   at scala.collection.AbstractMap.apply(Map.scala:59)
   at .person(<console>:22)
-  ... 910 elided
+  ... 1019 elided
 ```
 
 ---
@@ -235,7 +264,7 @@ The `Option` type represents the result of computations that might not return a 
 
 ```scala
 sealed trait Option[+A]
-case class Some[A](get: A) extends Option[A]
+case class Some[A](value: A) extends Option[A]
 case object Nothing extends Option[Nothing]
 ```
 
@@ -534,6 +563,7 @@ def person(m: Map[String, String]) = ??? // either a Problem or a Person
 
 ???
 
+- much better than using `String` for errors ... you have some useful structure here
 - so instead of returning a `None` when there's a problem, we want to return a `Problem` value that we can show to the user.
 - it turns out that scala has a type for this!
 
@@ -578,7 +608,7 @@ scala> val e: Either[String, Int] = Right(42)
 e: Either[String,Int] = Right(42)
 
 scala> e.right.map(_ + 1)
-res23: Product with Serializable with scala.util.Either[String,Int] = Right(43)
+res23: scala.util.Either[String,Int] = Right(43)
 
 scala> e.right.flatMap(n => Right(n + 1))
 res24: scala.util.Either[String,Int] = Right(43)
@@ -595,13 +625,13 @@ We can turn a `Option` into an `Either` by supplying the "other" side to use if 
 
 ```scala
 scala> Some(42).toRight("Hello")
-res26: Product with Serializable with scala.util.Either[String,Int] = Right(42)
+res26: scala.util.Either[String,Int] = Right(42)
 
 scala> None.toRight("Hello")
-res27: Product with Serializable with scala.util.Either[String,Nothing] = Left(Hello)
+res27: scala.util.Either[String,Nothing] = Left(Hello)
 
 scala> None.toLeft("Hello")
-res28: Product with Serializable with scala.util.Either[Nothing,String] = Right(Hello)
+res28: scala.util.Either[Nothing,String] = Right(Hello)
 ```
 
 ---
@@ -834,19 +864,22 @@ Try it! The `tuple` combinator lets us combine two `Validation`s into a single `
 
 ```scala
 scala> even(2)
-res55: scalaz.Validation[scalaz.NonEmptyList[String],Int] = Success(2)
+res55: Validation[NonEmptyList[String],Int] = Success(2)
 
 scala> even(3)
-res56: scalaz.Validation[scalaz.NonEmptyList[String],Int] = Failure(NonEmptyList(3 is odd!))
+res56: Validation[NonEmptyList[String],Int] = 
+  Failure(NonEmptyList(3 is odd!))
 
 scala> even(2) tuple even(4)
-res57: scalaz.Validation[scalaz.NonEmptyList[String],(Int, Int)] = Success((2,4))
+res57: Validation[NonEmptyList[String],(Int, Int)] = Success((2,4))
 
 scala> even(3) tuple even(4)
-res58: scalaz.Validation[scalaz.NonEmptyList[String],(Int, Int)] = Failure(NonEmptyList(3 is odd!))
+res58: Validation[NonEmptyList[String],(Int, Int)] = 
+  Failure(NonEmptyList(3 is odd!))
 
 scala> even(3) tuple even(5)
-res59: scalaz.Validation[scalaz.NonEmptyList[String],(Int, Int)] = Failure(NonEmptyList(3 is odd!, 5 is odd!))
+res59: Validation[NonEmptyList[String],(Int, Int)] = 
+  Failure(NonEmptyList(3 is odd!, 5 is odd!))
 ```
 
 ---
@@ -861,8 +894,9 @@ def stringParam(m: Map[String, String], key: String): ValidationNel[Problem, Str
 
 def intParam(m: Map[String, String], key: String): ValidationNel[Problem, Int] =
   stringParam(m, key) match {
-    case     Success(s) => parseInt(s).toSuccess(NotAnInteger(key, s)).toValidationNel
     case f @ Failure(_) => f
+    case Success(s) => 
+      parseInt(s).toSuccess(NotAnInteger(key, s)).toValidationNel
   }
 
 def person(m: Map[String, String]): ValidationNel[Problem, Person] =
@@ -877,13 +911,16 @@ Let's try it!
 
 ```scala
 scala> person(Map())
-res62: scalaz.ValidationNel[Problem,Person] = Failure(NonEmptyList(MissingKey(NAME), MissingKey(AGE)))
+res62: scalaz.ValidationNel[Problem,Person] = 
+  Failure(NonEmptyList(MissingKey(NAME), MissingKey(AGE)))
 
 scala> person(Map("NAME" -> "Bob"))
-res63: scalaz.ValidationNel[Problem,Person] = Failure(NonEmptyList(MissingKey(AGE)))
+res63: scalaz.ValidationNel[Problem,Person] = 
+  Failure(NonEmptyList(MissingKey(AGE)))
 
 scala> person(Map("NAME" -> "Bob", "AGE" -> "Forty-Two"))
-res64: scalaz.ValidationNel[Problem,Person] = Failure(NonEmptyList(NotAnInteger(AGE,Forty-Two)))
+res64: scalaz.ValidationNel[Problem,Person] = 
+  Failure(NonEmptyList(NotAnInteger(AGE,Forty-Two)))
 
 scala> person(Map("NAME" -> "Bob", "AGE" -> "42"))
 res65: scalaz.ValidationNel[Problem,Person] = Success(Person(Bob,42))
