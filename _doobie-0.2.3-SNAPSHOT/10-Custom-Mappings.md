@@ -111,7 +111,7 @@ Now it compiles as a column value and as a `Composite` that maps to a *single* c
 
 ```scala
 scala> sql"select * from person where id = $pid"
-res17: doobie.syntax.string.Builder[shapeless.::[PersonId,shapeless.HNil]] = doobie.syntax.string$Builder@355a3b05
+res17: doobie.syntax.string.Builder[shapeless.::[PersonId,shapeless.HNil]] = doobie.syntax.string$Builder@188aa20
 
 scala> Composite[PersonId].length
 res18: Int = 1

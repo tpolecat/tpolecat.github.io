@@ -25,6 +25,30 @@ import xa.yolo._
 
 This used to be very irritating, but as of 0.2.3 is only moderately irritating. See the section on `IN` clauses in [Chapter 5](05-Parameterized.html).
 
+### How do I ascribe a SQL type to an interpolated parameter?
+
+Interpolated parameters are replaced with `?` placeholders, so if you need to ascribe a SQL type you can use vendor-specific syntax in conjunction with the interpolated value. For example, in PostgreSQL you use `:: type`:
+
+```scala
+scala> val s = "foo"
+s: String = foo
+
+scala> sql"select $s".query[String].check.run
+
+  select ?
+
+  ✕ SQL Compiles and Typechecks
+    - ERROR: could not determine data type of parameter $1
+
+scala> sql"select $s :: char".query[String].check.run
+
+  select ? :: char
+
+  ✓ SQL Compiles and Typechecks
+  ✓ P01 String  →  CHAR (bpchar)
+  ✓ C01 bpchar CHAR (bpchar) NULL?  →  String
+```
+
 ### How do I do several things in the same transaction?
 
 You can use a `for` comprehension to compose any number of `ConnectionIO` programs, and then call `.transact(xa)` on the result. All of the composed programs will run in the same transaction. For this reason it's useful for your APIs to expose values in `ConnectionIO`, so higher-level code can place transaction boundaries as needed. 
@@ -120,7 +144,7 @@ When we use the `sql` interpolator we require a `Param` instance for an `HList` 
 
 ```
 scala> def query(s: String, u: UUID) = sql"… $s … $u …".query[Int]
-<console>:30: error: Could not find or construct Param[shapeless.::[String,shapeless.::[java.util.UUID,shapeless.HNil]]].
+<console>:31: error: Could not find or construct Param[shapeless.::[String,shapeless.::[java.util.UUID,shapeless.HNil]]].
 Ensure that this type is an atomic type with an Atom instance in scope, or is an HList whose members
 have Atom instances in scope. You can usually diagnose this problem by trying to summon the Atom
 instance for each element in the REPL. See the FAQ in the Book of Doobie for more hints.
@@ -132,7 +156,7 @@ Ok, so the message suggests that we need an `Atom` instance for each type in the
 
 ```
 scala> Atom[String]
-res8: doobie.util.atom.Atom[String] = doobie.util.atom$Atom$$anon$2@72114e0b
+res10: doobie.util.atom.Atom[String] = doobie.util.atom$Atom$$anon$2@3cb45f66
 
 scala> Atom[UUID]
 <console>:31: error: Could not find or construct Atom[java.util.UUID]; ensure that java.util.UUID has a Meta instance.
@@ -160,13 +184,13 @@ Having done this, the `Meta`, `Atom`, and `Param` instances are now present and 
 
 ```scala
 scala> Meta[UUID]
-res11: doobie.util.meta.Meta[java.util.UUID] = doobie.util.meta$Meta$$anon$2@68f61c3
+res13: doobie.util.meta.Meta[java.util.UUID] = doobie.util.meta$Meta$$anon$2@2d5c8972
 
 scala> Atom[UUID]
-res12: doobie.util.atom.Atom[java.util.UUID] = doobie.util.atom$Atom$$anon$2@4cc30986
+res14: doobie.util.atom.Atom[java.util.UUID] = doobie.util.atom$Atom$$anon$2@42d0a489
 
 scala> Param[String :: UUID :: HNil]
-res13: doobie.syntax.string.Param[shapeless.::[String,shapeless.::[java.util.UUID,shapeless.HNil]]] = doobie.syntax.string$Param$$anon$3@240e33b5
+res15: doobie.syntax.string.Param[shapeless.::[String,shapeless.::[java.util.UUID,shapeless.HNil]]] = doobie.syntax.string$Param$$anon$3@61fc8b6
 
 scala> def query(s: String, u: UUID) = sql"select ... where foo = $s and url = $u".query[Int]
 query: (s: String, u: java.util.UUID)doobie.util.query.Query0[Int]
@@ -245,6 +269,6 @@ Our derivation now works and the code compiles.
 
 ```scala
 scala> sql"…".query[State]
-res16: doobie.util.query.Query0[State] = doobie.util.query$Query$$anon$4@526f28d6
+res18: doobie.util.query.Query0[State] = doobie.util.query$Query$$anon$4@58076688
 ```
 

@@ -119,7 +119,24 @@ scala> insert2("Jimmy", Some(42)).quick.run
   Person(3,Jimmy,Some(42))
 ```
 
-This is irritating but it is supported by all databases (although the "get the last used id" function will vary by vendor). A nicer way to do this is in one shot by returning specified columns from the inserted row. Not all databases support this feature, but PostgreSQL does.
+This is irritating but it is supported by all databases (although the "get the last used id" function will vary by vendor).
+
+Some database (like H2) allow you to return [only] the inserted id, allowing the above operation to be reduced to two statements (see below for an explanation of `withUniqueGeneratedKeys`).
+
+```scala
+def insert2_H2(name: String, age: Option[Short]): ConnectionIO[Person] =
+  for {
+    id <- sql"insert into person (name, age) values ($name, $age)".update.withUniqueGeneratedKeys[Int]("id")
+    p  <- sql"select id, name, age from person where id = $id".query[Person].unique
+  } yield p
+```
+
+```scala
+scala> insert2_H2("Ramone", Some(42)).quick.run
+  Person(4,Ramone,Some(42))
+```
+
+Other databases (including PostgreSQL) provide a way to do this in one shot by returning multiple specified columns from the inserted row.
 
 ```scala
 def insert3(name: String, age: Option[Short]): ConnectionIO[Person] = {
@@ -132,7 +149,7 @@ The `withUniqueGeneratedKeys` specifies that we expect exactly one row back (oth
 
 ```scala
 scala> insert3("Elvis", None).quick.run
-  Person(4,Elvis,None)
+  Person(5,Elvis,None)
 ```
 
 This mechanism also works for updates, for databases that support it. In the case of multiple row updates we omit `unique` and get a `Process[ConnectionIO, Person]` back.
@@ -151,10 +168,12 @@ Running this process updates all rows with a non-`NULL` age and returns them.
 scala> up.quick.run
   Person(1,Alice,Some(16))
   Person(3,Jimmy,Some(43))
+  Person(4,Ramone,Some(43))
 
 scala> up.quick.run // and again!
   Person(1,Alice,Some(17))
   Person(3,Jimmy,Some(44))
+  Person(4,Ramone,Some(44))
 ```
 
 ### Batch Updates
@@ -193,9 +212,9 @@ Running this program yields the updated instances.
 
 ```scala
 scala> insertMany(data).quick.run
-  Person(5,Banjo,Some(39))
-  Person(6,Skeeter,None)
-  Person(7,Jim-Bob,Some(12))
+  Person(6,Banjo,Some(39))
+  Person(7,Skeeter,None)
+  Person(8,Jim-Bob,Some(12))
 ```
 
 If updated rows are not needed or are unsupported by your database, the `updateMany` operation contstructs a `ConnectionIO[Int]` that performs updates in the same way but simply returns the total number of updated rows.
