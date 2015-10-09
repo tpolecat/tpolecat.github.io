@@ -74,7 +74,7 @@ scala> biggerThan(0).check.run
   ✕ C01 code       CHAR     (bpchar)  NOT NULL  →  Int
     - CHAR (bpchar) is ostensibly coercible to Int according to the JDBC specification
       but is not a recommended target type. Fix this by changing the schema type to
-      INTEGER; or the Scala type to String.
+      INTEGER; or the Scala type to Code or String.
   ✓ C02 name       VARCHAR  (varchar) NOT NULL  →  String
   ✓ C03 population INTEGER  (int4)    NOT NULL  →  Int
   ✕ C04 gnp        NUMERIC  (numeric) NULL      →  Double

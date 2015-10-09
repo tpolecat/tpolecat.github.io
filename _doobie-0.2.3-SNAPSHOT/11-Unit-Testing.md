@@ -106,7 +106,7 @@ scala> { specs2 run AnalysisTestSpec; () } // pretend this is sbt> test
 [error]   x C01 code       CHAR     (bpchar)  NOT NULL  →  Int
 [error]    x CHAR (bpchar) is ostensibly coercible to Int according to the JDBC specification
      but is not a recommended target type. Fix this by changing the schema type to
-     INTEGER; or the Scala type to PersonId or String. (<console>:24)
+     INTEGER; or the Scala type to Code or PersonId or String. (<console>:24)
 [info] 
 [info]   + C02 name       VARCHAR  (varchar) NOT NULL  →  String
 [info]   + C03 population INTEGER  (int4)    NOT NULL  →  Int
@@ -128,7 +128,7 @@ scala> { specs2 run AnalysisTestSpec; () } // pretend this is sbt> test
 [info]   + P02 String  →  VARCHAR (text)
 [info] 
 [info] Total for specification $line14.$read$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$AnalysisTestSpec$
-[info] Finished in 29 ms
+[info] Finished in 27 ms
 13 examples, 4 failures, 0 error
 [info] 
 ```

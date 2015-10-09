@@ -84,8 +84,8 @@ scala> cities(Code("USA"), true).check.run
     
 
   ✓ SQL Compiles and Typechecks
-  ✓ P01 String  →  CHAR (bpchar)
-  ✓ C01 countrycode CHAR    (bpchar)  NOT NULL  →  String
+  ✓ P01 Code  →  CHAR (bpchar)
+  ✓ C01 countrycode CHAR    (bpchar)  NOT NULL  →  Code
   ✓ C02 name        VARCHAR (varchar) NOT NULL  →  String
   ✓ C03 population  INTEGER (int4)    NOT NULL  →  Int
 ```
@@ -156,7 +156,7 @@ Ok, so the message suggests that we need an `Atom` instance for each type in the
 
 ```
 scala> Atom[String]
-res10: doobie.util.atom.Atom[String] = doobie.util.atom$Atom$$anon$2@3cb45f66
+res10: doobie.util.atom.Atom[String] = doobie.util.atom$Atom$$anon$2@32e76624
 
 scala> Atom[UUID]
 <console>:31: error: Could not find or construct Atom[java.util.UUID]; ensure that java.util.UUID has a Meta instance.
@@ -184,13 +184,13 @@ Having done this, the `Meta`, `Atom`, and `Param` instances are now present and 
 
 ```scala
 scala> Meta[UUID]
-res13: doobie.util.meta.Meta[java.util.UUID] = doobie.util.meta$Meta$$anon$2@2d5c8972
+res13: doobie.util.meta.Meta[java.util.UUID] = doobie.util.meta$Meta$$anon$2@59f7d467
 
 scala> Atom[UUID]
-res14: doobie.util.atom.Atom[java.util.UUID] = doobie.util.atom$Atom$$anon$2@42d0a489
+res14: doobie.util.atom.Atom[java.util.UUID] = doobie.util.atom$Atom$$anon$2@1a546541
 
 scala> Param[String :: UUID :: HNil]
-res15: doobie.syntax.string.Param[shapeless.::[String,shapeless.::[java.util.UUID,shapeless.HNil]]] = doobie.syntax.string$Param$$anon$3@61fc8b6
+res15: doobie.syntax.string.Param[shapeless.::[String,shapeless.::[java.util.UUID,shapeless.HNil]]] = doobie.syntax.string$Param$$anon$3@25d03735
 
 scala> def query(s: String, u: UUID) = sql"select ... where foo = $s and url = $u".query[Int]
 query: (s: String, u: java.util.UUID)doobie.util.query.Query0[Int]
@@ -269,6 +269,6 @@ Our derivation now works and the code compiles.
 
 ```scala
 scala> sql"…".query[State]
-res18: doobie.util.query.Query0[State] = doobie.util.query$Query$$anon$4@58076688
+res18: doobie.util.query.Query0[State] = doobie.util.query$Query$$anon$4@707d1365
 ```
 

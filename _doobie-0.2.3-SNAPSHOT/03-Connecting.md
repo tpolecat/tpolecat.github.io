@@ -43,7 +43,7 @@ Right, so let's do this.
 
 ```scala
 scala> val task = program1.transact(xa)
-task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@1a7a4546
+task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@4053e1d3
 
 scala> task.run
 res0: Int = 42
@@ -64,7 +64,7 @@ scala> val program2 = sql"select 42".query[Int].unique
 program2: doobie.imports.ConnectionIO[Int] = Gosub()
 
 scala> val task2 = program2.transact(xa)
-task2: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@215683f2
+task2: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@14e89ccc
 
 scala> task2.run
 res1: Int = 42
@@ -89,7 +89,7 @@ And behold!
 
 ```scala
 scala> program3.transact(xa).run
-res2: (Int, Double) = (42,0.7923080143518746)
+res2: (Int, Double) = (42,0.08962684823200107)
 ```
 
 The astute among you will note that we don't actually need a monad to do this; an applicative functor is all we need here. So we could also write `program3` as:
@@ -106,18 +106,18 @@ And lo, it was good:
 
 ```scala
 scala> program3a.transact(xa).run
-res3: (Int, Double) = (42,0.7872196948155761)
+res3: (Int, Double) = (42,0.07525884406641126)
 ```
 
 And of course this composition can continue indefinitely.
 
 ```scala
-scala> List.fill(5)(program3a).sequenceU.transact(xa).run.foreach(println)
-(42,0.6259473762474954)
-(42,0.8407393367961049)
-(42,0.4634701912291348)
-(42,0.39226667350158095)
-(42,0.40465995809063315)
+scala> program3a.replicateM(5).transact(xa).run.foreach(println)
+(42,0.067840242292732)
+(42,0.7764098267070949)
+(42,0.2857229164801538)
+(42,0.41019743122160435)
+(42,0.24939577467739582)
 ```
 
 
@@ -134,7 +134,7 @@ scala> val kleisli = program1.transK[Task]
 kleisli: scalaz.Kleisli[scalaz.concurrent.Task,java.sql.Connection,Int] = Kleisli(<function1>)
 
 scala> val task = Task.delay(null: java.sql.Connection) >>= kleisli
-task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@b510dc4
+task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@4aff2f28
 
 scala> task.run // sneaky; program1 never looks at the connection
 res5: Int = 42
@@ -156,5 +156,5 @@ Currently scalaz has no typeclass for monads with **effect-capturing unit**, so 
 
 **doobie** provides instances for `Task` and `IO`, and the implementations are simply `delay` and `apply`, respectively.
 
-
+> Note that `scala.concurrent.Future` does **not** have an effect-capturing constructor and thus cannot be used as a target type for **doobie** programs. Although `Future` is very commonly used for side-effecting operations, doing so is not referentially transparent. *`Future` has nothing at all to say about side-effects. It is well-behaved in a functional sense only for pure computations.*
 
