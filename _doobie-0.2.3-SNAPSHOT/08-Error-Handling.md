@@ -44,7 +44,7 @@ scala> val p = 42.point[ConnectionIO]
 p: doobie.imports.ConnectionIO[Int] = Return(42)
 
 scala> p.attempt
-res2: doobie.imports.ConnectionIO[scalaz.\/[Throwable,Int]] = Suspend(scalaz.Coyoneda$$anon$22@33aef03b)
+res2: doobie.imports.ConnectionIO[scalaz.\/[Throwable,Int]] = Suspend(scalaz.Coyoneda$$anon$22@37d1d608)
 ```
 
 From the `.attempt` combinator we derive the following, available as combinators and as syntax:

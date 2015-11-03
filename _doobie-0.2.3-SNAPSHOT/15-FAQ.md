@@ -156,7 +156,7 @@ Ok, so the message suggests that we need an `Atom` instance for each type in the
 
 ```
 scala> Atom[String]
-res10: doobie.util.atom.Atom[String] = doobie.util.atom$Atom$$anon$2@32e76624
+res10: doobie.util.atom.Atom[String] = doobie.util.atom$Atom$$anon$2@4848c7e5
 
 scala> Atom[UUID]
 <console>:31: error: Could not find or construct Atom[java.util.UUID]; ensure that java.util.UUID has a Meta instance.
@@ -184,13 +184,13 @@ Having done this, the `Meta`, `Atom`, and `Param` instances are now present and 
 
 ```scala
 scala> Meta[UUID]
-res13: doobie.util.meta.Meta[java.util.UUID] = doobie.util.meta$Meta$$anon$2@59f7d467
+res13: doobie.util.meta.Meta[java.util.UUID] = doobie.util.meta$Meta$$anon$2@73134462
 
 scala> Atom[UUID]
-res14: doobie.util.atom.Atom[java.util.UUID] = doobie.util.atom$Atom$$anon$2@1a546541
+res14: doobie.util.atom.Atom[java.util.UUID] = doobie.util.atom$Atom$$anon$2@fc06bc4
 
 scala> Param[String :: UUID :: HNil]
-res15: doobie.syntax.string.Param[shapeless.::[String,shapeless.::[java.util.UUID,shapeless.HNil]]] = doobie.syntax.string$Param$$anon$3@25d03735
+res15: doobie.syntax.string.Param[shapeless.::[String,shapeless.::[java.util.UUID,shapeless.HNil]]] = doobie.syntax.string$Param$$anon$3@67f5f0a3
 
 scala> def query(s: String, u: UUID) = sql"select ... where foo = $s and url = $u".query[Int]
 query: (s: String, u: java.util.UUID)doobie.util.query.Query0[Int]
@@ -269,6 +269,6 @@ Our derivation now works and the code compiles.
 
 ```scala
 scala> sql"…".query[State]
-res18: doobie.util.query.Query0[State] = doobie.util.query$Query$$anon$4@707d1365
+res18: doobie.util.query.Query0[State] = doobie.util.query$Query$$anon$4@62c3cc9e
 ```
 
