@@ -1,0 +1,318 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>free - doobie.contrib.postgresql.free</title>
+          <meta name="description" content="free - doobie.contrib.postgresql.free" />
+          <meta name="keywords" content="free doobie.contrib.postgresql.free" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../../../index.html';
+            var hash = 'doobie.contrib.postgresql.free.package';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="value">
+      <div id="definition">
+        <img alt="Package" src="../../../../lib/package_big.png" />
+        <p id="owner"><a href="../../../package.html" class="extype" name="doobie">doobie</a>.<a href="../../package.html" class="extype" name="doobie.contrib">contrib</a>.<a href="../package.html" class="extype" name="doobie.contrib.postgresql">postgresql</a></p>
+        <h1>free</h1><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.package" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">free</span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        
+        
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="doobie.contrib.postgresql.free.copyin" visbl="pub" data-isabs="false" fullComment="yes" group="Modules">
+      <a id="copyin"></a>
+      <a id="copyin:copyin"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="copyin$.html"><span class="name">copyin</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.package@copyin" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Algebra and free monad for primitive operations over a <code>org.postgresql.copy.CopyIn</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Algebra and free monad for primitive operations over a <code>org.postgresql.copy.CopyIn</code>. This is
+a low-level API that exposes lifecycle-managed JDBC objects directly and is intended mainly
+for library developers. End users will prefer a safer, higher-level API such as that provided
+in the <code>doobie.hi</code> package.</p><p><code>CopyInIO</code> is a free monad that must be run via an interpreter, most commonly via
+natural transformation of its underlying algebra <code>CopyInOp</code> to another monad via
+<code>Free.runFC</code>.</p><p>The library provides a natural transformation to <code>Kleisli[M, CopyIn, A]</code> for any
+exception-trapping (<code>Catchable</code>) and effect-capturing (<code>Capture</code>) monad <code>M</code>. Such evidence is
+provided for <code>Task</code>, <code>IO</code>, and stdlib <code>Future</code>; and <code>transK[M]</code> is provided as syntax.</p><pre><span class="cmt">// An action to run</span>
+<span class="kw">val</span> a: CopyInIO[Foo] = ...
+
+<span class="cmt">// A JDBC object</span>
+<span class="kw">val</span> s: CopyIn = ...
+
+<span class="cmt">// Unfolding into a Task</span>
+<span class="kw">val</span> ta: Task[A] = a.transK[Task].run(s)</pre></div></div>
+    </li><li name="doobie.contrib.postgresql.free.copymanager" visbl="pub" data-isabs="false" fullComment="yes" group="Modules">
+      <a id="copymanager"></a>
+      <a id="copymanager:copymanager"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="copymanager$.html"><span class="name">copymanager</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.package@copymanager" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Algebra and free monad for primitive operations over a <code>org.postgresql.copy.CopyManager</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Algebra and free monad for primitive operations over a <code>org.postgresql.copy.CopyManager</code>. This is
+a low-level API that exposes lifecycle-managed JDBC objects directly and is intended mainly
+for library developers. End users will prefer a safer, higher-level API such as that provided
+in the <code>doobie.hi</code> package.</p><p><code>CopyManagerIO</code> is a free monad that must be run via an interpreter, most commonly via
+natural transformation of its underlying algebra <code>CopyManagerOp</code> to another monad via
+<code>Free.runFC</code>.</p><p>The library provides a natural transformation to <code>Kleisli[M, CopyManager, A]</code> for any
+exception-trapping (<code>Catchable</code>) and effect-capturing (<code>Capture</code>) monad <code>M</code>. Such evidence is
+provided for <code>Task</code>, <code>IO</code>, and stdlib <code>Future</code>; and <code>transK[M]</code> is provided as syntax.</p><pre><span class="cmt">// An action to run</span>
+<span class="kw">val</span> a: CopyManagerIO[Foo] = ...
+
+<span class="cmt">// A JDBC object</span>
+<span class="kw">val</span> s: CopyManager = ...
+
+<span class="cmt">// Unfolding into a Task</span>
+<span class="kw">val</span> ta: Task[A] = a.transK[Task].run(s)</pre></div></div>
+    </li><li name="doobie.contrib.postgresql.free.copyout" visbl="pub" data-isabs="false" fullComment="yes" group="Modules">
+      <a id="copyout"></a>
+      <a id="copyout:copyout"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="copyout$.html"><span class="name">copyout</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.package@copyout" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Algebra and free monad for primitive operations over a <code>org.postgresql.copy.CopyOut</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Algebra and free monad for primitive operations over a <code>org.postgresql.copy.CopyOut</code>. This is
+a low-level API that exposes lifecycle-managed JDBC objects directly and is intended mainly
+for library developers. End users will prefer a safer, higher-level API such as that provided
+in the <code>doobie.hi</code> package.</p><p><code>CopyOutIO</code> is a free monad that must be run via an interpreter, most commonly via
+natural transformation of its underlying algebra <code>CopyOutOp</code> to another monad via
+<code>Free.runFC</code>.</p><p>The library provides a natural transformation to <code>Kleisli[M, CopyOut, A]</code> for any
+exception-trapping (<code>Catchable</code>) and effect-capturing (<code>Capture</code>) monad <code>M</code>. Such evidence is
+provided for <code>Task</code>, <code>IO</code>, and stdlib <code>Future</code>; and <code>transK[M]</code> is provided as syntax.</p><pre><span class="cmt">// An action to run</span>
+<span class="kw">val</span> a: CopyOutIO[Foo] = ...
+
+<span class="cmt">// A JDBC object</span>
+<span class="kw">val</span> s: CopyOut = ...
+
+<span class="cmt">// Unfolding into a Task</span>
+<span class="kw">val</span> ta: Task[A] = a.transK[Task].run(s)</pre></div></div>
+    </li><li name="doobie.contrib.postgresql.free.fastpath" visbl="pub" data-isabs="false" fullComment="yes" group="Modules">
+      <a id="fastpath"></a>
+      <a id="fastpath:fastpath"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="fastpath$.html"><span class="name">fastpath</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.package@fastpath" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Algebra and free monad for primitive operations over a <code>org.postgresql.fastpath.Fastpath</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Algebra and free monad for primitive operations over a <code>org.postgresql.fastpath.Fastpath</code>. This is
+a low-level API that exposes lifecycle-managed JDBC objects directly and is intended mainly
+for library developers. End users will prefer a safer, higher-level API such as that provided
+in the <code>doobie.hi</code> package.</p><p><code>FastpathIO</code> is a free monad that must be run via an interpreter, most commonly via
+natural transformation of its underlying algebra <code>FastpathOp</code> to another monad via
+<code>Free.runFC</code>.</p><p>The library provides a natural transformation to <code>Kleisli[M, Fastpath, A]</code> for any
+exception-trapping (<code>Catchable</code>) and effect-capturing (<code>Capture</code>) monad <code>M</code>. Such evidence is
+provided for <code>Task</code>, <code>IO</code>, and stdlib <code>Future</code>; and <code>transK[M]</code> is provided as syntax.</p><pre><span class="cmt">// An action to run</span>
+<span class="kw">val</span> a: FastpathIO[Foo] = ...
+
+<span class="cmt">// A JDBC object</span>
+<span class="kw">val</span> s: Fastpath = ...
+
+<span class="cmt">// Unfolding into a Task</span>
+<span class="kw">val</span> ta: Task[A] = a.transK[Task].run(s)</pre></div></div>
+    </li><li name="doobie.contrib.postgresql.free.largeobject" visbl="pub" data-isabs="false" fullComment="yes" group="Modules">
+      <a id="largeobject"></a>
+      <a id="largeobject:largeobject"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="largeobject$.html"><span class="name">largeobject</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.package@largeobject" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Algebra and free monad for primitive operations over a <code>org.postgresql.largeobject.LargeObject</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Algebra and free monad for primitive operations over a <code>org.postgresql.largeobject.LargeObject</code>. This is
+a low-level API that exposes lifecycle-managed JDBC objects directly and is intended mainly
+for library developers. End users will prefer a safer, higher-level API such as that provided
+in the <code>doobie.hi</code> package.</p><p><code>LargeObjectIO</code> is a free monad that must be run via an interpreter, most commonly via
+natural transformation of its underlying algebra <code>LargeObjectOp</code> to another monad via
+<code>Free.runFC</code>.</p><p>The library provides a natural transformation to <code>Kleisli[M, LargeObject, A]</code> for any
+exception-trapping (<code>Catchable</code>) and effect-capturing (<code>Capture</code>) monad <code>M</code>. Such evidence is
+provided for <code>Task</code>, <code>IO</code>, and stdlib <code>Future</code>; and <code>transK[M]</code> is provided as syntax.</p><pre><span class="cmt">// An action to run</span>
+<span class="kw">val</span> a: LargeObjectIO[Foo] = ...
+
+<span class="cmt">// A JDBC object</span>
+<span class="kw">val</span> s: LargeObject = ...
+
+<span class="cmt">// Unfolding into a Task</span>
+<span class="kw">val</span> ta: Task[A] = a.transK[Task].run(s)</pre></div></div>
+    </li><li name="doobie.contrib.postgresql.free.largeobjectmanager" visbl="pub" data-isabs="false" fullComment="yes" group="Modules">
+      <a id="largeobjectmanager"></a>
+      <a id="largeobjectmanager:largeobjectmanager"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="largeobjectmanager$.html"><span class="name">largeobjectmanager</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.package@largeobjectmanager" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Algebra and free monad for primitive operations over a <code>org.postgresql.largeobject.LargeObjectManager</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Algebra and free monad for primitive operations over a <code>org.postgresql.largeobject.LargeObjectManager</code>. This is
+a low-level API that exposes lifecycle-managed JDBC objects directly and is intended mainly
+for library developers. End users will prefer a safer, higher-level API such as that provided
+in the <code>doobie.hi</code> package.</p><p><code>LargeObjectManagerIO</code> is a free monad that must be run via an interpreter, most commonly via
+natural transformation of its underlying algebra <code>LargeObjectManagerOp</code> to another monad via
+<code>Free.runFC</code>.</p><p>The library provides a natural transformation to <code>Kleisli[M, LargeObjectManager, A]</code> for any
+exception-trapping (<code>Catchable</code>) and effect-capturing (<code>Capture</code>) monad <code>M</code>. Such evidence is
+provided for <code>Task</code>, <code>IO</code>, and stdlib <code>Future</code>; and <code>transK[M]</code> is provided as syntax.</p><pre><span class="cmt">// An action to run</span>
+<span class="kw">val</span> a: LargeObjectManagerIO[Foo] = ...
+
+<span class="cmt">// A JDBC object</span>
+<span class="kw">val</span> s: LargeObjectManager = ...
+
+<span class="cmt">// Unfolding into a Task</span>
+<span class="kw">val</span> ta: Task[A] = a.transK[Task].run(s)</pre></div></div>
+    </li><li name="doobie.contrib.postgresql.free.pgconnection" visbl="pub" data-isabs="false" fullComment="yes" group="Modules">
+      <a id="pgconnection"></a>
+      <a id="pgconnection:pgconnection"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="pgconnection$.html"><span class="name">pgconnection</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../index.html#doobie.contrib.postgresql.free.package@pgconnection" title="Permalink" target="_top">
+        <img src="../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Algebra and free monad for primitive operations over a <code>org.postgresql.PGConnection</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Algebra and free monad for primitive operations over a <code>org.postgresql.PGConnection</code>. This is
+a low-level API that exposes lifecycle-managed JDBC objects directly and is intended mainly
+for library developers. End users will prefer a safer, higher-level API such as that provided
+in the <code>doobie.contrib.postgresql.hi</code> package.</p><p><code>PGConnectionIO</code> is a free monad that must be run via an interpreter, most commonly via
+natural transformation of its underlying algebra <code>PGConnectionOp</code> to another monad via
+<code>Free.runFC</code>.</p><p>The library provides a natural transformation to <code>Kleisli[M, PGConnection, A]</code> for any
+exception-trapping (<code>Catchable</code>) and effect-capturing (<code>Capture</code>) monad <code>M</code>. Such evidence is
+provided for <code>Task</code>, <code>IO</code>, and stdlib <code>Future</code>; and <code>transK[M]</code> is provided as syntax.</p><pre><span class="cmt">// An action to run</span>
+<span class="kw">val</span> a: PGConnectionIO[Foo] = ...
+
+<span class="cmt">// A JDBC object</span>
+<span class="kw">val</span> s: PGConnection = ...
+
+<span class="cmt">// Unfolding into a Task</span>
+<span class="kw">val</span> ta: Task[A] = a.transK[Task].run(s)</pre></div></div>
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Modules">
+              <h3>Modules</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>
