@@ -1,4 +1,4 @@
-highlighter: pygments
+highlighter: rouge
 url: http://tpolecat.github.io/
 # lsi: false
 exclude: [LICENSE, CNAME, README.md, .gitignore]
