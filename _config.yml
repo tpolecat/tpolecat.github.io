@@ -2,7 +2,7 @@ highlighter: pygments
 url: http://tpolecat.github.io/
 # lsi: false
 exclude: [LICENSE, CNAME, README.md, .gitignore]
-markdown: redcarpet
+markdown: kramdown
 
 collections:
   doobie-0.2.0:
@@ -30,3 +30,8 @@ collections:
     title: "book of doobie"
     index: "00-index.html"
     version: "0.2.4-SNAPSHOT"
+  doobie-0.3.0-SNAPSHOT:
+    output: true
+    title: "book of doobie"
+    index: "00-index.html"
+    version: "0.3.0-SNAPSHOT"

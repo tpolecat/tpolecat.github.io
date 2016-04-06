@@ -19,25 +19,29 @@ layout: root
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">chapters<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-          {% for x in site.collections[page.collection].docs %}
-            {% if x.number > 0 %}
-              {% if x.number == page.number %}
-                <li style="background-color: #eeeeee"><a href="{{x.url}}">{{ x.number }}. {{ x.title }}</a></li>
-              {% else %}
-                <li><a href="{{x.url}}">{{ x.number }}. {{ x.title }}</a></li>
+            {% for x in site.collections %}
+              {% if x.label == page.collection %}
+                {% for y in x.docs %}
+                  {% if y.number > 0 %}
+                    {% if y.number == page.number %}
+                      <li style="background-color: #eeeeee"><a href="{{y.url}}">{{ y.number }}. {{ y.title }}</a></li>
+                    {% else %}
+                      <li><a href="{{y.url}}">{{ y.number }}. {{ y.title }}</a></li>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
               {% endif %}
-            {% endif %}
-          {% endfor %}
+            {% endfor %}
           </ul>
         </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">versions<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
           {% for x in site.collections %}
-            {% if x[1].version == site.collections[page.collection].version %}
-              <li style="background-color: #eeeeee"><a href="/{{ x[1].label }}/{{ x[1].index }}">{{ x[1].version }}</a></li>
+            {% if x.label == page.collection %}
+              <li style="background-color: #eeeeee"><a href="/{{ x.label }}/{{ x.index }}">{{ x.version }}</a></li>
             {% else %}
-              <li><a href="/{{ x[1].label }}/{{ x[1].index }}">{{ x[1].version }}</a></li>
+              <li><a href="/{{ x.label }}/{{ x.index }}">{{ x.version }}</a></li>
             {% endif %}
           {% endfor %}
           </ul>
@@ -60,25 +64,33 @@ layout: root
 <div class="container" role="nav-2" style="padding-top: 36pt">
   <nav>
     <ul class="pager">
-    {% capture prev %}{{ page.number | minus: 1 }}{% endcapture %}
-    {% capture next %}{{ page.number | plus: 1 }}{% endcapture %}
-    {% for y in site.collections[page.collection].docs %}
-      {% capture curr %}{{ y.number | minus: 0 }}{% endcapture %}
-      {% if curr == prev %}
-        <li class="previous">
-          <a href="{{y.url}}"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> {{ y.title }}</a>
-        </li>
-      {% endif %}
-      {% if curr == next %}
-        <li class="next">
-          <a href="{{y.url}}">{{ y.title }} <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> </a>
-        </li>
-    {% endif %}
-    {% endfor %}
+      {% capture prev %}{{ page.number | minus: 1 }}{% endcapture %}
+      {% capture next %}{{ page.number | plus: 1 }}{% endcapture %}
+      {% for x in site.collections %}
+        {% if x.label == page.collection %}
+          {% for y in x.docs %}
+            {% capture curr %}{{ y.number | minus: 0 }}{% endcapture %}
+            {% if curr == prev %}
+              <li class="previous">
+                <a href="{{y.url}}"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> {{ y.title }}</a>
+              </li>
+            {% endif %}
+            {% if curr == next %}
+              <li class="next">
+                <a href="{{y.url}}">{{ y.title }} <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> </a>
+              </li>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
     </ul>
   </nav>
 </div>
 
 <div class="ribbon">
-  <a href="#">Version {{ site.collections[page.collection].version | replace:'-SNAPSHOT','' }}</a>
+  {% for x in site.collections %}
+    {% if x.label == page.collection %}
+      <a href="#">Version {{ x.version | replace:'-SNAPSHOT','' }}</a>
+    {% endif %}
+  {% endfor %}
 </div>
