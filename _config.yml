@@ -30,11 +30,6 @@ collections:
     title: "book of doobie"
     index: "00-index.html"
     version: "0.2.4"
-  doobie-0.2.5-SNAPSHOT:
-    output: true
-    title: "book of doobie"
-    index: "00-index.html"
-    version: "0.2.5-SNAPSHOT"
   doobie-0.3.0-SNAPSHOT:
     output: true
     title: "book of doobie"
