@@ -43,7 +43,7 @@ Right, so let's do this.
 
 ```scala
 scala> val task = program1.transact(xa)
-task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@419cfb97
+task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@19f63b41
 
 scala> task.unsafePerformSync
 res0: Int = 42
@@ -64,7 +64,7 @@ scala> val program2 = sql"select 42".query[Int].unique
 program2: doobie.imports.ConnectionIO[Int] = Gosub(Gosub(Suspend(PrepareStatement4(select 42)),<function1>),<function1>)
 
 scala> val task2 = program2.transact(xa)
-task2: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@6718880d
+task2: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@6be96fc1
 
 scala> task2.unsafePerformSync
 res1: Int = 42
@@ -89,7 +89,7 @@ And behold!
 
 ```scala
 scala> program3.transact(xa).unsafePerformSync
-res2: (Int, Double) = (42,0.18205656064674258)
+res2: (Int, Double) = (42,0.8670884524472058)
 ```
 
 The astute among you will note that we don't actually need a monad to do this; an applicative functor is all we need here. So we could also write `program3` as:
@@ -106,18 +106,18 @@ And lo, it was good:
 
 ```scala
 scala> program3a.transact(xa).unsafePerformSync
-res3: (Int, Double) = (42,0.7471497016958892)
+res3: (Int, Double) = (42,0.007854437455534935)
 ```
 
 And of course this composition can continue indefinitely.
 
 ```scala
 scala> program3a.replicateM(5).transact(xa).unsafePerformSync.foreach(println)
-(42,0.5128471874631941)
-(42,0.999615388456732)
-(42,0.16511048888787627)
-(42,0.4202802716754377)
-(42,0.022828227374702692)
+(42,0.6472118003293872)
+(42,0.37534416001290083)
+(42,0.6658719899132848)
+(42,0.2659648545086384)
+(42,0.9221543571911752)
 ```
 
 
@@ -134,7 +134,7 @@ scala> val kleisli = program1.transK[Task]
 kleisli: scalaz.Kleisli[scalaz.concurrent.Task,java.sql.Connection,Int] = Kleisli(<function1>)
 
 scala> val task = Task.delay(null: java.sql.Connection) >>= kleisli
-task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@4a76849d
+task: scalaz.concurrent.Task[Int] = scalaz.concurrent.Task@52288573
 
 scala> task.unsafePerformSync // sneaky; program1 never looks at the connection
 res5: Int = 42

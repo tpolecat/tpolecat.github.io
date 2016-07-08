@@ -245,7 +245,7 @@ scala> val p = {
      |     .process         // Process[ConnectionIO, Country]
      |     .transact(xa)    // Process[Task, Country]
      |  }
-p: scalaz.stream.Process[scalaz.concurrent.Task,Country] = Await(scalaz.concurrent.Task@73346893,<function1>,<function1>)
+p: scalaz.stream.Process[scalaz.concurrent.Task,Country] = Await(scalaz.concurrent.Task@5679dd65,<function1>,<function1>)
 
 scala> p.take(5).runLog.run.foreach(println)
 <console>:34: warning: method run in class Task is deprecated: use unsafePerformSync

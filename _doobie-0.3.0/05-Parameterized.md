@@ -180,10 +180,10 @@ When reading a row or setting parameters in the high-level API, we require an in
 
 ```scala
 scala> Composite[(String, Boolean)]
-res9: doobie.util.composite.Composite[(String, Boolean)] = doobie.util.composite$LowerPriorityComposite$$anon$7@60d6bf4c
+res9: doobie.util.composite.Composite[(String, Boolean)] = doobie.util.composite$LowerPriorityComposite$$anon$7@1aee4262
 
 scala> Composite[Country]
-res10: doobie.util.composite.Composite[Country] = doobie.util.composite$LowerPriorityComposite$$anon$7@25abbc14
+res10: doobie.util.composite.Composite[Country] = doobie.util.composite$LowerPriorityComposite$$anon$7@6070470d
 ```
 
 The `set` constructor takes an argument of any type with a `Composite` instance and returns a program that sets the unrolled sequence of values starting at parameter index 1 by default. Some other variations are shown here.

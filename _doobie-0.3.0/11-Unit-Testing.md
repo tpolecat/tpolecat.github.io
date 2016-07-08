@@ -129,7 +129,7 @@ scala> { specs2 run AnalysisTestSpec; () } // pretend this is sbt> test
 [info] 
 [info] 
 [info] Total for specification $line14.$read$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$AnalysisTestSpec$
-[info] Finished in 40 ms
+[info] Finished in 25 ms
 13 examples, 4 failures, 0 error
 [info] 
 ```
