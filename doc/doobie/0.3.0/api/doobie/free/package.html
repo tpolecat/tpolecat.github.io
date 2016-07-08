@@ -1,0 +1,600 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>free - doobie.free</title>
+          <meta name="description" content="free - doobie.free" />
+          <meta name="keywords" content="free doobie.free" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../lib/template.js"></script>
+      <script type="text/javascript" src="../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../index.html';
+            var hash = 'doobie.free.package';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="value">
+      <div id="definition">
+        <img alt="Package" src="../../lib/package_big.png" />
+        <p id="owner"><a href="../package.html" class="extype" name="doobie">doobie</a></p>
+        <h1>free</h1><span class="permalink">
+      <a href="../../index.html#doobie.free.package" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <span class="name">free</span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Free algebras for computations over JDBC objects. Note that all modules in this package other
+than <code>drivermanager</code> are generated as part of the build.
+</p></div><dl class="attributes block"> <dt>Source</dt><dd><a href="https://github.com/tpolecat/doobie/tree/v0.3.0-SNAPSHOT/core/src/main/scala/doobie/free/package.scala" target="_blank">package.scala</a></dd></dl><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                <li class="group out"><span>Grouped</span></li>
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By Inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="doobie.free"><span>free</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show All</span></li>
+            </ol>
+          </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="doobie.free.blob" visbl="pub" data-isabs="false" fullComment="yes" group="Modules">
+      <a id="blob"></a>
+      <a id="blob:blob"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="blob$.html"><span class="name">blob</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.package@blob" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Algebra and free monad for primitive operations over a <code>java.sql.Blob</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Algebra and free monad for primitive operations over a <code>java.sql.Blob</code>. This is
+a low-level API that exposes lifecycle-managed JDBC objects directly and is intended mainly
+for library developers. End users will prefer a safer, higher-level API such as that provided
+in the <code>doobie.hi</code> package.</p><p><code>BlobIO</code> is a free monad that must be run via an interpreter, most commonly via
+natural transformation of its underlying algebra <code>BlobOp</code> to another monad via
+<code>Free#foldMap</code>.</p><p>The library provides a natural transformation to <code>Kleisli[M, Blob, A]</code> for any
+exception-trapping (<code>Catchable</code>) and effect-capturing (<code>Capture</code>) monad <code>M</code>. Such evidence is
+provided for <code>Task</code>, <code>IO</code>, and stdlib <code>Future</code>; and <code>transK[M]</code> is provided as syntax.</p><pre><span class="cmt">// An action to run</span>
+<span class="kw">val</span> a: BlobIO[Foo] = ...
+
+<span class="cmt">// A JDBC object</span>
+<span class="kw">val</span> s: Blob = ...
+
+<span class="cmt">// Unfolding into a Task</span>
+<span class="kw">val</span> ta: Task[A] = a.transK[Task].run(s)</pre></div></div>
+    </li><li name="doobie.free.callablestatement" visbl="pub" data-isabs="false" fullComment="yes" group="Modules">
+      <a id="callablestatement"></a>
+      <a id="callablestatement:callablestatement"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="callablestatement$.html"><span class="name">callablestatement</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.package@callablestatement" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Algebra and free monad for primitive operations over a <code>java.sql.CallableStatement</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Algebra and free monad for primitive operations over a <code>java.sql.CallableStatement</code>. This is
+a low-level API that exposes lifecycle-managed JDBC objects directly and is intended mainly
+for library developers. End users will prefer a safer, higher-level API such as that provided
+in the <code>doobie.hi</code> package.</p><p><code>CallableStatementIO</code> is a free monad that must be run via an interpreter, most commonly via
+natural transformation of its underlying algebra <code>CallableStatementOp</code> to another monad via
+<code>Free#foldMap</code>.</p><p>The library provides a natural transformation to <code>Kleisli[M, CallableStatement, A]</code> for any
+exception-trapping (<code>Catchable</code>) and effect-capturing (<code>Capture</code>) monad <code>M</code>. Such evidence is
+provided for <code>Task</code>, <code>IO</code>, and stdlib <code>Future</code>; and <code>transK[M]</code> is provided as syntax.</p><pre><span class="cmt">// An action to run</span>
+<span class="kw">val</span> a: CallableStatementIO[Foo] = ...
+
+<span class="cmt">// A JDBC object</span>
+<span class="kw">val</span> s: CallableStatement = ...
+
+<span class="cmt">// Unfolding into a Task</span>
+<span class="kw">val</span> ta: Task[A] = a.transK[Task].run(s)</pre></div></div>
+    </li><li name="doobie.free.clob" visbl="pub" data-isabs="false" fullComment="yes" group="Modules">
+      <a id="clob"></a>
+      <a id="clob:clob"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="clob$.html"><span class="name">clob</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.package@clob" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Algebra and free monad for primitive operations over a <code>java.sql.Clob</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Algebra and free monad for primitive operations over a <code>java.sql.Clob</code>. This is
+a low-level API that exposes lifecycle-managed JDBC objects directly and is intended mainly
+for library developers. End users will prefer a safer, higher-level API such as that provided
+in the <code>doobie.hi</code> package.</p><p><code>ClobIO</code> is a free monad that must be run via an interpreter, most commonly via
+natural transformation of its underlying algebra <code>ClobOp</code> to another monad via
+<code>Free#foldMap</code>.</p><p>The library provides a natural transformation to <code>Kleisli[M, Clob, A]</code> for any
+exception-trapping (<code>Catchable</code>) and effect-capturing (<code>Capture</code>) monad <code>M</code>. Such evidence is
+provided for <code>Task</code>, <code>IO</code>, and stdlib <code>Future</code>; and <code>transK[M]</code> is provided as syntax.</p><pre><span class="cmt">// An action to run</span>
+<span class="kw">val</span> a: ClobIO[Foo] = ...
+
+<span class="cmt">// A JDBC object</span>
+<span class="kw">val</span> s: Clob = ...
+
+<span class="cmt">// Unfolding into a Task</span>
+<span class="kw">val</span> ta: Task[A] = a.transK[Task].run(s)</pre></div></div>
+    </li><li name="doobie.free.connection" visbl="pub" data-isabs="false" fullComment="yes" group="Modules">
+      <a id="connection"></a>
+      <a id="connection:connection"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="connection$.html"><span class="name">connection</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.package@connection" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Algebra and free monad for primitive operations over a <code>java.sql.Connection</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Algebra and free monad for primitive operations over a <code>java.sql.Connection</code>. This is
+a low-level API that exposes lifecycle-managed JDBC objects directly and is intended mainly
+for library developers. End users will prefer a safer, higher-level API such as that provided
+in the <code>doobie.hi</code> package.</p><p><code>ConnectionIO</code> is a free monad that must be run via an interpreter, most commonly via
+natural transformation of its underlying algebra <code>ConnectionOp</code> to another monad via
+<code>Free#foldMap</code>.</p><p>The library provides a natural transformation to <code>Kleisli[M, Connection, A]</code> for any
+exception-trapping (<code>Catchable</code>) and effect-capturing (<code>Capture</code>) monad <code>M</code>. Such evidence is
+provided for <code>Task</code>, <code>IO</code>, and stdlib <code>Future</code>; and <code>transK[M]</code> is provided as syntax.</p><pre><span class="cmt">// An action to run</span>
+<span class="kw">val</span> a: ConnectionIO[Foo] = ...
+
+<span class="cmt">// A JDBC object</span>
+<span class="kw">val</span> s: Connection = ...
+
+<span class="cmt">// Unfolding into a Task</span>
+<span class="kw">val</span> ta: Task[A] = a.transK[Task].run(s)</pre></div></div>
+    </li><li name="doobie.free.databasemetadata" visbl="pub" data-isabs="false" fullComment="yes" group="Modules">
+      <a id="databasemetadata"></a>
+      <a id="databasemetadata:databasemetadata"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="databasemetadata$.html"><span class="name">databasemetadata</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.package@databasemetadata" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Algebra and free monad for primitive operations over a <code>java.sql.DatabaseMetaData</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Algebra and free monad for primitive operations over a <code>java.sql.DatabaseMetaData</code>. This is
+a low-level API that exposes lifecycle-managed JDBC objects directly and is intended mainly
+for library developers. End users will prefer a safer, higher-level API such as that provided
+in the <code>doobie.hi</code> package.</p><p><code>DatabaseMetaDataIO</code> is a free monad that must be run via an interpreter, most commonly via
+natural transformation of its underlying algebra <code>DatabaseMetaDataOp</code> to another monad via
+<code>Free#foldMap</code>.</p><p>The library provides a natural transformation to <code>Kleisli[M, DatabaseMetaData, A]</code> for any
+exception-trapping (<code>Catchable</code>) and effect-capturing (<code>Capture</code>) monad <code>M</code>. Such evidence is
+provided for <code>Task</code>, <code>IO</code>, and stdlib <code>Future</code>; and <code>transK[M]</code> is provided as syntax.</p><pre><span class="cmt">// An action to run</span>
+<span class="kw">val</span> a: DatabaseMetaDataIO[Foo] = ...
+
+<span class="cmt">// A JDBC object</span>
+<span class="kw">val</span> s: DatabaseMetaData = ...
+
+<span class="cmt">// Unfolding into a Task</span>
+<span class="kw">val</span> ta: Task[A] = a.transK[Task].run(s)</pre></div></div>
+    </li><li name="doobie.free.driver" visbl="pub" data-isabs="false" fullComment="yes" group="Modules">
+      <a id="driver"></a>
+      <a id="driver:driver"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="driver$.html"><span class="name">driver</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.package@driver" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Algebra and free monad for primitive operations over a <code>java.sql.Driver</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Algebra and free monad for primitive operations over a <code>java.sql.Driver</code>. This is
+a low-level API that exposes lifecycle-managed JDBC objects directly and is intended mainly
+for library developers. End users will prefer a safer, higher-level API such as that provided
+in the <code>doobie.hi</code> package.</p><p><code>DriverIO</code> is a free monad that must be run via an interpreter, most commonly via
+natural transformation of its underlying algebra <code>DriverOp</code> to another monad via
+<code>Free#foldMap</code>.</p><p>The library provides a natural transformation to <code>Kleisli[M, Driver, A]</code> for any
+exception-trapping (<code>Catchable</code>) and effect-capturing (<code>Capture</code>) monad <code>M</code>. Such evidence is
+provided for <code>Task</code>, <code>IO</code>, and stdlib <code>Future</code>; and <code>transK[M]</code> is provided as syntax.</p><pre><span class="cmt">// An action to run</span>
+<span class="kw">val</span> a: DriverIO[Foo] = ...
+
+<span class="cmt">// A JDBC object</span>
+<span class="kw">val</span> s: Driver = ...
+
+<span class="cmt">// Unfolding into a Task</span>
+<span class="kw">val</span> ta: Task[A] = a.transK[Task].run(s)</pre></div></div>
+    </li><li name="doobie.free.drivermanager" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="drivermanager"></a>
+      <a id="drivermanager:drivermanager"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="drivermanager$.html"><span class="name">drivermanager</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.package@drivermanager" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.kleislitrans" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="kleislitrans"></a>
+      <a id="kleislitrans:kleislitrans"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="kleislitrans$.html"><span class="name">kleislitrans</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.package@kleislitrans" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="doobie.free.nclob" visbl="pub" data-isabs="false" fullComment="yes" group="Modules">
+      <a id="nclob"></a>
+      <a id="nclob:nclob"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="nclob$.html"><span class="name">nclob</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.package@nclob" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Algebra and free monad for primitive operations over a <code>java.sql.NClob</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Algebra and free monad for primitive operations over a <code>java.sql.NClob</code>. This is
+a low-level API that exposes lifecycle-managed JDBC objects directly and is intended mainly
+for library developers. End users will prefer a safer, higher-level API such as that provided
+in the <code>doobie.hi</code> package.</p><p><code>NClobIO</code> is a free monad that must be run via an interpreter, most commonly via
+natural transformation of its underlying algebra <code>NClobOp</code> to another monad via
+<code>Free#foldMap</code>.</p><p>The library provides a natural transformation to <code>Kleisli[M, NClob, A]</code> for any
+exception-trapping (<code>Catchable</code>) and effect-capturing (<code>Capture</code>) monad <code>M</code>. Such evidence is
+provided for <code>Task</code>, <code>IO</code>, and stdlib <code>Future</code>; and <code>transK[M]</code> is provided as syntax.</p><pre><span class="cmt">// An action to run</span>
+<span class="kw">val</span> a: NClobIO[Foo] = ...
+
+<span class="cmt">// A JDBC object</span>
+<span class="kw">val</span> s: NClob = ...
+
+<span class="cmt">// Unfolding into a Task</span>
+<span class="kw">val</span> ta: Task[A] = a.transK[Task].run(s)</pre></div></div>
+    </li><li name="doobie.free.preparedstatement" visbl="pub" data-isabs="false" fullComment="yes" group="Modules">
+      <a id="preparedstatement"></a>
+      <a id="preparedstatement:preparedstatement"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="preparedstatement$.html"><span class="name">preparedstatement</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.package@preparedstatement" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Algebra and free monad for primitive operations over a <code>java.sql.PreparedStatement</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Algebra and free monad for primitive operations over a <code>java.sql.PreparedStatement</code>. This is
+a low-level API that exposes lifecycle-managed JDBC objects directly and is intended mainly
+for library developers. End users will prefer a safer, higher-level API such as that provided
+in the <code>doobie.hi</code> package.</p><p><code>PreparedStatementIO</code> is a free monad that must be run via an interpreter, most commonly via
+natural transformation of its underlying algebra <code>PreparedStatementOp</code> to another monad via
+<code>Free#foldMap</code>.</p><p>The library provides a natural transformation to <code>Kleisli[M, PreparedStatement, A]</code> for any
+exception-trapping (<code>Catchable</code>) and effect-capturing (<code>Capture</code>) monad <code>M</code>. Such evidence is
+provided for <code>Task</code>, <code>IO</code>, and stdlib <code>Future</code>; and <code>transK[M]</code> is provided as syntax.</p><pre><span class="cmt">// An action to run</span>
+<span class="kw">val</span> a: PreparedStatementIO[Foo] = ...
+
+<span class="cmt">// A JDBC object</span>
+<span class="kw">val</span> s: PreparedStatement = ...
+
+<span class="cmt">// Unfolding into a Task</span>
+<span class="kw">val</span> ta: Task[A] = a.transK[Task].run(s)</pre></div></div>
+    </li><li name="doobie.free.ref" visbl="pub" data-isabs="false" fullComment="yes" group="Modules">
+      <a id="ref"></a>
+      <a id="ref:ref"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="ref$.html"><span class="name">ref</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.package@ref" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Algebra and free monad for primitive operations over a <code>java.sql.Ref</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Algebra and free monad for primitive operations over a <code>java.sql.Ref</code>. This is
+a low-level API that exposes lifecycle-managed JDBC objects directly and is intended mainly
+for library developers. End users will prefer a safer, higher-level API such as that provided
+in the <code>doobie.hi</code> package.</p><p><code>RefIO</code> is a free monad that must be run via an interpreter, most commonly via
+natural transformation of its underlying algebra <code>RefOp</code> to another monad via
+<code>Free#foldMap</code>.</p><p>The library provides a natural transformation to <code>Kleisli[M, Ref, A]</code> for any
+exception-trapping (<code>Catchable</code>) and effect-capturing (<code>Capture</code>) monad <code>M</code>. Such evidence is
+provided for <code>Task</code>, <code>IO</code>, and stdlib <code>Future</code>; and <code>transK[M]</code> is provided as syntax.</p><pre><span class="cmt">// An action to run</span>
+<span class="kw">val</span> a: RefIO[Foo] = ...
+
+<span class="cmt">// A JDBC object</span>
+<span class="kw">val</span> s: Ref = ...
+
+<span class="cmt">// Unfolding into a Task</span>
+<span class="kw">val</span> ta: Task[A] = a.transK[Task].run(s)</pre></div></div>
+    </li><li name="doobie.free.resultset" visbl="pub" data-isabs="false" fullComment="yes" group="Modules">
+      <a id="resultset"></a>
+      <a id="resultset:resultset"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="resultset$.html"><span class="name">resultset</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.package@resultset" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Algebra and free monad for primitive operations over a <code>java.sql.ResultSet</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Algebra and free monad for primitive operations over a <code>java.sql.ResultSet</code>. This is
+a low-level API that exposes lifecycle-managed JDBC objects directly and is intended mainly
+for library developers. End users will prefer a safer, higher-level API such as that provided
+in the <code>doobie.hi</code> package.</p><p><code>ResultSetIO</code> is a free monad that must be run via an interpreter, most commonly via
+natural transformation of its underlying algebra <code>ResultSetOp</code> to another monad via
+<code>Free#foldMap</code>.</p><p>The library provides a natural transformation to <code>Kleisli[M, ResultSet, A]</code> for any
+exception-trapping (<code>Catchable</code>) and effect-capturing (<code>Capture</code>) monad <code>M</code>. Such evidence is
+provided for <code>Task</code>, <code>IO</code>, and stdlib <code>Future</code>; and <code>transK[M]</code> is provided as syntax.</p><pre><span class="cmt">// An action to run</span>
+<span class="kw">val</span> a: ResultSetIO[Foo] = ...
+
+<span class="cmt">// A JDBC object</span>
+<span class="kw">val</span> s: ResultSet = ...
+
+<span class="cmt">// Unfolding into a Task</span>
+<span class="kw">val</span> ta: Task[A] = a.transK[Task].run(s)</pre></div></div>
+    </li><li name="doobie.free.sqldata" visbl="pub" data-isabs="false" fullComment="yes" group="Modules">
+      <a id="sqldata"></a>
+      <a id="sqldata:sqldata"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="sqldata$.html"><span class="name">sqldata</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.package@sqldata" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Algebra and free monad for primitive operations over a <code>java.sql.SQLData</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Algebra and free monad for primitive operations over a <code>java.sql.SQLData</code>. This is
+a low-level API that exposes lifecycle-managed JDBC objects directly and is intended mainly
+for library developers. End users will prefer a safer, higher-level API such as that provided
+in the <code>doobie.hi</code> package.</p><p><code>SQLDataIO</code> is a free monad that must be run via an interpreter, most commonly via
+natural transformation of its underlying algebra <code>SQLDataOp</code> to another monad via
+<code>Free#foldMap</code>.</p><p>The library provides a natural transformation to <code>Kleisli[M, SQLData, A]</code> for any
+exception-trapping (<code>Catchable</code>) and effect-capturing (<code>Capture</code>) monad <code>M</code>. Such evidence is
+provided for <code>Task</code>, <code>IO</code>, and stdlib <code>Future</code>; and <code>transK[M]</code> is provided as syntax.</p><pre><span class="cmt">// An action to run</span>
+<span class="kw">val</span> a: SQLDataIO[Foo] = ...
+
+<span class="cmt">// A JDBC object</span>
+<span class="kw">val</span> s: SQLData = ...
+
+<span class="cmt">// Unfolding into a Task</span>
+<span class="kw">val</span> ta: Task[A] = a.transK[Task].run(s)</pre></div></div>
+    </li><li name="doobie.free.sqlinput" visbl="pub" data-isabs="false" fullComment="yes" group="Modules">
+      <a id="sqlinput"></a>
+      <a id="sqlinput:sqlinput"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="sqlinput$.html"><span class="name">sqlinput</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.package@sqlinput" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Algebra and free monad for primitive operations over a <code>java.sql.SQLInput</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Algebra and free monad for primitive operations over a <code>java.sql.SQLInput</code>. This is
+a low-level API that exposes lifecycle-managed JDBC objects directly and is intended mainly
+for library developers. End users will prefer a safer, higher-level API such as that provided
+in the <code>doobie.hi</code> package.</p><p><code>SQLInputIO</code> is a free monad that must be run via an interpreter, most commonly via
+natural transformation of its underlying algebra <code>SQLInputOp</code> to another monad via
+<code>Free#foldMap</code>.</p><p>The library provides a natural transformation to <code>Kleisli[M, SQLInput, A]</code> for any
+exception-trapping (<code>Catchable</code>) and effect-capturing (<code>Capture</code>) monad <code>M</code>. Such evidence is
+provided for <code>Task</code>, <code>IO</code>, and stdlib <code>Future</code>; and <code>transK[M]</code> is provided as syntax.</p><pre><span class="cmt">// An action to run</span>
+<span class="kw">val</span> a: SQLInputIO[Foo] = ...
+
+<span class="cmt">// A JDBC object</span>
+<span class="kw">val</span> s: SQLInput = ...
+
+<span class="cmt">// Unfolding into a Task</span>
+<span class="kw">val</span> ta: Task[A] = a.transK[Task].run(s)</pre></div></div>
+    </li><li name="doobie.free.sqloutput" visbl="pub" data-isabs="false" fullComment="yes" group="Modules">
+      <a id="sqloutput"></a>
+      <a id="sqloutput:sqloutput"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="sqloutput$.html"><span class="name">sqloutput</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.package@sqloutput" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Algebra and free monad for primitive operations over a <code>java.sql.SQLOutput</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Algebra and free monad for primitive operations over a <code>java.sql.SQLOutput</code>. This is
+a low-level API that exposes lifecycle-managed JDBC objects directly and is intended mainly
+for library developers. End users will prefer a safer, higher-level API such as that provided
+in the <code>doobie.hi</code> package.</p><p><code>SQLOutputIO</code> is a free monad that must be run via an interpreter, most commonly via
+natural transformation of its underlying algebra <code>SQLOutputOp</code> to another monad via
+<code>Free#foldMap</code>.</p><p>The library provides a natural transformation to <code>Kleisli[M, SQLOutput, A]</code> for any
+exception-trapping (<code>Catchable</code>) and effect-capturing (<code>Capture</code>) monad <code>M</code>. Such evidence is
+provided for <code>Task</code>, <code>IO</code>, and stdlib <code>Future</code>; and <code>transK[M]</code> is provided as syntax.</p><pre><span class="cmt">// An action to run</span>
+<span class="kw">val</span> a: SQLOutputIO[Foo] = ...
+
+<span class="cmt">// A JDBC object</span>
+<span class="kw">val</span> s: SQLOutput = ...
+
+<span class="cmt">// Unfolding into a Task</span>
+<span class="kw">val</span> ta: Task[A] = a.transK[Task].run(s)</pre></div></div>
+    </li><li name="doobie.free.statement" visbl="pub" data-isabs="false" fullComment="yes" group="Modules">
+      <a id="statement"></a>
+      <a id="statement:statement"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="statement$.html"><span class="name">statement</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../index.html#doobie.free.package@statement" title="Permalink" target="_top">
+        <img src="../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Algebra and free monad for primitive operations over a <code>java.sql.Statement</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Algebra and free monad for primitive operations over a <code>java.sql.Statement</code>. This is
+a low-level API that exposes lifecycle-managed JDBC objects directly and is intended mainly
+for library developers. End users will prefer a safer, higher-level API such as that provided
+in the <code>doobie.hi</code> package.</p><p><code>StatementIO</code> is a free monad that must be run via an interpreter, most commonly via
+natural transformation of its underlying algebra <code>StatementOp</code> to another monad via
+<code>Free#foldMap</code>.</p><p>The library provides a natural transformation to <code>Kleisli[M, Statement, A]</code> for any
+exception-trapping (<code>Catchable</code>) and effect-capturing (<code>Capture</code>) monad <code>M</code>. Such evidence is
+provided for <code>Task</code>, <code>IO</code>, and stdlib <code>Future</code>; and <code>transK[M]</code> is provided as syntax.</p><pre><span class="cmt">// An action to run</span>
+<span class="kw">val</span> a: StatementIO[Foo] = ...
+
+<span class="cmt">// A JDBC object</span>
+<span class="kw">val</span> s: Statement = ...
+
+<span class="cmt">// Unfolding into a Task</span>
+<span class="kw">val</span> ta: Task[A] = a.transK[Task].run(s)</pre></div></div>
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Modules">
+              <h3>Modules</h3>
+              
+            </div><div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>
