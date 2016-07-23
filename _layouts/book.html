@@ -94,7 +94,7 @@ layout: root
 <div class="ribbon">
   {% for x in site.collections %}
     {% if x.label == page.collection %}
-      <a href="#">Version {{ x.version | replace:'-SNAPSHOT','' }}</a>
+      <a href="#">{{ x.version | replace:'-SNAPSHOT','' }}</a>
     {% endif %}
   {% endfor %}
 </div>

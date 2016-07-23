@@ -35,3 +35,13 @@ collections:
     title: "book of doobie"
     index: "00-index.html"
     version: "0.3.0"
+  doobie-cats-0.3.1-SNAPSHOT:
+    output: true
+    title: "book of doobie"
+    index: "00-index.html"
+    version: "0.3.1-SNAPSHOT (Cats)"
+  doobie-scalaz-0.3.1-SNAPSHOT:
+    output: true
+    title: "book of doobie"
+    index: "00-index.html"
+    version: "0.3.1-SNAPSHOT (scalaz)"
