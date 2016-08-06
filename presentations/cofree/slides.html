@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif', 'Helvetica'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz', 'Gill Sans';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono', 'Consolas', 'Courier New'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+class: center, middle
+
+# Fun & Games with Fix, Cofree, and Doobie!
+Rob Norris • `@tpolecat` • Gemini Observatory
+
+???
+
+- I'm Rob, I'm from Portland, first time in Montréal
+- For my day job I write software for big telescopes (in Scala) but I also work on some open-source projects in support of typeful, pure functional programming in Scala. That's what I'm interested in. If **you** are interested in this kind of programming I encourage you to get involved with Typelevel because that's what we're all about.
+- I would have put a typelevel logo on the slide but i don't understand css so i gave up.
+- If you don't mid admitting it, how many of you have used scalaz or cats?
+- So today I want to talk about some odds and ends that I think are interesting, and we'll see if you find them interesting too.
+
+---
+
+# Goals
+
+1. Gain an intuition about some simple recursive types.
+2. Gain some confidence pushing on code to see what happens.
+3. Learn how boring doobie is.
+4. Do not panic.
+
+???
+
+1. --- that's the main point of the talk. These types seem to be pretty well known in the Haskell community but not so much among Scala programmers, and they're interesting and worth knowing about.
+2. --- so, this is something I mention from time to time when I give talks and people ask me to say more about it, so I'll try to do that as well.
+3. --- Ok, so this is ostensibly a talk about database programming with doobie, which is a library I work on, but because it's a pure functional libary everything just kind of works so it's a very low-drama way to do things.
+4. --- Recursion is always mind-blowing at first. Everybody struggles with recursive functions and self-referential data, and today we're going to talk about self-referential types, which may be new to a lot of you. So remain calm, this can be hard to grasp. So I'm going to try to approach it very gradually. If it ends up being too slow for you, I apologize; if it's too fast I also apologize. But please stop me if you have questions.
+
+Ok so let's look at a recursive data type.
+
+---
+
+# Recursive Data
+
+A recursive data type for professors and their Ph.D. students.
+
+```scala
+case class Prof(
+  name: String,
+  year: Int,
+  students: List[Prof]
+)
+```
+
+<img align=right src="prof.png"/>
+
+
+???
+
+- ...
+- So the kind of invented problem I want to talk about is how to store this in a relational database. So how do I save one of these tree structures to a database and read it back?
+
+---
+
+# Recursive Data
+
+A recursive data type for professors and their Ph.D. students.
+
+```scala
+case class Prof(
+  name: String,
+  year: Int,
+  students: List[Prof]
+)
+```
+
+Natural SQL representation:
+
+<img align=right src="prof.png"/>
+
+```sql
+CREATE TABLE prof (
+  id     INTEGER IDENTITY,
+  parent INTEGER     NULL,
+  name   VARCHAR NOT NULL,
+  year   INTEGER NOT NULL,
+  FOREIGN KEY(parent) REFERENCES prof(id)        
+)
+```
+
+???
+
+- Here's how you normally want to do it.
+- ...
+- You have the child refer to its parent, so the relationship is inverted.
+- But before we get to the parent-child relationship we need to talk about how we're going to represent the id on the Scala side.
+- Ok so here's one possibility.
+
+---
+
+# Recursive Data
+
+A recursive data type for professors and their Ph.D. students.
+
+```scala
+case class Prof(
+  id : Int @@ Prof,
+  name: String,
+  year: Int,
+  students: List[Prof]
+)
+```
+
+Natural SQL representation.
+
+<img align=right src="prof.png"/>
+
+```sql
+CREATE TABLE prof (
+  id     INTEGER IDENTITY,
+  parent INTEGER     NULL,
+  name   VARCHAR NOT NULL,
+  year   INTEGER NOT NULL,
+  FOREIGN KEY(parent) REFERENCES prof(id)        
+)
+```
+
+???
+
+- ...
+- So we would probably use a tagged type or something to store this, but just for simplicity I'm going to use a plan `Int`.
+- Also going to get rid of the table definition for now.
+
+---
+
+# Recursive Data
+
+A recursive data type for professors and their Ph.D. students.
+
+```scala
+case class Prof(
+  id : Int,
+  name: String,
+  year: Int,
+  students: List[Prof]
+)
+```
+
+<img align=right src="prof.png"/>
+
+???
+
+- Ok so what's wrong with this representatoin for IDs? (new objects)
+
+---
+
+# Recursive Data
+
+A recursive data type for professors and their Ph.D. students.
+
+```scala
+case class Prof(
+  id : Option[Int],
+  name: String,
+  year: Int,
+  students: List[Prof]
+)
+```
+
+<img align=right src="prof.png"/>
+
+???
+
+- Ok is this any better? 
+- ...
+- Maybe a little bit, but I think it's irritating because you tend to have three cases:
+
+1. it's new, and we know it's new
+2. it's from the database so we know it has an id
+3. we're doing some kind of computation that's only looking at the structure and we don't care about database id
+
+And this encoding is irritating in all three cases, so I don't like it.
+
+So a way to make the id less invasive is to externalize it.
+
+---
+
+# Recursive Data
+
+A recursive data type for professors and their Ph.D. students.
+
+```scala
+case class Prof(
+  name: String,
+  year: Int,
+  students: List[Prof]
+)
+
+type IdProf = (Int, Prof)
+```
+
+<img align=right src="prof.png"/>
+
+???
+
+- so ...
+- but the problem now is that the children don't have ids, right? So we have to do this:
+
+
+---
+
+# Recursive Data
+
+A recursive data type for professors and their Ph.D. students.
+
+```scala
+case class Prof(
+  name: String,
+  year: Int,
+  students: List[(Int, Prof)]
+)
+
+type IdProf = (Int, Prof)
+```
+
+<img align=right src="prof.png"/>
+
+???
+
+- ... Which defeats the purpose of externalizing the ids … the whole point was to not have to talk about them in the model.
+
+So let's try something else. Let's parameterize it on the child type.
+
+---
+
+# Recursive Data
+
+A ~~recursive~~ data type for professors and their Ph.D. students.
+
+```scala
+case class ProfF[A](
+  name: String,
+  year: Int,
+  students: List[A]
+)
+```
+
+```scala
+type Prof   = ProfF[ProfF]
+type IdProf = (Int, ProfF[(Int, ProfF)])
+```
+
+<img align=right src="prof.png"/>
+
+???
+
+- ok so the data type isn't recursive anymore
+- And I'm going to call this `ProfF` just to distinguish it from our old `Prof`, so now we can just say ...
+- right? no, because ProfF has a type parameter
+
+---
+
+# Recursive Data
+
+A ~~recursive~~ data type for professors and their Ph.D. students.
+
+```scala
+case class ProfF[A](
+  name: String,
+  year: Int,
+  students: List[A]
+)
+```
+
+```scala
+type Prof   = ProfF[ProfF[ProfF[ProfF[ProfF[ProfF[ProfF[ProfF[ProfF[ProfF[ProfF[ProfF[ProfF[ProfF[ProfF[ProfF[ProfF[
+type IdProf = (Int, ProfF[(Int, ProfF[(Int, ProfF[(Int, ProfF[(Int, ProfF[(Int, ProfF[(Int, ProfF[(Int, ProfF[(Int, 
+```
+
+<img align=right src="prof.png"/>
+
+???
+
+- so this doesn't work because the types are infinite
+
+
+
+---
+
+# Recursive Data
+
+A ~~recursive~~ data type for professors and their Ph.D. students.
+
+```scala
+case class ProfF[A](
+  name: String,
+  year: Int,
+  students: List[A]
+)
+```
+
+```scala
+type Prof   = ProfF[Prof]
+type IdProf = (Int, ProfF[IdProf])
+```
+
+<img align=right src="prof.png"/>
+
+???
+
+- what if we make the type aliases self-referential? 
+- ok? no. doesn't compile
+- type aliases can't be recursive. but **classes** can ...
+
+---
+
+# Recursive Data
+
+A ~~recursive~~ data type for professors and their Ph.D. students.
+
+```scala
+case class ProfF[A](
+  name: String,
+  year: Int,
+  students: List[A]
+)
+```
+
+```scala
+case class Prof(value: ProfF[Prof])
+case class IdProf(id: Int, value: ProfF[IdProf])
+```
+
+???
+
+- So what if we make these case classes? Does this work?
+- So this is cool, we have one representation for our data type, `ProfF`, and depending on how we wrap it we can represent just the pure data *or* the data annotated with database ids.
+- We could claim victory here because this actually does what we want.
+- But this is functional programming and we like abstraction, so let's push on this a little it and see if we can generalize it a little bit.
+- Ok, so there's nothing here's that's specific to ProfF, so let's factor that out.
+
+---
+
+# Recursive Data
+
+A ~~recursive~~ data type for professors and their Ph.D. students.
+
+```scala
+case class ProfF[A](
+  name: String,
+  year: Int,
+  students: List[A]
+)
+```
+
+```scala
+case class Prof[F[_]](value: F[Prof])
+case class IdProf[F[_]](id: Int, value: F[IdProf])
+```
+
+???
+
+- But this doesn't compile because `Prof` needs a type argument, which is ... `F` right?
+
+---
+
+# Recursive Data
+
+A ~~recursive~~ data type for professors and their Ph.D. students.
+
+```scala
+case class ProfF[A](
+  name: String,
+  year: Int,
+  students: List[A]
+)
+```
+
+```scala
+case class Prof[F[_]](value: F[Prof[F]])
+case class IdProf[F[_]](id: Int, value: F[IdProf[F]]) 
+```
+
+???
+
+- We also note that this doesn't depend on the id being an `Int` so let's factor that out too.
+
+---
+
+# Recursive Data
+
+A ~~recursive~~ data type for professors and their Ph.D. students.
+
+```scala
+case class ProfF[A](
+  name: String,
+  year: Int,
+  students: List[A]
+)
+```
+
+```scala
+case class Prof[F[_]](value: F[Prof[F]])
+case class IdProf[F[_], A](id: A, value: F[IdProf[F, A]])
+```
+
+???
+
+- and we had to add the `A` to the type argument here since `IdProf` now has two type parameters.
+- Ok, so what do we have now? We have two recursive types that are totally generic; the first one can make any `F` recursive, and the second can make any `F` recursive *and* annotate each value with some arbitrary label.
+- It turns out these are well-known types.
+
+---
+
+# Recursive Data
+
+A ~~recursive~~ data type for professors and their Ph.D. students.
+
+```scala
+case class ProfF[A](
+  name: String,
+  year: Int,
+  students: List[A]
+)
+```
+
+```scala
+case class Fix[F[_]](unfix: F[Fix[F]])
+case class Cofree[F[_], A](head: A, tail: F[Cofree[F, A]])
+```
+
+???
+
+- the first is ...
+- the second is ...
+- and I'll mention here that `Cofree` (sometimes called the cofree comonad) is the dual of the `Free` monad, which everyone spent the last few years talking about at Scala conferences. Cofree is an A **and** an `F[Cofree[F, A]]` and Free is an `A` **or** an `F[Free[F,A]]`. So that's how they're related and that's where the name comes from.
+- and i'll also say that both free and cofree are really just special cases of `Fix`, and I think Greg Pfiel will have something to say about that in the talk that's coming up next.
+
+- but this illustrates what I mean about pushing on code. if you push hard enough sometimes it disappears entirely, because:
+
+---
+
+class: center, middle
+
+### tpolecat's law of mistaken invention:
+
+## _"Anything I invent that is sufficiently polymorphic and plausibly useful probably already exists in scalaz."_ 
+
+???
+
+- But in this case both scalaz and cats provide `Cofree` and neither provides `Fix`.
+- Ok so now that we know about the general types we can define `Prof` and `ProfF` trivially.
+
+---
+
+
+# Recursive Data
+
+A ~~recursive~~ data type for professors and their Ph.D. students.
+
+```scala
+case class ProfF[A](
+  name: String,
+  year: Int,
+  students: List[A]
+)
+```
+
+```scala
+case class Fix[F[_]](unfix: F[Fix[F]])
+case class Cofree[F[_], A](head: A, tail: F[Cofree[F, A]])
+```
+
+Annotated and un-annotated `ProfF` trees.
+
+```scala
+type Prof   = Fix[ProfF]
+type IdProf = Cofree[ProfF, Int]
+```
+
+???
+
+- So by this point I fear I may have lost some people, so just to get back to reality I want to show you how you can construct these things.
+
+---
+
+# Recursive Data
+
+```scala
+case class Prof(name: String, year: Int, students: List[Prof])
+
+
+val p: Prof = 
+  Prof("Hilbert", 1885, List(
+    Prof("Ackermann", 1925, Nil),
+    Prof("Curry", 1930, Nil),
+    Prof("Weyl", 1908, List(
+      Prof("Mac Lane", 1934, List(
+        Prof("Howard", 1956, Nil),
+        Prof("Awodey", 1997, Nil)
+      ))
+    ))
+ ))
+```
+<img align=right src="prof.png"/>
+
+???
+
+- Here is our original recursive data type and a construction. Nothing fancy here.
+- Ok point out how much awesomeness is in this tree.
+
+---
+
+# Recursive Data
+
+```scala
+case class ProfF[A](name: String, year: Int, students: List[A])
+type Prof = Fix[ProfF]
+
+val p: Prof = 
+  Fix(ProfF("Hilbert", 1885, List(
+    Fix(ProfF("Ackermann", 1925, Nil)),
+    Fix(ProfF("Curry", 1930,Nil)),
+    Fix(ProfF("Weyl", 1908, List(
+      Fix(ProfF("Mac Lane", 1934, List(
+        Fix(ProfF("Howard", 1956, Nil)),
+        Fix(ProfF("Awodey", 1997, Nil))
+      ))))
+    )))
+  ))
+```
+<img align=right src="prof.png"/>
+
+???
+
+- And here's the version with `Fix`. It's identical in structure but there's an extra `Fix` constructor wrapped around the `ProfF` constructor.
+
+---
+
+# Recursive Data
+
+```scala
+case class ProfF[A](name: String, year: Int, students: List[A])
+type IdProf = Cofree[ProfF, Int]
+
+val p: IdProf = 
+  Cofree(1, ProfF("Hilbert", 1885, List(
+    Cofree(2, ProfF("Ackermann", 1925, Nil)),
+    Cofree(3, ProfF("Curry", 1930,Nil)),
+    Cofree(4, ProfF("Weyl", 1908, List(
+      Cofree(5, ProfF("Mac Lane", 1934, List(
+        Cofree(6, ProfF("Howard", 1956, Nil)),
+        Cofree(7, ProfF("Awodey", 1997, Nil))
+      ))))
+    )))
+  ))
+```
+<img align=right src="idprof.png"/>
+
+???
+
+- And here's the `Cofree` version, which also has an annotation (an `Int` in this case) associated with each node.
+- So even though the types here are a little challenging at first and the names are kind of intimidating, but it's just data. You can construct them, you can pattern match on them, and so on. Not scary.
+- <pause>
+
+---
+
+class: center, middle
+
+# Mezzanine
+
+???
+
+- Ok, so before we get back to our database problem I want to take a detour and show you an example of programming with these types in a totally pure context, without worrying about IO effects.
+
+- So we're going to write some parsers.
+
+---
+
+# Parse Positions
+
+```scala
+case class ProfF[A](name: String, year: Int, students: List[A])
+
+val data =
+  """|Simeon Denis Poisson, 1800
+     |  Gustav Peter Lejeune Dirichlet, 1827
+     |    Rudolf Otto Sigismund Lipschitz, 1853
+     |      C. Felix (Christian) Klein, 1868
+     |        William Edward Story, 1875
+     |          Solomon Lefschetz, 1911
+     |            Albert William Tucker, 1932
+     |              Marvin Lee Minsky, 1954
+     |                Gerald Jay Sussman, 1973
+     |                  Guy Lewis Steele, 1980
+     |                    Philip Lee Wadler, 1984
+     |        C. L. Ferdinand (Carl Louis) Lindemann, 1873
+     |          David Hilbert, 1885
+     |            Wilhelm Ackermann, 1925
+     |            Haskell Curry, 1930
+     |            Hermann Weyl, 1908
+     |              Saunders Mac Lane, 1934
+     |                Steven Awodey, 1997
+     |                William Howard, 1956
+     |""".stripMargin
+```
+
+???
+
+So, here's some sample data that we want to parse into our fixpoint types. You may recognize some of these names.
+
+---
+
+# Parse Positions
+
+
+
+
+```scala
+def prof(n: Int): Parser[Fix[ProfF]] =
+  for {
+    _    <- manyN(n, char(' '))     // skip 'n' spaces
+    name <- stringOf(notChar(','))  // read up to a comma
+    _    <- token(char(','))        // skip comma and following space
+    year <- int                     // read an int
+    _    <- char('\n')              // skip a newline
+    ss   <- many(prof(n + 2))       // recursively read more at indent + 2
+  } yield Fix(ProfF(name, year, ss))
+```
+
+???
+
+- And here's one way to do it. This is written with `atto` which is a parsing library I work on but it would look the same with Li Haoyi's Fastparse or pretty much any monadic parser combinator library.
+- <explain it>
+
+---
+
+# Parse Positions
+
+```scala
+def prof(n: Int): Parser[Fix[ProfF]] =
+  for {
+    _    <- manyN(n, char(' '))     // skip 'n' spaces
+    name <- stringOf(notChar(','))  // read up to a comma
+    _    <- token(char(','))        // skip comma and following space
+    year <- int                     // read an int
+    _    <- char('\n')              // skip a newline
+    ss   <- many(prof(n + 2))       // recursively read more at indent + 2
+  } yield Fix(ProfF(name, year, ss))
+```
+
+```scala
+scala> prof(0).parseOnly(data).option
+res7: Option[Fix[ProfF]] = Some(Fix(ProfF(Simeon Denis Poisson, 1800, «1»)))
+```
+
+???
+
+- and it works!
+- but the `toString` for `Fix` isn't that great so I'll call a utility method that prints out the tree. I'm not going to show it to you but it's in the example code.
+
+---
+
+# Parse Positions
+
+
+
+
+```scala
+scala> prof(0).parseOnly(data).option.foreach(drawFix)
+ProfF(Simeon Denis Poisson, 1800, «1»)
+ ProfF(Gustav Peter Lejeune Dirichlet, 1827, «1»)
+  ProfF(Rudolf Otto Sigismund Lipschitz, 1853, «1»)
+   ProfF(C. Felix (Christian) Klein, 1868, «2»)
+    ProfF(William Edward Story, 1875, «1»)
+     ProfF(Solomon Lefschetz, 1911, «1»)
+      ProfF(Albert William Tucker, 1932, «1»)
+       ProfF(Marvin Lee Minsky, 1954, «1»)
+        ProfF(Gerald Jay Sussman, 1973, «1»)
+         ProfF(Guy Lewis Steele, 1980, «1»)
+          ProfF(Philip Lee Wadler, 1984, «0»)
+    ProfF(C. L. Ferdinand (Carl Louis) Lindemann, 1873, «1»)
+     ProfF(David Hilbert, 1885, «3»)
+      ProfF(Wilhelm Ackermann, 1925, «0»)
+      ProfF(Haskell Curry, 1930, «0»)
+      ProfF(Hermann Weyl, 1908, «1»)
+       ProfF(Saunders Mac Lane, 1934, «2»)
+        ProfF(Steven Awodey, 1997, «0»)
+        ProfF(William Howard, 1956, «0»)
+```
+
+???
+
+- right. that looks good.
+- now let's see what we can do with `Cofree`.
+
+---
+
+# Parse Positions
+
+```scala
+def prof(n: Int): Parser[Fix[ProfF]] =
+  for {
+
+    _    <- manyN(n, char(' '))     // skip 'n' spaces
+    name <- stringOf(notChar(','))  // read up to a comma
+    _    <- token(char(','))        // skip comma and following space
+    year <- int                     // read an int
+    _    <- char('\n')              // skip a newline
+    ss   <- many(prof(n + 2))       // recursively read more at indent + 2
+
+  } yield Fix(ProfF(name, year, ss))
+```
+
+???
+
+- Here's our `Fix` parser ...
+
+---
+
+# Parse Positions
+
+```scala
+def posProf(n: Int): Parser[Cofree[ProfF, (Int, Int)]] =
+  for {
+    p0   <- pos
+    _    <- manyN(n, char(' '))     // skip 'n' spaces
+    name <- stringOf(notChar(','))  // read up to a comma
+    _    <- token(char(','))        // skip comma and following space
+    year <- int                     // read an int
+    _    <- char('\n')              // skip a newline
+    ss   <- many(posProf(n + 2))    // recursively read more at indent + 2
+    p1   <- pos
+  } yield Cofree((p0, p1), ProfF(name, year, ss))
+```
+
+???
+
+- And here's one with `Cofree`, and what we're doing here is annotating each `ProfF` with the starting and ending parse positions.
+
+---
+
+# Parse Positions
+
+```scala
+def posProf(n: Int): Parser[Cofree[ProfF, (Int, Int)]] =
+  for {
+    p0   <- pos
+    _    <- manyN(n, char(' '))     // skip 'n' spaces
+    name <- stringOf(notChar(','))  // read up to a comma
+    _    <- token(char(','))        // skip comma and following space
+    year <- int                     // read an int
+    _    <- char('\n')              // skip a newline
+    ss   <- many(posProf(n + 2))    // recursively read more at indent + 2
+    p1   <- pos
+  } yield Cofree((p0, p1), ProfF(name, year, ss))
+```
+
+```scala
+scala> posProf(0).parseOnly(data).option
+res9: Option[Cofree[ProfF,(Int, Int)]] = Some(Cofree((0,713),ProfF(Simeon Denis Poisson, 1800, «1»)))
+```
+
+???
+
+- And it works, again with an awful `toString`
+
+---
+
+# Parse Positions
+
+
+
+
+```scala
+scala> posProf(0).parseOnly(data).option.foreach(drawCofree)
+(0,713) :< ProfF(Simeon Denis Poisson, 1800, «1»)
+ (27,713) :< ProfF(Gustav Peter Lejeune Dirichlet, 1827, «1»)
+  (66,713) :< ProfF(Rudolf Otto Sigismund Lipschitz, 1853, «1»)
+   (108,713) :< ProfF(C. Felix (Christian) Klein, 1868, «2»)
+    (147,420) :< ProfF(William Edward Story, 1875, «1»)
+     (182,420) :< ProfF(Solomon Lefschetz, 1911, «1»)
+      (216,420) :< ProfF(Albert William Tucker, 1932, «1»)
+       (256,420) :< ProfF(Marvin Lee Minsky, 1954, «1»)
+        (294,420) :< ProfF(Gerald Jay Sussman, 1973, «1»)
+         (335,420) :< ProfF(Guy Lewis Steele, 1980, «1»)
+          (376,420) :< ProfF(Philip Lee Wadler, 1984, «0»)
+    (420,713) :< ProfF(C. L. Ferdinand (Carl Louis) Lindemann, 1873, «1»)
+     (473,713) :< ProfF(David Hilbert, 1885, «3»)
+      (503,539) :< ProfF(Wilhelm Ackermann, 1925, «0»)
+      (539,571) :< ProfF(Haskell Curry, 1930, «0»)
+      (571,713) :< ProfF(Hermann Weyl, 1908, «1»)
+       (602,713) :< ProfF(Saunders Mac Lane, 1934, «2»)
+        (640,676) :< ProfF(Steven Awodey, 1997, «0»)
+        (676,713) :< ProfF(William Howard, 1956, «0»)
+```
+
+???
+- So our original idea for `Cofree` was for database IDs but we can use that slot for anything. Without any changes to our API we now have a representation with source positions.
+- And you can see how this can be really useful for something like a computer language, because your recursive data type is an AST that you might want to annotate with source positions, types, strictness analysis, any number of things, and by encoding your data types this way you get that ability for free, which is really nice.
+
+- Ok, so back to our database problem.
+
+
+---
+
+class: center, middle
+
+# Ok, not quite yet. Almost.
+
+???
+
+- Ok so before we do that I need to explain something that you may have been wondering about.
+
+---
+
+# So Why the F?
+
+```scala
+case class ProfF[A](name: String, year: Int, students: List[A])
+```
+
+`ProfF` is a functor. This means we can map over it. 
+
+```scala
+implicit val PersonFunctor: Functor[ProfF] =
+  new Functor[ProfF] {
+    def map[A, B](fa: ProfF[A])(f: A => B): ProfF[B] =
+      fa.copy(students = fa.students.map(f))
+  }
+```
+
+Thus.
+
+```scala
+scala> val ps = ProfF("Bob", 1976, List("foo", "bar"))
+ps: ProfF[String] = ProfF(Bob,1976,List(foo, bar))
+
+scala> ps.map(s => s.length)
+res11: ProfF[Int] = ProfF(Bob,1976,List(3, 3))
+```
+
+???
+
+- ProfF is a functor. This means we can map over it.
+- And if you follow this design pattern your data type will *always* be a functor, in fact it's called a pattern functor, so that's the thing to google if you want to learn more about this kind of thing.
+- In any case the functor here is straightforward because we can just delegate to `.map` on `List` and we're done.
+
+---
+
+# But wait, there's more!
+
+```scala
+case class ProfF[A](name: String, year: Int, students: List[A])
+```
+
+`ProfF` is a *traversable* functor. This means we can sequence it.
+
+```scala
+implicit val PersonTraverse: Traverse[ProfF] =
+  new Traverse[ProfF] {
+    def traverseImpl[G[_]: Applicative, A, B](fa: ProfF[A])(f: A => G[B]): G[ProfF[B]] =
+      fa.students.traverse(f).map(ss => fa.copy(students = ss))
+  }
+```
+
+Thus.
+
+```scala
+scala> val p = ProfF("Bob", 1975, List(Option(1), Option(2)))
+p: ProfF[Option[Int]] = ProfF(Bob,1975,List(Some(1), Some(2)))
+
+scala> p.sequence
+res12: Option[ProfF[Int]] = Some(ProfF(Bob,1975,List(1, 2)))
+```
+
+???
+
+- It turns out that `ProfF` is also a **traversable** functor. This means we can turn a `ProfF[F[A]]` into a `F[ProfF[A]]` if `F` is an applicative functor. We can flip the type constructors, which is what the example illustrates. Look at the types.
+- The implementation is a little more involved but again we just delegate to `traverse` on `List` for most of the work because `List` is also a traversable functor.
+
+---
+
+# (small digression)
+
+Because "map and then sequence" is so common, we also have `traverse` which does them in one step. You can define one in terms of the other but they have this relationship:
+
+```scala
+fa.map(f).sequence <~> fa.traverse(f) // (1) definition of traverse
+```
+
+And we can find another identity by equational reasoning.
+
+```scala
+
+fa          <~> fa.map(identity)          // (2) the functor law
+
+fa.sequence <~> fa.map(identity).sequence // by (2) above
+
+fa.sequence <~> fa.traverse(identity)     // by (1) above
+```
+
+So when you're working with traversable functors it's nice to know both of those substitutions.
+
+???
+
+- and by `<~>` we mean "the same thing" ... you can freely substitute one for the other.
+- and given that we can find another identity
+- this is kind of a trivial example but again it's just that's not in your toolchest when you're first learning about functional programming and I always like to give examples when I can.
+- Ok.
+
+---
+
+class: center, middle
+
+# Can we do some SQL now?
+
+
+---
+
+# Get your doobie on
+
+Doobie is a **pure functional** (i.e., side-effect free) JDBC library for Scala. See `tpolecat/doobie` for doc, presentations, etc.
+
+```scala
+// a transactor abstracts over connection pools and io-effect types
+val xa = DriverManagerTransactor[IO]("org.h2.Driver", "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "sa", "")
+
+// a program to create the schema
+val create: ConnectionIO[Int] =
+  sql"""
+    CREATE TABLE prof (
+      id     INTEGER IDENTITY,
+      parent INTEGER     NULL,
+      name   VARCHAR NOT NULL,
+      year   INTEGER NOT NULL,
+      FOREIGN KEY(parent) REFERENCES prof(id)        
+    );
+  """.update.run
+```
+
+Let's init the database.
+
+```scala
+scala> create.transact(xa).unsafePerformIO
+res16: Int = 0
+
+scala> sql"select id from prof".query[Int].list.transact(xa).unsafePerformIO
+res17: List[Int] = List()
+```
+
+???
+- Ok so I don't have time to explain doobie in detail, but the big idea is that Doobie programs are values. They're data. They don't "do" anything until you translate them to some target type like `IO` or `Task` and run it ("at the end of the world" as we say).
+- So here ...
+- And that's about all we need to know right now.
+
+---
+
+# Insert a Tree
+
+```scala
+def insertNode(op: Option[Int], p: ProfF[_]): ConnectionIO[Int] =
+  sql"""
+    INSERT INTO prof (parent, name, year)
+    VALUES ($op, ${p.name}, ${p.year})
+  """.update.withUniqueGeneratedKeys("id")
+```
+
+???
+
+- Ok so here's a method that constructs a program that inserts a row into the `prof` table and yields the generated id.
+- (explain) 
+- It disregards the childern entirely, which you know because of the exstential placeholder; the implementation can't do anything with the children because it doesn't even know what type they are.
+-
+
+---
+
+# Insert a Tree
+
+```scala
+def insertNode(op: Option[Int], p: ProfF[_]): ConnectionIO[Int] =
+  sql"""
+    INSERT INTO prof (parent, name, year)
+    VALUES ($op, ${p.name}, ${p.year})
+  """.update.withUniqueGeneratedKeys("id")
+
+def insertTree(fp: Fix[ProfF], op: Option[Int]): ConnectionIO[Cofree[ProfF, Int]] =
+  for {
+    h <- insertNode(op, fp.unfix)       // ConnectionIO[Int] 
+    t <- fp.unfix                       // ProfF[Fix[ProfF]] 
+           .map(insertTree(_, Some(h))) // ProfF[ConnectionIO[Cofree[ProfF, Int]]]
+           .sequence                    // ConnectionIO[ProfF[Cofree[ProfF, Int]]]
+  } yield Cofree(h, t) 
+```
+
+???
+
+- And here's a metohod that constructs a program to insert a `Fix[ProfF]` into the database, and yield another tree with the same structure but annotated with database ids. Which is what we wanted to do.
+- So how does this work?
+- (explain)
+- ok so we know that `.map` and then `.sequence` is `.traverse` so let's simplify that
+---
+
+# Insert a Tree
+
+```scala
+def insertNode(op: Option[Int], p: ProfF[_]): ConnectionIO[Int] =
+  sql"""
+    INSERT INTO prof (parent, name, year)
+    VALUES ($op, ${p.name}, ${p.year})
+  """.update.withUniqueGeneratedKeys("id")
+
+def insertTree(fp: Fix[ProfF], op: Option[Int]): ConnectionIO[Cofree[ProfF, Int]] =
+  for {
+    h <- insertNode(op, fp.unfix)
+    t <- fp.unfix
+           .traverse(insertTree(_, Some(h))) // same as map + sequence
+  } yield Cofree(h, t) 
+```
+
+???
+
+- (next slide)
+
+---
+
+# Insert a Tree
+
+
+
+
+```scala
+def insertNode(op: Option[Int], p: ProfF[_]): ConnectionIO[Int] =
+  sql"""
+    INSERT INTO prof (parent, name, year)
+    VALUES ($op, ${p.name}, ${p.year})
+  """.update.withUniqueGeneratedKeys("id")
+
+def insertTree(fp: Fix[ProfF], op: Option[Int]): ConnectionIO[Cofree[ProfF, Int]] =
+  for {
+    h <- insertNode(op, fp.unfix)
+    t <- fp.unfix.traverse(insertTree(_, Some(h)))
+  } yield Cofree(h, t) 
+```
+
+???
+
+- So, this `insertTree` operation can be generalized but the `Option` type makes it a little messy so we're just going to leave it as-is.
+
+---
+
+# Insert a Tree
+
+
+
+
+```scala
+scala> val p = prof(0).parseOnly(data).option.get // yolo
+p: Fix[ProfF] = Fix(ProfF(Simeon Denis Poisson, 1800, «1»))
+
+scala> val io = insertTree(p, None).transact(xa).flatMap(c => ioDrawCofree(c))
+io: scalaz.effect.IO[Unit] = scalaz.effect.IOFunctions$$anon$6@57653a55
+
+scala> io.unsafePerformIO
+1 :< ProfF(Simeon Denis Poisson, 1800, «1»)
+ 2 :< ProfF(Gustav Peter Lejeune Dirichlet, 1827, «1»)
+  3 :< ProfF(Rudolf Otto Sigismund Lipschitz, 1853, «1»)
+   4 :< ProfF(C. Felix (Christian) Klein, 1868, «2»)
+    5 :< ProfF(William Edward Story, 1875, «1»)
+     6 :< ProfF(Solomon Lefschetz, 1911, «1»)
+      7 :< ProfF(Albert William Tucker, 1932, «1»)
+       8 :< ProfF(Marvin Lee Minsky, 1954, «1»)
+        9 :< ProfF(Gerald Jay Sussman, 1973, «1»)
+         10 :< ProfF(Guy Lewis Steele, 1980, «1»)
+          11 :< ProfF(Philip Lee Wadler, 1984, «0»)
+    12 :< ProfF(C. L. Ferdinand (Carl Louis) Lindemann, 1873, «1»)
+     13 :< ProfF(David Hilbert, 1885, «3»)
+      14 :< ProfF(Wilhelm Ackermann, 1925, «0»)
+      15 :< ProfF(Haskell Curry, 1930, «0»)
+      16 :< ProfF(Hermann Weyl, 1908, «1»)
+       17 :< ProfF(Saunders Mac Lane, 1934, «2»)
+        18 :< ProfF(Steven Awodey, 1997, «0»)
+        19 :< ProfF(William Howard, 1956, «0»)
+```
+
+???
+
+- so first we parse the value like we did before
+- then we construct a program to insert it, passing the result to `ioDrawCofree` which is the same printing code, just in `IO` so it doesn't side-effect.
+- Then we run the program and see that we get back an annotated tree.
+- It starts with 1 which is a little suspicious, so let's do it again ...
+
+
+---
+
+# Insert a Tree
+
+```scala
+scala> io.unsafePerformIO
+20 :< ProfF(Simeon Denis Poisson, 1800, «1»)
+ 21 :< ProfF(Gustav Peter Lejeune Dirichlet, 1827, «1»)
+  22 :< ProfF(Rudolf Otto Sigismund Lipschitz, 1853, «1»)
+   23 :< ProfF(C. Felix (Christian) Klein, 1868, «2»)
+    24 :< ProfF(William Edward Story, 1875, «1»)
+     25 :< ProfF(Solomon Lefschetz, 1911, «1»)
+      26 :< ProfF(Albert William Tucker, 1932, «1»)
+       27 :< ProfF(Marvin Lee Minsky, 1954, «1»)
+        28 :< ProfF(Gerald Jay Sussman, 1973, «1»)
+         29 :< ProfF(Guy Lewis Steele, 1980, «1»)
+          30 :< ProfF(Philip Lee Wadler, 1984, «0»)
+    31 :< ProfF(C. L. Ferdinand (Carl Louis) Lindemann, 1873, «1»)
+     32 :< ProfF(David Hilbert, 1885, «3»)
+      33 :< ProfF(Wilhelm Ackermann, 1925, «0»)
+      34 :< ProfF(Haskell Curry, 1930, «0»)
+      35 :< ProfF(Hermann Weyl, 1908, «1»)
+       36 :< ProfF(Saunders Mac Lane, 1934, «2»)
+        37 :< ProfF(Steven Awodey, 1997, «0»)
+        38 :< ProfF(William Howard, 1956, «0»)
+```
+
+???
+- and yeah, it really is using database sequence to get the ids.
+- I should mention that this whole talk is one long  REPL session that has been typechecked and executed, I just haven't been showing output. I use a tool called **tut** to do this.
+- Ok, so now how do we read trees back?
+
+---
+
+# And now read it back.
+
+```scala
+def readNode(id: Int): ConnectionIO[ProfF[Int]] =
+  for {
+    d  <- sql"SELECT name, year FROM prof WHERE id = $id".query[(String, Int)].unique
+    ss <- sql"SELECT id FROM prof WHERE parent = $id".query[Int].list
+  } yield ProfF(d._1, d._2, ss)
+```
+
+???
+- Here's a method that constructs a program to compute a `ProfF[Inf]` ... no what does that mean? It's a `ProfF` whose children are database ids. So instead of object references we have database references.
+- I think this is a really nice consequence of this encoding; sometimes you want the whole structure and sometimes you just want a "local" hunk, and we get both with the same data type.
+- I should acknowledge that this is a very inefficient way to do this; it would be much faster to read the whole thing into memory and assemble the tree locally, but this is easier to follow and ends up being a better example.
+- So now that we have a way to read a slice with database references, how do we assemble this into a tree?
+
+---
+
+
+# And now read it back.
+
+```scala
+def readNode(id: Int): ConnectionIO[ProfF[Int]] =
+  for {
+    d  <- sql"SELECT name, year FROM prof WHERE id = $id".query[(String, Int)].unique
+    ss <- sql"SELECT id FROM prof WHERE parent = $id".query[Int].list
+  } yield ProfF(d._1, d._2, ss)
+
+def readTree(id: Int): ConnectionIO[Cofree[ProfF, Int]] =
+  readNode(id).flatMap { pi =>
+    pi.map(readTree)      // ProfF[ConnectionIO[Cofree[ProfF, Int]]]
+      .sequence           // ConnectionIO[ProfF[Cofree[ProfF, Int]]]
+      .map(Cofree(id, _)) // ConnectionIO[Cofree[ProfF, Int]]
+  }
+```
+
+???
+- here we go. (explain)
+- as before we know that `.map` and then `.sequence` is ...
+
+---
+
+# And now read it back.
+
+```scala
+def readNode(id: Int): ConnectionIO[ProfF[Int]] =
+  for {
+    d  <- sql"SELECT name, year FROM prof WHERE id = $id".query[(String, Int)].unique
+    ss <- sql"SELECT id FROM prof WHERE parent = $id".query[Int].list
+  } yield ProfF(d._1, d._2, ss)
+
+def readTree(id: Int): ConnectionIO[Cofree[ProfF, Int]] =
+  readNode(id).flatMap { pi =>
+    pi.traverse(readTree)
+      .map(Cofree(id, _))
+  }
+```
+
+???
+- (next)
+
+---
+
+# And now read it back.
+
+```scala
+def readNode(id: Int): ConnectionIO[ProfF[Int]] =
+  for {
+    d  <- sql"SELECT name, year FROM prof WHERE id = $id".query[(String, Int)].unique
+    ss <- sql"SELECT id FROM prof WHERE parent = $id".query[Int].list
+  } yield ProfF(d._1, d._2, ss)
+
+def readTree(id: Int): ConnectionIO[Cofree[ProfF, Int]] =
+  readNode(id).flatMap(_.traverse(readTree).map(Cofree(id, _)))
+```
+
+???
+- Ok so I'd like to take a minute to look at the `readTree` method more closely and see if we can generalize it.
+
+---
+
+# (another digression)
+
+```scala
+// our original method for reading a tree
+def readTree(id: Int): ConnectionIO[Cofree[ProfF, Int]] =
+  readNode(id).flatMap(_.traverse(readTree).map(Cofree(id, _)))
+```
+
+???
+- Let's factor out the call to `readNode`.
+
+
+---
+
+# (another digression)
+
+```scala
+// factor out the function we're calling
+def readTree(id: Int)(f: Int => ConnectionIO[ProfF[Int]]): ConnectionIO[Cofree[ProfF, Int]] =
+  f(id).flatMap(_.traverse(readTree(_)(f)).map(Cofree(id, _)))
+```
+
+???
+
+- Ok, so `f` gives us a `ConnectionIO` but all we're doing with it is calling `.flatMap` and then `.map`, so it should work with any monad. Let's factor that out.
+
+---
+
+# (another digression)
+
+```scala
+// factor out the monad
+def readTree[M[_]: Monad](id: Int)(f: Int => M[ProfF[Int]]): M[Cofree[ProfF, Int]] =
+  f(id).flatMap(_.traverse(readTree(_)(f)).map(Cofree(id, _)))
+```
+
+???
+
+- So now we get an that `M` of `ProfF[Int]` but the only thing we're doing with the `ProfF` it is calling `.traverse`, so it should work with any traversable functor. Let's factor that out.
+
+---
+
+# (another digression)
+
+```scala
+// factor out the traversable functor
+def readTree[M[_]: Monad, F[_]: Traverse](id: Int)(f: Int => M[F[Int]]): M[Cofree[F, Int]] =
+  f(id).flatMap(_.traverse(readTree(_)(f)).map(Cofree(id, _)))
+```
+
+???
+
+- And we're not doing anything with the `Int` but passing it as an argument so let's factor that out too.
+
+---
+
+# (another digression)
+
+```scala
+// factor out the Int
+def readTree[M[_]: Monad, F[_]: Traverse, A](a: A)(f: A => M[F[A]]): M[Cofree[F, A]] =
+  f(a).flatMap(_.traverse(readTree(_)(f)).map(Cofree(a, _)))
+```
+
+???
+- ok, so now we have something definitely useful and totally generic.
+
+---
+
+# (another digression)
+
+```scala
+// we now have a generic monadic unfold into cofree
+def unfoldCM[M[_]: Monad, F[_]: Traverse, A](a: A)(f: A => M[F[A]]): M[Cofree[F, A]] =
+  f(a).flatMap(_.traverse(unfoldCM(_)(f)).map(Cofree(a, _)))
+```
+
+???
+
+- This is monadic cofree corecursion; it takes a seed value and feeds it into a function that generates an F in some context, the traverses it to expand the `A`'s in the `F`, forever, or until there are no more `A`s; in this case it means we're at the leaves of the tree.
+- And what it gives back is a Cofree annotated with the key values.
+- And does this method exist in scalaz already? NO! The non-monadic version does but not this one. It's an oversight.
+
+---
+
+# (another digression)
+
+```scala
+// we now have a generic monadic unfold into cofree
+def unfoldCM[M[_]: Monad, F[_]: Traverse, A](a: A)(f: A => M[F[A]]): M[Cofree[F, A]] =
+  f(a).flatMap(_.traverse(unfoldCM(_)(f)).map(Cofree(a, _)))
+
+// and we can define readTree in terms of it
+def readTree(id: Int): ConnectionIO[Cofree[ProfF, Int]] =
+  unfoldCM(id)(readNode)
+```
+
+???
+
+- so in any case, with this method our `readTree` method is trivial.
+- and I want to point out it's worth doing this **even if you're only calling it once** because the more polymorphic your code is, the fewer ways there are to write it because you have fewer operations available. So that means there are fewer ways to write it wrong. And in fact sometimes if it typechecks it has to be correct because there's only one way to do it.
+- But does it work?
+
+---
+
+# Do it work?
+
+Let's read Hilbert's sub-tree (id = 32).
+
+```scala
+scala> val io = readTree(32).transact(xa).flatMap(c => ioDrawCofree(c))
+io: scalaz.effect.IO[Unit] = scalaz.effect.IOFunctions$$anon$6@5ff635a8
+
+scala> io.unsafePerformIO
+32 :< ProfF(David Hilbert, 1885, «3»)
+ 33 :< ProfF(Wilhelm Ackermann, 1925, «0»)
+ 34 :< ProfF(Haskell Curry, 1930, «0»)
+ 35 :< ProfF(Hermann Weyl, 1908, «1»)
+  36 :< ProfF(Saunders Mac Lane, 1934, «2»)
+   37 :< ProfF(Steven Awodey, 1997, «0»)
+   38 :< ProfF(William Howard, 1956, «0»)
+```
+
+???
+
+- yes!
+- and I think it's really cool that we're using a totally generic monadic unfold to do database programming. We never once thought "hey we're talking to a database here so we need to be careful, we have a connection and a resultset and iteration" and all that ... we just went where the types took us.
+- Ok, so what have we seen?
+
+---
+
+# Review
+
+- We learned about some recursive types.
+- We used them to do something useful (or at least interesting).
+- We pushed on our code and did some equational reasoning.
+- We were not frightened.
+
+???
+
+- `Fix` and `Cofree` popped out of our model naturally just by pushing a little bit; it's not a contrived example, the question of what to do with database IDs is a real thing we think about.
+- And we used them to represent the same data type in a bunch of different ways: as a simple recursive data type, as an isolated node with unknown child types, as as tree annotated with parse positions, as a node with database references rather than object references, and of course as a tree annotated with database ids. We did all of this with the same definition of `ProfF`.
+- We did some code pushing. Not much more to say about that, I just wanted to demonstrate the way we think about things when we do FP with expressive types, so hopefully even if you didn't follow all of it you get a sense for how powerful it is.
+- And hopefully you all survived. And if not I have bad news for you because Greg Pfiel is up next and he's going to be talking about using recursion schemes in a much more general and more powerful way.
+
+- sooooo, that's it.
+
+---
+
+class: center, middle
+
+# Thanks!
+Code and slides at `tpolecat/cofree` on GitHub
+
+## Questions?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ </textarea>
+    <script src="remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
