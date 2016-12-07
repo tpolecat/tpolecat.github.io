@@ -12,7 +12,7 @@ layout: root
       </button>
       {% for x in site.collections %}
         {% if x.label == page.collection %}
-          <a class="navbar-brand" 
+          <a class="navbar-brand"
              href="/{{ x.label }}/{{ x.index }}"
              >{{ x.title }}</a>
         {% endif %}
@@ -26,7 +26,7 @@ layout: root
             {% for x in site.collections %}
               {% if x.label == page.collection %}
                 {% for y in x.docs %}
-                  {% if y.number > 0 %}
+                  {% if y.number.to_i > 0 %}
                     {% if y.number == page.number %}
                       <li style="background-color: #eeeeee"><a href="{{y.url}}">{{ y.number }}. {{ y.title }}</a></li>
                     {% else %}
@@ -59,7 +59,7 @@ layout: root
 </nav>
 
 <div class="container" role="main">
-  {% if page.number > 0 %}
+  {% if page.number.to_i > 0 %}
     <h2>{{ page.number }}. {{ page.title }}</h2>
   {% endif %}
   {{ content }}
