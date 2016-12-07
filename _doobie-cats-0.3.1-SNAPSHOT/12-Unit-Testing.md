@@ -1,6 +1,6 @@
 ---
 layout: book
-number: 11
+number: 12
 title: Unit Testing
 ---
 
@@ -16,7 +16,8 @@ As with earlier chapters we set up a `Transactor` and YOLO mode. Note that the c
 
 ```scala
 import doobie.imports._
-import scalaz._, Scalaz._
+import cats._, cats.data._, cats.implicits._
+import fs2.interop.cats._
 val xa = DriverManagerTransactor[IOLite](
   "org.postgresql.Driver", "jdbc:postgresql:world", "postgres", ""
 )
@@ -39,7 +40,7 @@ CREATE TABLE country (
 
 The `doobie-contrib-specs2` add-on provides a mix-in trait that we can add to a `Specification` to allow for typechecking of queries, interpreted as a set of specifications.
 
-So here are a few queries we would like to check. Note that we can only check values of type `Query0` and `Update0`; we can't check `Process` or `ConnectionIO` values, so a good practice is to define your queries in a DAO module and apply further operations at a higher level. 
+So here are a few queries we would like to check. Note that we can only check values of type `Query0` and `Update0`; we can't check `Process` or `ConnectionIO` values, so a good practice is to define your queries in a DAO module and apply further operations at a higher level.
 
 ```scala
 case class Country(code: Int, name: String, pop: Int, gnp: Double)
@@ -83,15 +84,15 @@ When we run the test we get output similar to what we saw in the previous chapte
 
 ```
 scala> { specs2 run AnalysisTestSpec; () } // pretend this is sbt> test
-[info] $line14.$read$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$AnalysisTestSpec$
+[info] $line12.$read$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$AnalysisTestSpec$
 [info] 
-[info] Query0[(Int, String)] defined at <console>:22
+[info] Query0[(Int, String)] defined at <console>:28
   
   select 42, 'foo'::varchar
 [info]   + SQL Compiles and Typechecks
 [info]   + C01 ?column? INTEGER (int4)    NULL?  →  Int
 [info]   + C02 varchar  VARCHAR (varchar) NULL?  →  String
-[info] Query0[Country] defined at <console>:24
+[info] Query0[Country] defined at <console>:30
   
   select code, name, population, gnp, indepyear
   from country
@@ -100,12 +101,12 @@ scala> { specs2 run AnalysisTestSpec; () } // pretend this is sbt> test
 [error]   x P01 Short  →  INTEGER (int4)
 [error]    x Short is not coercible to INTEGER (int4) according to the JDBC specification.
      Fix this by changing the schema type to SMALLINT, or the Scala type to JdbcType
-     or Int. (<console>:24)
+     or Int. (<console>:30)
 [info] 
 [error]   x C01 code       CHAR     (bpchar)  NOT NULL  →  Int
 [error]    x CHAR (bpchar) is ostensibly coercible to Int according to the JDBC specification
      but is not a recommended target type. Fix this by changing the schema type to
-     INTEGER; or the Scala type to Code or Code or PersonId or Code or String. (<console>:24)
+     INTEGER; or the Scala type to String. (<console>:30)
 [info] 
 [info]   + C02 name       VARCHAR  (varchar) NOT NULL  →  String
 [info]   + C03 population INTEGER  (int4)    NOT NULL  →  Int
@@ -114,12 +115,12 @@ scala> { specs2 run AnalysisTestSpec; () } // pretend this is sbt> test
      specification but is not a recommended target type. Fix this by changing the
      schema type to FLOAT or DOUBLE; or the Scala type to BigDecimal or BigDecimal.
    x Reading a NULL value into Double will result in a runtime failure. Fix this by
-     making the schema type NOT NULL or by changing the Scala type to Option[Double] (<console>:24)
+     making the schema type NOT NULL or by changing the Scala type to Option[Double] (<console>:30)
 [info] 
 [error]   x C05 indepyear  SMALLINT (int2)    NULL      →  
-[error]    x Column is unused. Remove it from the SELECT statement. (<console>:24)
+[error]    x Column is unused. Remove it from the SELECT statement. (<console>:30)
 [info] 
-[info] Update0 defined at <console>:22
+[info] Update0 defined at <console>:28
   
   update country set name = ? where name = ?
 [info]   + SQL Compiles and Typechecks
@@ -127,11 +128,8 @@ scala> { specs2 run AnalysisTestSpec; () } // pretend this is sbt> test
 [info]   + P02 String  →  VARCHAR (text)
 [info] 
 [info] 
-[info] Total for specification $line14.$read$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$AnalysisTestSpec$
-[info] Finished in 33 ms
+[info] Total for specification $line12.$read$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$AnalysisTestSpec$
+[info] Finished in 348 ms
 13 examples, 4 failures, 0 error
 [info] 
 ```
-
-
-

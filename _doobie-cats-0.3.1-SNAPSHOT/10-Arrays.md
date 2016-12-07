@@ -1,6 +1,6 @@
 ---
 layout: book
-number: 9
+number: 10
 title: SQL Arrays
 ---
 
@@ -13,7 +13,8 @@ Again we set up a transactor and pull in YOLO mode. We also need an import to ge
 ```scala
 import doobie.imports._
 import doobie.postgres.pgtypes._
-import scalaz._, Scalaz._
+import cats._, cats.data._, cats.implicits._
+import fs2.interop.cats._
 val xa = DriverManagerTransactor[IOLite](
   "org.postgresql.Driver", "jdbc:postgresql:world", "postgres", ""
 )
@@ -27,7 +28,7 @@ Let's create a new table with a SQL array column. Note that this is likely to wo
 ```scala
 val drop = sql"DROP TABLE IF EXISTS person".update.quick
 
-val create = 
+val create =
   sql"""
     CREATE TABLE person (
       id   SERIAL,
@@ -85,23 +86,4 @@ scala> sql"select array['foo',NULL,'baz']".query[List[Option[String]]].quick.uns
 scala> sql"select array['foo',NULL,'baz']".query[Option[List[Option[String]]]].quick.unsafePerformIO
   Some(List(Some(foo), None, Some(baz)))
 ```
-
-### Diving Deep
-
-We can easily add support for other sequence types like `scalaz.IList` by invariant mapping. The `nxmap` method is a variant of `xmap` that ensures null values read from the database are never observed. The `TypeTag` is required to provide better feedback when type mismatches are detected.
-
-```scala
-import scala.reflect.runtime.universe.TypeTag
-
-implicit def IListMeta[A: TypeTag](implicit ev: Meta[List[A]]): Meta[IList[A]] =
-  ev.nxmap[IList[A]](IList.fromList, _.toList)
-```
-
-Once this mapping is in scope we can map columns directly to `IList`.
-
-```scala
-scala> sql"select pets from person where name = 'Bob'".query[IList[String]].quick.unsafePerformIO
-  [Nixon,Slappy]
-```
-
 

@@ -49,13 +49,13 @@ scala> (sql"select code, name, population, gnp from country"
   Country(DZA,Algeria,31471000,Some(49982.0))
 ```
 
-Still works. Ok. 
+Still works. Ok.
 
 So let's factor our query into a method and add a parameter that selects only the countries with a population larger than some value the user will provide. We insert the `minPop` argument into our SQL statement as `$minPop`, just as if we were doing string interpolation.
 
 ```scala
 def biggerThan(minPop: Int) = sql"""
-  select code, name, population, gnp 
+  select code, name, population, gnp
   from country
   where population > $minPop
 """.query[Country]
@@ -90,7 +90,7 @@ Multiple parameters work the same way. No surprises here.
 
 ```scala
 scala> def populationIn(range: Range) = sql"""
-     |   select code, name, population, gnp 
+     |   select code, name, population, gnp
      |   from country
      |   where population > ${range.min}
      |   and   population < ${range.max}
@@ -104,31 +104,26 @@ scala> populationIn(150000000 to 200000000).quick.unsafePerformIO
 
 ### Dealing with `IN` Clauses
 
-A common irritant when dealing with SQL literals is the desire to inline a *sequence* of arguments into an `IN` clause, but SQL does not support this notion (nor does JDBC do anything to assist). So as of version 0.2.3 **doobie** provides support in the form of some slightly inconvenient machinery.
+A common irritant when dealing with SQL literals is the desire to inline a *sequence* of arguments into an `IN` clause, but SQL does not support this notion (nor does JDBC do anything to assist). **doobie** supports this via *statement fragments* (see Chapter 8).
 
 ```scala
 def populationIn(range: Range, codes: NonEmptyList[String]) = {
-  implicit val codesParam = Param.many(codes)
-  sql"""
-    select code, name, population, gnp 
+  val q = fr"""
+    select code, name, population, gnp
     from country
     where population > ${range.min}
     and   population < ${range.max}
-    and   code in (${codes : codes.type})
-  """.query[Country]
+    and   """ ++ Fragments.in(fr"code", codes) // code IN (...)
+  q.query[Country]
 }
 ```
 
-There are a few things to notice here:
-
-- The `IN` clause must be non-empty, so `codes` is a `NonEmptyList`.
-- We must derive a `Param` instance for the *singleton type* of `codes`, which we do via `Param.many`. This derivation is legal for any `F[A]` given `Foldable1[F]` and `Atom[A]`. You can have any number of `IN` arguments but each must have its own derived `Param` instance.
-- When interpolating `codes` we must explicitly ascribe its singleton type `codes.type`.
+Note that the `IN` clause must be non-empty, so `codes` is a `NonEmptyList`.
 
 Running this query gives us the desired result.
 
 ```scala
-scala> populationIn(100000000 to 300000000, NonEmptyList("USA", "BRA", "PAK", "GBR")).quick.unsafePerformIO
+scala> populationIn(100000000 to 300000000, NonEmptyList.of("USA", "BRA", "PAK", "GBR")).quick.unsafePerformIO
   Country(BRA,Brazil,170115000,Some(776739.0))
   Country(PAK,Pakistan,156483000,Some(61289.0))
   Country(USA,United States,278357000,Some(8510700.0))
@@ -136,20 +131,20 @@ scala> populationIn(100000000 to 300000000, NonEmptyList("USA", "BRA", "PAK", "G
 
 ### Diving Deeper
 
-In the previous chapter's *Diving Deeper* we saw how a query constructed with the `sql` interpolator is just sugar for the `process` constructor defined in the `doobie.hi.connection` module (aliased as `HC`). Here we see that the second parameter, a `PreparedStatementIO` program, is used to set the query parameters.
+In the previous chapter's *Diving Deeper* we saw how a query constructed with the `sql` interpolator is just sugar for the `process` constructor defined in the `doobie.hi.connection` module (aliased as `HC`). Here we see that the second parameter, a `PreparedStatementIO` program, is used to set the query parameters. The third parameter specifies a chunking factor; rows are buffered in chunks of the specified size.
 
 ```scala
 import fs2.Stream
 
 val q = """
-  select code, name, population, gnp 
+  select code, name, population, gnp
   from country
   where population > ?
   and   population < ?
   """
 
-def proc(range: Range): Stream[ConnectionIO, Country] = 
-  HC.process[Country](q, HPS.set((range.min, range.max)))
+def proc(range: Range): Stream[ConnectionIO, Country] =
+  HC.process[Country](q, HPS.set((range.min, range.max)), 512)
 ```
 
 Which produces the same output.
@@ -168,10 +163,10 @@ When reading a row or setting parameters in the high-level API, we require an in
 
 ```scala
 scala> Composite[(String, Boolean)]
-res7: doobie.util.composite.Composite[(String, Boolean)] = doobie.util.composite$LowerPriorityComposite$$anon$7@903b1d6
+res7: doobie.util.composite.Composite[(String, Boolean)] = doobie.util.composite$LowerPriorityComposite$$anon$8@431b821d
 
 scala> Composite[Country]
-res8: doobie.util.composite.Composite[Country] = doobie.util.composite$LowerPriorityComposite$$anon$7@608df070
+res8: doobie.util.composite.Composite[Country] = doobie.util.composite$LowerPriorityComposite$$anon$8@3ae94bdc
 ```
 
 The `set` constructor takes an argument of any type with a `Composite` instance and returns a program that sets the unrolled sequence of values starting at parameter index 1 by default. Some other variations are shown here.
@@ -196,8 +191,3 @@ Using the low level `doobie.free` constructors there is no typeclass-driven type
 FPS.setString(1, "foo") *> FPS.setBoolean(2, true)
 
 ```
-
-
-
-
-

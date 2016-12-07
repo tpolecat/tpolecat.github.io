@@ -74,12 +74,12 @@ lazy val doobieVersion = "0.3.1-SNAPSHOT"
 
 libraryDependencies ++= Seq(
   "org.tpolecat" %% "doobie-core"       % doobieVersion,
-  "org.tpolecat" %% "doobie-postgresql" % doobieVersion,
+  "org.tpolecat" %% "doobie-postgres"   % doobieVersion,
   "org.tpolecat" %% "doobie-specs2"     % doobieVersion
 )
 ```
 
-If you are not using PostgreSQL you can omit `doobie-postgresql` and will need to add the appropriate JDBC driver as a dependency. Note that there is a `doobie-h2` add-on if you happen to be using [H2](http://www.h2database.com/).
+If you are not using PostgreSQL you can omit `doobie-postgres` and will need to add the appropriate JDBC driver as a dependency. Note that there is a `doobie-h2` add-on if you happen to be using [H2](http://www.h2database.com/).
 
 ### Conventions
 
@@ -112,7 +112,7 @@ Sometimes we demonstrate that something doesn't compile. In such cases it will b
 
 ```scala
 scala> woozle(nel) // doesn't compile
-<console>:25: error: not found: value woozle
+<console>:23: error: not found: value woozle
        woozle(nel) // doesn't compile
        ^
 ```

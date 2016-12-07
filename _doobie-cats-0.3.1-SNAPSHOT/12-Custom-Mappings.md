@@ -1,6 +1,6 @@
 ---
 layout: book
-number: 10
+number: 12
 title: Custom Mappings
 ---
 
@@ -8,22 +8,29 @@ In this chapter we learn how to use custom `Meta` instances to map arbitrary dat
 
 ### Setting Up
 
-The examples in this chapter require the `contrib-postgresql` add-on, as well as the [argonaut](http://argonaut.io/) JSON library, which you can add to your build thus:
+The examples in this chapter require the `postgres` add-on, as well as the [circe](http://circe.io/) JSON library, which you can add to your build thus:
 
 ```scala
-libraryDependencies += "io.argonaut" %% "argonaut" % "6.2-M1" // as of date of publication
+val circeVersion = "0.6.0"
+
+libraryDependencies ++= Seq(
+  "io.circe" %% "circe-core",
+  "io.circe" %% "circe-generic",
+  "io.circe" %% "circe-parser"
+).map(_ % circeVersion)
 ```
 
 In our REPL we have the same setup as before, plus a few extra imports.
 
 ```scala
-import argonaut._, Argonaut._
+import io.circe._, io.circe.jawn._, io.circe.syntax._
 import doobie.imports._
 import java.awt.Point
 import org.postgresql.util.PGobject
 import scala.reflect.runtime.universe.TypeTag
 import scala.util.Try
-import scalaz._, Scalaz._
+import cats._, cats.implicits._
+import fs2.interop.cats._
 
 val xa = DriverManagerTransactor[IOLite](
   "org.postgresql.Driver", "jdbc:postgresql:world", "postgres", ""
@@ -58,7 +65,7 @@ So our strategy for mapping custom types is to construct a new `Meta` instance (
 
 ### Meta by Invariant Map
 
-Let's say we have a structured value that's represented by a single string in a legacy database. We also have conversion methods to and from the legacy format. 
+Let's say we have a structured value that's represented by a single string in a legacy database. We also have conversion methods to and from the legacy format.
 
 ```scala
 case class PersonId(department: String, number: Int) {
@@ -92,7 +99,7 @@ However if we try to use this type for a *single* column value (i.e., as a query
 
 ```
 scala> sql"select * from person where id = $pid"
-<console>:41: error: Could not find or construct Param[shapeless.::[PersonId,shapeless.HNil]].
+<console>:43: error: Could not find or construct Param[shapeless.::[PersonId,shapeless.HNil]].
 Ensure that this type is an atomic type with an Atom instance in scope, or is an HList whose members
 have Atom instances in scope. You can usually diagnose this problem by trying to summon the Atom
 instance for each element in the REPL. See the FAQ in the Book of Doobie for more hints.
@@ -100,11 +107,11 @@ instance for each element in the REPL. See the FAQ in the Book of Doobie for mor
        ^
 ```
 
-According to the error message we need a `Param[PersonId :: HNil]` instance which requires a `Meta` instance for each member, which means we need a `Meta[PersonId]`. 
+According to the error message we need a `Param[PersonId :: HNil]` instance which requires a `Meta` instance for each member, which means we need a `Meta[PersonId]`.
 
 ```scala
 scala> Meta[PersonId]
-<console>:38: error: Could not find an instance of Meta[PersonId]; you can construct one based on a primitive instance via `xmap`.
+<console>:44: error: Could not find an instance of Meta[PersonId]; you can construct one based on a primitive instance via `xmap`.
        Meta[PersonId]
            ^
 ```
@@ -112,7 +119,7 @@ scala> Meta[PersonId]
 ... and we don't have one. So how do we get one? The simplest way is by basing it on an existing `Meta` instance, using `nxmap`, which is like the invariant functor `xmap` but ensures that `null` values are never observed. So we simply provide `String => PersonId` and vice-versa and we're good to go.
 
 ```scala
-implicit val PersonIdMeta: Meta[PersonId] = 
+implicit val PersonIdMeta: Meta[PersonId] =
   Meta[String].nxmap(PersonId.unsafeFromLegacy, _.toLegacy)
 ```
 
@@ -120,7 +127,7 @@ Now it compiles as a column value and as a `Composite` that maps to a *single* c
 
 ```scala
 scala> sql"select * from person where id = $pid"
-res18: doobie.syntax.string.Builder[shapeless.::[PersonId,shapeless.HNil]] = doobie.syntax.string$Builder@4ecc2a7c
+res18: doobie.util.fragment.Fragment = Fragment("select * from person where id = ?")
 
 scala> Composite[PersonId].length
 res19: Int = 1
@@ -135,15 +142,20 @@ Note that the `Composite` width is now a single column. The rule is: if there ex
 
 Some modern databases support a `json` column type that can store structured data as a JSON document, along with various SQL extensions to allow querying and selecting arbitrary sub-structures. So an obvious thing we might want to do is provide a mapping from Scala model objects to JSON columns, via some kind of JSON serialization library.
 
-We can construct a `Meta` instance for the argonaut `Json` type by using the `Meta.other` constructor, which constructs a direct object mapping via JDBC's `.getObject` and `.setObject`. In the case of PostgreSQL the JSON values are marshalled via the `PGObject` type, which encapsulates an uninspiring `(String, String)` pair representing the schema type and its string value. 
+We can construct a `Meta` instance for the circe `Json` type by using the `Meta.other` constructor, which constructs a direct object mapping via JDBC's `.getObject` and `.setObject`. In the case of PostgreSQL the JSON values are marshalled via the `PGObject` type, which encapsulates an uninspiring `(String, String)` pair representing the schema type and its string value.
 
 Here we go:
 
 ```scala
-implicit val JsonMeta: Meta[Json] = 
+implicit val JsonMeta: Meta[Json] =
   Meta.other[PGobject]("json").nxmap[Json](
-    a => Parse.parse(a.getValue).leftMap[Json](sys.error).merge, // failure raises an exception
-    a => new PGobject <| (_.setType("json")) <| (_.setValue(a.nospaces))
+    a => parse(a.getValue).leftMap[Json](e => throw e).merge, // failure raises an exception
+    a => {
+      val o = new PGobject
+      o.setType("json")
+      o.setValue(a.noSpaces)
+      o
+    }
   )
 ```
 
@@ -155,20 +167,21 @@ res21: Int = 2
 Given this mapping to and from `Json` we can construct a *further* mapping to any type that has a `EncodeJson` and `DecodeJson` instances. The `nxmap` constrains us to reference types and requires a `TypeTag` for diagnostics, so the full type constraint is `A >: Null : EncodeJson : DecodeJson : TypeTag`. On failure we throw an exception; this indicates a logic or schema problem.
 
 ```scala
-def codecMeta[A >: Null : EncodeJson : DecodeJson : TypeTag]: Meta[A] =
+def codecMeta[A >: Null : Encoder : Decoder : TypeTag]: Meta[A] =
   Meta[Json].nxmap[A](
-    _.as[A].result.fold(p => sys.error(p._1), identity), 
+    _.as[A].fold[A](throw _, identity),
     _.asJson
   )
 ```
 
-Let's make sure it works. Here is a simple data type with an argonaut serializer, taken straight from the website, and a `Meta` instance derived from the code above.
+Let's make sure it works. Here is a simple data type with an circe encoder, taken straight from the website, and a `Meta` instance derived from the code above.
 
 ```scala
 case class Person(name: String, age: Int, things: List[String])
 
-implicit val PersonCodecJson =
-  casecodec3(Person.apply, Person.unapply)("name", "age", "things")
+implicit val (personEncodeJson, personDecodeJson) =
+  (Encoder.forProduct3("name", "age", "things")((p: Person) => (p.name, p.age, p.things)),
+   Decoder.forProduct3("name", "age", "things")((name: String, age: Int, things: List[String]) => Person(name, age, things)))
 
 implicit val PersonMeta = codecMeta[Person]
 ```
@@ -178,7 +191,7 @@ Now let's create a table that has a `json` column to store a `Person`.
 ```scala
 val drop = sql"DROP TABLE IF EXISTS pet".update.run
 
-val create = 
+val create =
   sql"""
     CREATE TABLE pet (
       id    SERIAL,
@@ -201,7 +214,7 @@ scala> sql"select owner from pet".query[Int].check.unsafePerformIO
   ✕ C01 owner OTHER (json) NOT NULL  →  Int
     - OTHER (json) is not coercible to Int according to the JDBC specification or any
       defined mapping. Fix this by changing the schema type to INTEGER, or the Scala
-      type to PGobject or Json or Person.
+      type to Person or Json or PGobject.
 ```
 
 And we can now use `Person` as a parameter type and as a column type.
@@ -227,9 +240,9 @@ scala> sql"select name, owner from pet".query[(String,String)].quick.unsafePerfo
 We get `Composite[A]` for free given `Atom[A]`, or for tuples, `HList`s, shapeless records, and case classes whose fields have `Composite` instances. This covers a lot of cases, but we still need a way to map other types. For example, what if we wanted to map a `java.awt.Point` across two columns? Because it's not a tuple or case class we can't do it for free, but we can get there via `xmap`. Here we map `Point` to a pair of `Int` columns.
 
 ```scala
-implicit val Point2DComposite: Composite[Point] = 
-  Composite[(Int, Int)].xmap(
-    (t: (Int,Int)) => new Point(t._1, t._2),
+implicit val Point2DComposite: Composite[Point] =
+  Composite[(Int, Int)].imap(
+    (t: (Int,Int)) => new Point(t._1, t._2))(
     (p: Point) => (p.x, p.y)
   )
 ```
@@ -240,5 +253,3 @@ And it works!
 scala> sql"select 'foo', 12, 42, true".query[(String, Point, Boolean)].unique.quick.unsafePerformIO
   (foo,java.awt.Point[x=12,y=42],true)
 ```
-
-

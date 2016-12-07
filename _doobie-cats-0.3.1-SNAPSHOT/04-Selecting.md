@@ -224,7 +224,7 @@ scala> val p = {
      |     .process         // Process[ConnectionIO, Country]
      |     .transact(xa)    // Process[Task, Country]
      |  }
-p: fs2.Stream[doobie.imports.IOLite,Country] = attemptEval(doobie.util.iolite$IOLite$$anon$4@36b497be).flatMap(<function1>).flatMap(<function1>)
+p: fs2.Stream[doobie.imports.IOLite,Country] = attemptEval(doobie.util.iolite$IOLite$$anon$3@1854d3dc).flatMap(<function1>).flatMap(<function1>)
 
 scala> p.take(5).runLog.unsafePerformIO.foreach(println)
 Country(Afghanistan,22720000,Some(5976.0))
@@ -243,7 +243,7 @@ The `sql` interpolator is sugar for constructors defined in the `doobie.hi.conne
 
 val sql = "select code, name, population, gnp from country"
 
-val proc = HC.process[(Code, Country)](sql, ().pure[PreparedStatementIO])
+val proc = HC.process[(Code, Country)](sql, ().pure[PreparedStatementIO], 512) // chunk size
 
 (proc.take(5)        // Process[ConnectionIO, (Code, Country)]
      .list           // ConnectionIO[List[(Code, Country)]]

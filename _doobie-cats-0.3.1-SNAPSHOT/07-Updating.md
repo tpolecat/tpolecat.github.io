@@ -13,6 +13,7 @@ Again we set up a transactor and pull in YOLO mode, but this time we're not usin
 ```scala
 import doobie.imports._
 import cats._, cats.data._, cats.implicits._
+import fs2.interop.cats._
 val xa = DriverManagerTransactor[IOLite](
   "org.postgresql.Driver", "jdbc:postgresql:world", "postgres", ""
 )

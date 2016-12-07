@@ -15,8 +15,8 @@ Before we can use **doobie** we need to import some symbols. We will use the `do
 
 ```scala
 import doobie.imports._
-import doobie.util.compat.cats.monad._ // todo: make this automatic
 import cats._, cats.data._, cats.implicits._
+import fs2.interop.cats._
 ```
 
 In the **doobie** high level API the most common types we will deal with have the form `ConnectionIO[A]`, specifying computations that take place in a context where a `java.sql.Connection` is available, ultimately producing a value of type `A`.
@@ -25,7 +25,7 @@ So let's start with a `ConnectionIO` program that simply returns a constant.
 
 ```scala
 scala> val program1 = 42.pure[ConnectionIO]
-program1: doobie.imports.ConnectionIO[Int] = Pure(42)
+program1: doobie.imports.ConnectionIO[Int] = Free(...)
 ```
 
 This is a perfectly respectable **doobie** program, but we can't run it as-is; we need a `Connection` first. There are several ways to do this, but here let's use a `Transactor`.
@@ -46,7 +46,7 @@ Right, so let's do this.
 
 ```scala
 scala> val task = program1.transact(xa)
-task: doobie.imports.IOLite[Int] = doobie.util.iolite$IOLite$$anon$2@4231b273
+task: doobie.imports.IOLite[Int] = doobie.util.iolite$IOLite$$anon$3@288e5473
 
 scala> task.unsafePerformIO
 res0: Int = 42
@@ -64,10 +64,10 @@ Let's use the `sql` string interpolator to construct a query that asks the *data
 
 ```scala
 scala> val program2 = sql"select 42".query[Int].unique
-program2: doobie.free.connection.ConnectionIO[Int] = Gosub(Gosub(Suspend(PrepareStatement4(select 42)),<function1>),<function1>)
+program2: doobie.free.connection.ConnectionIO[Int] = Free(...)
 
 scala> val task2 = program2.transact(xa)
-task2: doobie.imports.IOLite[Int] = doobie.util.iolite$IOLite$$anon$2@1601f301
+task2: doobie.imports.IOLite[Int] = doobie.util.iolite$IOLite$$anon$3@d9844a
 
 scala> task2.unsafePerformIO
 res1: Int = 42
@@ -92,7 +92,7 @@ And behold!
 
 ```scala
 scala> program3.transact(xa).unsafePerformIO
-res2: (Int, Double) = (42,0.23509424040094018)
+res2: (Int, Double) = (42,0.9755408153869212)
 ```
 
 The astute among you will note that we don't actually need a monad to do this; an applicative functor is all we need here. So we could also write `program3` as:
@@ -109,18 +109,18 @@ And lo, it was good:
 
 ```scala
 scala> program3a.transact(xa).unsafePerformIO
-res3: (Int, Double) = (42,0.3421785798855126)
+res3: (Int, Double) = (42,0.3460129159502685)
 ```
 
 And of course this composition can continue indefinitely.
 
 ```scala
-scala> program3a.replicateA(5).transact(xa).unsafePerformIO.foreach(println)
-(42,0.2070185267366469)
-(42,0.08885496761649847)
-(42,0.8384117069654167)
-(42,0.18164100078865886)
-(42,0.14273460116237402)
+scala> Applicative[ConnectionIO].replicateA(5, program3a).transact(xa).unsafePerformIO.foreach(println)
+(42,0.07230991870164871)
+(42,0.9688345743343234)
+(42,0.698257505428046)
+(42,0.6896850112825632)
+(42,0.30181286856532097)
 ```
 
 ### Diving Deeper
@@ -133,10 +133,10 @@ Out of the box all of the **doobie** free monads provide a transformation to `Kl
 
 ```scala
 scala> val kleisli = program1.transK[IOLite] 
-kleisli: cats.data.Kleisli[doobie.imports.IOLite,java.sql.Connection,Int] = Kleisli(<function1>)
+kleisli: cats.data.Kleisli[doobie.imports.IOLite,java.sql.Connection,Int] = Kleisli(cats.data.Kleisli$$Lambda$6324/1647144417@34c70432)
 
 scala> val task = IOLite.primitive(null: java.sql.Connection) >>= kleisli.run
-task: doobie.util.iolite.IOLite[Int] = doobie.util.iolite$IOLite$$anon$4@59b399fd
+task: doobie.util.iolite.IOLite[Int] = doobie.util.iolite$IOLite$$anon$5@64d8897b
 
 scala> task.unsafePerformIO // sneaky; program1 never looks at the connection
 res5: Int = 42

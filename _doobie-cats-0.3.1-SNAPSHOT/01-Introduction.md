@@ -74,12 +74,12 @@ lazy val doobieVersion = "0.3.1-SNAPSHOT"
 
 libraryDependencies ++= Seq(
   "org.tpolecat" %% "doobie-core-cats"       % doobieVersion,
-  "org.tpolecat" %% "doobie-postgresql-cats" % doobieVersion,
+  "org.tpolecat" %% "doobie-postgres-cats"   % doobieVersion,
   "org.tpolecat" %% "doobie-specs2-cats"     % doobieVersion
 )
 ```
 
-If you are not using PostgreSQL you can omit `doobie-postgresql-cats` and will need to add the appropriate JDBC driver as a dependency. Note that there is a `doobie-h2-cats` add-on if you happen to be using [H2](http://www.h2database.com/).
+If you are not using PostgreSQL you can omit `doobie-postgres-cats` and will need to add the appropriate JDBC driver as a dependency. Note that there is a `doobie-h2-cats` add-on if you happen to be using [H2](http://www.h2database.com/).
 
 ### Conventions
 
@@ -96,7 +96,7 @@ After that there is text interspersed with code examples. Sometimes definitions 
 
 case class Person(name: String, age: Int)
 
-val nel = NonEmptyList(Person("Bob", 12), Person("Alice", 14))
+val nel = NonEmptyList.of(Person("Bob", 12), Person("Alice", 14))
 ```
 And sometimes they will appear as a REPL interaction.
 
@@ -112,7 +112,7 @@ Sometimes we demonstrate that something doesn't compile. In such cases it will b
 
 ```scala
 scala> woozle(nel) // doesn't compile
-<console>:28: error: not found: value woozle
+<console>:26: error: not found: value woozle
        woozle(nel) // doesn't compile
        ^
 ```

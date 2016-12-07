@@ -1,6 +1,6 @@
 ---
 layout: book
-number: 15
+number: 16
 title: Frequently-Asked Questions
 ---
 
@@ -22,7 +22,7 @@ import xa.yolo._
 
 ### How do I do an `IN` clause?
 
-This used to be very irritating, but as of 0.2.3 is only moderately irritating. See the section on `IN` clauses in [Chapter 5](05-Parameterized.html).
+This used to be very irritating, but as of 0.3.1 there is a good solution. See the section on `IN` clauses in [Chapter 5](05-Parameterized.html) and [Chapter 8](08-Fragments.html) on statement fragments.
 
 ### How do I ascribe a SQL type to an interpolated parameter?
 
@@ -50,24 +50,24 @@ scala> sql"select $s :: char".query[String].check.unsafePerformIO
 
 ### How do I do several things in the same transaction?
 
-You can use a `for` comprehension to compose any number of `ConnectionIO` programs, and then call `.transact(xa)` on the result. All of the composed programs will run in the same transaction. For this reason it's useful for your APIs to expose values in `ConnectionIO`, so higher-level code can place transaction boundaries as needed. 
+You can use a `for` comprehension to compose any number of `ConnectionIO` programs, and then call `.transact(xa)` on the result. All of the composed programs will run in the same transaction. For this reason it's useful for your APIs to expose values in `ConnectionIO`, so higher-level code can place transaction boundaries as needed.
 
-### How do I turn an arbitrary SQL string into a `Query/Query0`?
+### How do I turn an arbitrary SQL string into a `Query0/Update0`?
 
-The `sql` interpolator does not allow arbitrary string interpolation in SQL literals; each interpolated value becomes a `?` placeholder, paired with a type-appropriate `setXXX` action. So if you wish to generate SQL statements dynamically you cannot use the `sql` interpolator. Instead construct the SQL literal with placeholders for parameters, and pass this to the `Query` constructor. You can then apply your parameters (tupled if there are several) to produce the desired `Query0`.
+As of **doobie** 0.3.1 this is done via [statement fragments](08-Fragments.html). Here we choose the sort order dynamically.
 
 ```scala
 case class Code(country: String)
 case class City(code: Code, name: String, population: Int)
 
 def cities(code: Code, asc: Boolean): Query0[City] = {
-  val sql = s"""
+  val ord = if (asc) fr"ASC" else fr"DESC"
+  val sql = fr"""
     SELECT countrycode, name, population
     FROM   city
-    WHERE  countrycode = ?
-    ORDER BY name ${if (asc) "ASC" else "DESC"}
-  """
-  Query[Code, City](sql, None).toQuery0(code)
+    WHERE  countrycode = $code
+    ORDER BY name""" ++ ord
+  sql.query[City]
 }
 ```
 
@@ -79,8 +79,7 @@ scala> cities(Code("USA"), true).check.unsafePerformIO
       SELECT countrycode, name, population
       FROM   city
       WHERE  countrycode = ?
-      ORDER BY name ASC
-    
+      ORDER BY name ASC 
 
   ✓ SQL Compiles and Typechecks
   ✓ P01 Code  →  CHAR (bpchar)
@@ -115,12 +114,12 @@ With an outer join you end up with set of nullable columns, which you typically 
 case class Country(name: String, code: String)
 case class City(name: String, district: String)
 
-val join: Query0[(Country, Option[City])] = 
+val join: Query0[(Country, Option[City])] =
   sql"""
     select c.name, c.code,
-           k.name, k.district 
-    from country c 
-    left outer join city k 
+           k.name, k.district
+    from country c
+    left outer join city k
     on c.capital = k.id
   """.query[(Country, Option[String], Option[String])].map {
     case (c, n, d) => (c, (n |@| d)(City))
@@ -155,7 +154,7 @@ Ok, so the message suggests that we need an `Atom` instance for each type in the
 
 ```
 scala> Atom[String]
-res10: doobie.util.atom.Atom[String] = doobie.util.atom$Atom$$anon$2@32cd05c9
+res10: doobie.util.atom.Atom[String] = doobie.util.atom$Atom$$anon$2@9188a80
 
 scala> Atom[UUID]
 <console>:31: error: Could not find or construct Atom[java.util.UUID]; ensure that java.util.UUID has a Meta instance.
@@ -183,13 +182,13 @@ Having done this, the `Meta`, `Atom`, and `Param` instances are now present and 
 
 ```scala
 scala> Meta[UUID]
-res13: doobie.util.meta.Meta[java.util.UUID] = doobie.util.meta$Meta$$anon$2@1153b8e0
+res13: doobie.util.meta.Meta[java.util.UUID] = doobie.util.meta$Meta$$anon$2@4016242c
 
 scala> Atom[UUID]
-res14: doobie.util.atom.Atom[java.util.UUID] = doobie.util.atom$Atom$$anon$2@43dc7e09
+res14: doobie.util.atom.Atom[java.util.UUID] = doobie.util.atom$Atom$$anon$2@3886785
 
 scala> Param[String :: UUID :: HNil]
-res15: doobie.syntax.string.Param[shapeless.::[String,shapeless.::[java.util.UUID,shapeless.HNil]]] = doobie.syntax.string$Param$$anon$3@3ae651d9
+res15: doobie.util.param.Param[shapeless.::[String,shapeless.::[java.util.UUID,shapeless.HNil]]] = Param(doobie.util.composite$LowerPriorityComposite$$anon$6@35efd483)
 
 scala> def query(s: String, u: UUID) = sql"select ... where foo = $s and url = $u".query[Int]
 query: (s: String, u: java.util.UUID)doobie.util.query.Query0[Int]
@@ -257,7 +256,7 @@ the FAQ in the Book of Doobie for more hints.
 If this were an atomic type it would be a matter of importing or defining a `Meta` instance, but here we need to define a `Composite` directly because we're mapping a type with several members. As this type is isomorphic to `(Double, Double)` we can simply base our mapping off of the existing `Composite`.
 
 ```scala
-implicit val Point2DComposite: Composite[Point2D.Double] = 
+implicit val Point2DComposite: Composite[Point2D.Double] =
   Composite[(Double, Double)].xmap(
     (t: (Double, Double)) => new Point2D.Double(t._1, t._2),
     (p: Point2D.Double) => (p.x, p.y)
@@ -268,6 +267,13 @@ Our derivation now works and the code compiles.
 
 ```scala
 scala> sql"…".query[State]
-res18: doobie.util.query.Query0[State] = doobie.util.query$Query$$anon$4@7ffa3115
+res18: doobie.util.query.Query0[State] = doobie.util.query$Query$$anon$4@750ce8dd
 ```
 
+### How do I time query execution?
+
+Because the actual execution of a query does not occur at the site in the code where the query is defined, logging timing is a little challenging. Rob wrote up an example of how to do it in [Issue #267](https://github.com/tpolecat/doobie/issues/267). You'll need to copy the `import`s and the `Combinators` trait into your code base. See the `wickland` object for an example of how to use the `Combinators.timed`.
+
+### How do I log the SQL produced for my query after interpolation?
+
+The result of `sql"…".query` is a `Query0`. The `Query0` type has an `sql` method which provides the SQL. Unfortunately, the SQL includes `?` placeholders for the interpolated values in order to facilitate creating a prepared statement. If you want the values that were interpolated to appear in your logging, you'll have to separately include them in your logging statement.

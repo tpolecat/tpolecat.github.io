@@ -66,12 +66,12 @@ scala> biggerThan(0).check.unsafePerformIO
   ✓ SQL Compiles and Typechecks
   ✕ P01 Short  →  INTEGER (int4)
     - Short is not coercible to INTEGER (int4) according to the JDBC specification.
-      Fix this by changing the schema type to SMALLINT, or the Scala type to JdbcType
-      or Int.
+      Fix this by changing the schema type to SMALLINT, or the Scala type to Int or
+      JdbcType.
   ✕ C01 code       CHAR     (bpchar)  NOT NULL  →  Int
     - CHAR (bpchar) is ostensibly coercible to Int according to the JDBC specification
       but is not a recommended target type. Fix this by changing the schema type to
-      INTEGER; or the Scala type to Code or Code or Code or String.
+      INTEGER; or the Scala type to Code or String.
   ✓ C02 name       VARCHAR  (varchar) NOT NULL  →  String
   ✓ C03 population INTEGER  (int4)    NOT NULL  →  Int
   ✕ C04 gnp        NUMERIC  (numeric) NULL      →  Double
