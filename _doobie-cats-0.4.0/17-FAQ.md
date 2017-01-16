@@ -22,7 +22,7 @@ import xa.yolo._
 
 ### How do I do an `IN` clause?
 
-This used to be very irritating, but as of 0.3.1 there is a good solution. See the section on `IN` clauses in [Chapter 5](05-Parameterized.html) and [Chapter 8](08-Fragments.html) on statement fragments.
+This used to be very irritating, but as of 0.4.0 there is a good solution. See the section on `IN` clauses in [Chapter 5](05-Parameterized.html) and [Chapter 8](08-Fragments.html) on statement fragments.
 
 ### How do I ascribe a SQL type to an interpolated parameter?
 
@@ -70,7 +70,7 @@ Note that you need both of these operations if you are using a `Transactor` beca
 
 ### How do I turn an arbitrary SQL string into a `Query0/Update0`?
 
-As of **doobie** 0.3.1 this is done via [statement fragments](08-Fragments.html). Here we choose the sort order dynamically.
+As of **doobie** 0.4.0 this is done via [statement fragments](08-Fragments.html). Here we choose the sort order dynamically.
 
 ```scala
 case class Code(country: String)
@@ -170,7 +170,7 @@ Ok, so the message suggests that we need an `Atom` instance for each type in the
 
 ```
 scala> Atom[String]
-res11: doobie.util.atom.Atom[String] = doobie.util.atom$Atom$$anon$3@60cd2583
+res11: doobie.util.atom.Atom[String] = doobie.util.atom$Atom$$anon$3@569ed23c
 
 scala> Atom[UUID]
 <console>:34: error: Could not find or construct Atom[java.util.UUID]; ensure that java.util.UUID has a Meta instance.
@@ -198,13 +198,13 @@ Having done this, the `Meta`, `Atom`, and `Param` instances are now present and 
 
 ```scala
 scala> Meta[UUID]
-res14: doobie.util.meta.Meta[java.util.UUID] = doobie.util.meta$Meta$$anon$2@5f36fe54
+res14: doobie.util.meta.Meta[java.util.UUID] = doobie.util.meta$Meta$$anon$2@2d363e07
 
 scala> Atom[UUID]
-res15: doobie.util.atom.Atom[java.util.UUID] = doobie.util.atom$Atom$$anon$3@727ad4cb
+res15: doobie.util.atom.Atom[java.util.UUID] = doobie.util.atom$Atom$$anon$3@4fe2120d
 
 scala> Param[String :: UUID :: HNil]
-res16: doobie.util.param.Param[shapeless.::[String,shapeless.::[java.util.UUID,shapeless.HNil]]] = Param(doobie.util.composite$LowerPriorityComposite$$anon$6@15a7cf72)
+res16: doobie.util.param.Param[shapeless.::[String,shapeless.::[java.util.UUID,shapeless.HNil]]] = Param(doobie.util.composite$LowerPriorityComposite$$anon$6@30e88cac)
 
 scala> def query(s: String, u: UUID) = sql"select ... where foo = $s and url = $u".query[Int]
 query: (s: String, u: java.util.UUID)doobie.util.query.Query0[Int]
@@ -283,7 +283,7 @@ Our derivation now works and the code compiles.
 
 ```scala
 scala> sql"…".query[State]
-res19: doobie.util.query.Query0[State] = doobie.util.query$Query$$anon$7@5efed385
+res19: doobie.util.query.Query0[State] = doobie.util.query$Query$$anon$7@3ab7e062
 ```
 
 ### How do I time query execution?

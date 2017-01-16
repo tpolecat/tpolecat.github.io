@@ -46,7 +46,7 @@ Right, so let's do this.
 
 ```scala
 scala> val task = program1.transact(xa)
-task: doobie.imports.IOLite[Int] = doobie.util.iolite$IOLite$$anon$3@2f8b808
+task: doobie.imports.IOLite[Int] = doobie.util.iolite$IOLite$$anon$3@10b05b91
 
 scala> task.unsafePerformIO
 res0: Int = 42
@@ -67,7 +67,7 @@ scala> val program2 = sql"select 42".query[Int].unique
 program2: doobie.free.connection.ConnectionIO[Int] = Free(...)
 
 scala> val task2 = program2.transact(xa)
-task2: doobie.imports.IOLite[Int] = doobie.util.iolite$IOLite$$anon$3@70fb951
+task2: doobie.imports.IOLite[Int] = doobie.util.iolite$IOLite$$anon$3@fe9ad3
 
 scala> task2.unsafePerformIO
 res1: Int = 42
@@ -92,7 +92,7 @@ And behold!
 
 ```scala
 scala> program3.transact(xa).unsafePerformIO
-res2: (Int, Double) = (42,0.15129532990977168)
+res2: (Int, Double) = (42,0.28605485102161765)
 ```
 
 The astute among you will note that we don't actually need a monad to do this; an applicative functor is all we need here. So we could also write `program3` as:
@@ -109,18 +109,18 @@ And lo, it was good:
 
 ```scala
 scala> program3a.transact(xa).unsafePerformIO
-res3: (Int, Double) = (42,0.33791113179177046)
+res3: (Int, Double) = (42,0.4837783221155405)
 ```
 
 And of course this composition can continue indefinitely.
 
 ```scala
 scala> Applicative[ConnectionIO].replicateA(5, program3a).transact(xa).unsafePerformIO.foreach(println)
-(42,0.07636774657294154)
-(42,0.2090375693514943)
-(42,0.1669171047396958)
-(42,0.8443649876862764)
-(42,0.6692933016456664)
+(42,0.6275497185997665)
+(42,0.5237683937884867)
+(42,0.7650513392873108)
+(42,0.4081709557212889)
+(42,0.734960485715419)
 ```
 
 ### Diving Deeper
@@ -133,10 +133,10 @@ Out of the box all of the **doobie** free monads provide a transformation to `Kl
 
 ```scala
 scala> val kleisli = program1.transK[IOLite] 
-kleisli: cats.data.Kleisli[doobie.imports.IOLite,java.sql.Connection,Int] = Kleisli(cats.data.Kleisli$$Lambda$6552/1869220124@33e45ab9)
+kleisli: cats.data.Kleisli[doobie.imports.IOLite,java.sql.Connection,Int] = Kleisli(cats.data.Kleisli$$Lambda$6316/871825589@59d9e7f8)
 
 scala> val task = IOLite.primitive(null: java.sql.Connection) >>= kleisli.run
-task: doobie.util.iolite.IOLite[Int] = doobie.util.iolite$IOLite$$anon$5@2c260434
+task: doobie.util.iolite.IOLite[Int] = doobie.util.iolite$IOLite$$anon$5@7d0df231
 
 scala> task.unsafePerformIO // sneaky; program1 never looks at the connection
 res5: Int = 42

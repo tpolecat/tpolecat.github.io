@@ -224,7 +224,7 @@ scala> val p = {
      |     .process         // Process[ConnectionIO, Country]
      |     .transact(xa)    // Process[Task, Country]
      |  }
-p: fs2.Stream[doobie.imports.IOLite,Country] = attemptEval(doobie.util.iolite$IOLite$$anon$3@35436aa4).flatMap(<function1>).flatMap(<function1>)
+p: fs2.Stream[doobie.imports.IOLite,Country] = attemptEval(doobie.util.iolite$IOLite$$anon$3@3faba65f).flatMap(<function1>).flatMap(<function1>)
 
 scala> p.take(5).runLog.unsafePerformIO.foreach(println)
 Country(Afghanistan,22720000,Some(5976.0))

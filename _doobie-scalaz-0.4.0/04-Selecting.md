@@ -224,7 +224,7 @@ scala> val p = {
      |     .process         // Process[ConnectionIO, Country]
      |     .transact(xa)    // Process[Task, Country]
      |  }
-p: scalaz.stream.Process[doobie.imports.IOLite,Country] = Await(doobie.util.iolite$IOLite$$anon$4@74c217,scalaz.stream.Process$Await$$Lambda$2016/1750793611@56b2c40c,scalaz.stream.Process$Await$$$Lambda$2021/1364321496@7ac896b2)
+p: scalaz.stream.Process[doobie.imports.IOLite,Country] = Await(doobie.util.iolite$IOLite$$anon$4@53b2c139,scalaz.stream.Process$Await$$Lambda$2108/780961263@7874c1ab,scalaz.stream.Process$Await$$$Lambda$2113/1829707476@2d217161)
 
 scala> p.take(5).runLog.unsafePerformIO.foreach(println)
 Country(Afghanistan,22720000,Some(5976.0))

@@ -45,7 +45,7 @@ Right, so let's do this.
 
 ```scala
 scala> val task = program1.transact(xa)
-task: doobie.imports.IOLite[Int] = doobie.util.iolite$IOLite$$anon$2@6df988b
+task: doobie.imports.IOLite[Int] = doobie.util.iolite$IOLite$$anon$2@69db89ce
 
 scala> task.unsafePerformIO
 res0: Int = 42
@@ -63,10 +63,10 @@ Let's use the `sql` string interpolator to construct a query that asks the *data
 
 ```scala
 scala> val program2 = sql"select 42".query[Int].unique
-program2: doobie.free.connection.ConnectionIO[Int] = Gosub(Gosub(Suspend(PrepareStatement(select 42)),doobie.hi.connection$$$Lambda$1867/1311894586@6a775af5),scalaz.Free$$Lambda$1524/2083259580@33670000)
+program2: doobie.free.connection.ConnectionIO[Int] = Gosub(Gosub(Suspend(PrepareStatement(select 42)),doobie.hi.connection$$$Lambda$1977/1048965800@292bba6b),scalaz.Free$$Lambda$1687/1873966560@ffe7fe2)
 
 scala> val task2 = program2.transact(xa)
-task2: doobie.imports.IOLite[Int] = doobie.util.iolite$IOLite$$anon$2@f4ba686
+task2: doobie.imports.IOLite[Int] = doobie.util.iolite$IOLite$$anon$2@5b38dedf
 
 scala> task2.unsafePerformIO
 res1: Int = 42
@@ -91,7 +91,7 @@ And behold!
 
 ```scala
 scala> program3.transact(xa).unsafePerformIO
-res2: (Int, Double) = (42,0.9144751369021833)
+res2: (Int, Double) = (42,0.8580462667159736)
 ```
 
 The astute among you will note that we don't actually need a monad to do this; an applicative functor is all we need here. So we could also write `program3` as:
@@ -108,18 +108,18 @@ And lo, it was good:
 
 ```scala
 scala> program3a.transact(xa).unsafePerformIO
-res3: (Int, Double) = (42,0.5576482368633151)
+res3: (Int, Double) = (42,0.8678193888626993)
 ```
 
 And of course this composition can continue indefinitely.
 
 ```scala
 scala> program3a.replicateM(5).transact(xa).unsafePerformIO.foreach(println)
-(42,0.09474247647449374)
-(42,0.17863030033186078)
-(42,0.6510857911780477)
-(42,0.4803883992135525)
-(42,0.4525053147226572)
+(42,0.48713289573788643)
+(42,0.03599965665489435)
+(42,0.24189397040754557)
+(42,0.3338653561659157)
+(42,0.7371620200574398)
 ```
 
 ### Diving Deeper
@@ -132,10 +132,10 @@ Out of the box all of the **doobie** free monads provide a transformation to `Kl
 
 ```scala
 scala> val kleisli = program1.transK[IOLite] 
-kleisli: scalaz.Kleisli[doobie.imports.IOLite,java.sql.Connection,Int] = Kleisli(scalaz.KleisliApplicative$$Lambda$1777/694393651@cd164a7)
+kleisli: scalaz.Kleisli[doobie.imports.IOLite,java.sql.Connection,Int] = Kleisli(scalaz.KleisliApplicative$$Lambda$1889/377099329@7b6f45c9)
 
 scala> val task = IOLite.primitive(null: java.sql.Connection) >>= kleisli.run
-task: doobie.util.iolite.IOLite[Int] = doobie.util.iolite$IOLite$$anon$4@6fde31b0
+task: doobie.util.iolite.IOLite[Int] = doobie.util.iolite$IOLite$$anon$4@5e0102e7
 
 scala> task.unsafePerformIO // sneaky; program1 never looks at the connection
 res5: Int = 42

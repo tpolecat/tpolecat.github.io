@@ -12,7 +12,8 @@ As with earlier chapters we set up a `Transactor` and YOLO mode. We will also us
 
 ```scala
 import doobie.imports._
-import scalaz._, Scalaz._
+import cats._, cats.data._, cats.implicits._
+import fs2.interop.cats._
 val xa = DriverManagerTransactor[IOLite](
   "org.postgresql.Driver", "jdbc:postgresql:world", "postgres", ""
 )
@@ -79,17 +80,17 @@ When we run the test we get output similar to what we saw in the previous chapte
 
 ```
 scala> { specs2 run AnalysisTestSpec; () } // pretend this is sbt> test
-[info] $line14.$read$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$AnalysisTestSpec$
+[info] $line12.$read$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$AnalysisTestSpec$
 [info] 
 [info] 
-Query0[(Int, String)] defined at <console>:22
+Query0[(Int, String)] defined at <console>:28
   
   select 42, 'foo'::varchar
 [info]   + SQL Compiles and Typechecks
 [info]   + C01 ?column? INTEGER (int4)    NULL?  →  Int
 [info]   + C02 varchar  VARCHAR (varchar) NULL?  →  String
 [info] 
-Query0[Country] defined at <console>:24
+Query0[Country] defined at <console>:30
   
   select code, name, population, gnp, indepyear
   from country
@@ -118,7 +119,7 @@ Query0[Country] defined at <console>:24
 [error]    x Column is unused. Remove it from the SELECT statement. (file:1)
 [info] 
 [info] 
-Update0 defined at <console>:22
+Update0 defined at <console>:28
   
   update country set name = ? where name = ?
 [info]   + SQL Compiles and Typechecks
@@ -126,8 +127,8 @@ Update0 defined at <console>:22
 [info]   + P02 String  →  VARCHAR (text)
 [info] 
 [info] 
-[info] Total for specification $line14.$read$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$AnalysisTestSpec$
-[info] Finished in 368 ms
+[info] Total for specification $line12.$read$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$$iw$AnalysisTestSpec$
+[info] Finished in 316 ms
 13 examples, 4 failures, 0 error
 [info] 
 ```
@@ -160,7 +161,7 @@ scala> (new AnalysisTestScalaCheck).execute() // pretend this is sbt> test
 AnalysisTestScalaCheck:
 - trivial
 - biggerThan *** FAILED ***
-  Query0[Country] defined at <console>:24
+  Query0[Country] defined at <console>:30
   
       select code, name, population, gnp, indepyear
       from country

@@ -12,7 +12,7 @@ Once again we will set up our REPL with a transactor.
 
 ```scala
 import doobie.imports._
-import scalaz._, Scalaz._
+import cats._, cats.data._, cats.implicits._
 
 val xa = DriverManagerTransactor[IOLite](
   "org.postgresql.Driver", "jdbc:postgresql:world", "postgres", ""
@@ -112,10 +112,10 @@ But that's not interesting. Let's at least print the event out.
 
 ```scala
 scala> val trivial = LogHandler(e => Console.println("*** " + e))
-trivial: doobie.util.log.LogHandler = LogHandler($$Lambda$4040/920439215@34296a62)
+trivial: doobie.util.log.LogHandler = LogHandler($$Lambda$8256/1866986007@5de34094)
 
 scala> sql"select 42".queryWithLogHandler[Int](trivial).unique.transact(xa).unsafePerformIO
-*** Success(select 42,List(),439254 nanoseconds,99180 nanoseconds)
+*** Success(select 42,List(),407288 nanoseconds,68398 nanoseconds)
 res3: Int = 42
 ```
 

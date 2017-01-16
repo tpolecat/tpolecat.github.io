@@ -70,23 +70,23 @@ On the Scala side you just need a console with the proper dependencies. A minima
 ```scala
 scalaVersion := "2.11.8" // no support for 2.10 or 2.12 at the moment
 
-lazy val doobieVersion = "0.3.1-SNAPSHOT"
+lazy val doobieVersion = "0.4.0"
 
 libraryDependencies ++= Seq(
-  "org.tpolecat" %% "doobie-core-cats"       % doobieVersion,
-  "org.tpolecat" %% "doobie-postgres-cats"   % doobieVersion,
-  "org.tpolecat" %% "doobie-specs2-cats"     % doobieVersion
+  "org.tpolecat" %% "doobie-core"       % doobieVersion,
+  "org.tpolecat" %% "doobie-postgres"   % doobieVersion,
+  "org.tpolecat" %% "doobie-specs2"     % doobieVersion
 )
 ```
 
-If you are not using PostgreSQL you can omit `doobie-postgres-cats` and will need to add the appropriate JDBC driver as a dependency. Note that there is a `doobie-h2-cats` add-on if you happen to be using [H2](http://www.h2database.com/).
+If you are not using PostgreSQL you can omit `doobie-postgres` and will need to add the appropriate JDBC driver as a dependency. Note that there is a `doobie-h2` add-on if you happen to be using [H2](http://www.h2database.com/).
 
 ### Conventions
 
 Each page begins with some imports, like this.
 
 ```scala
-import cats._, cats.data._, cats.implicits._
+import scalaz._, Scalaz._
 import doobie.imports._
 ```
 
@@ -96,7 +96,7 @@ After that there is text interspersed with code examples. Sometimes definitions 
 
 case class Person(name: String, age: Int)
 
-val nel = NonEmptyList.of(Person("Bob", 12), Person("Alice", 14))
+val nel = NonEmptyList(Person("Bob", 12), Person("Alice", 14))
 ```
 And sometimes they will appear as a REPL interaction.
 
@@ -105,14 +105,14 @@ scala> nel.head
 res2: Person = Person(Bob,12)
 
 scala> nel.tail
-res3: List[Person] = List(Person(Alice,14))
+res3: scalaz.IList[Person] = [Person(Alice,14)]
 ```
 
 Sometimes we demonstrate that something doesn't compile. In such cases it will be clear from the context that this is expected, and not a problem with the documentation.
 
 ```scala
 scala> woozle(nel) // doesn't compile
-<console>:26: error: not found: value woozle
+<console>:23: error: not found: value woozle
        woozle(nel) // doesn't compile
        ^
 ```
@@ -120,4 +120,3 @@ scala> woozle(nel) // doesn't compile
 ### Feedback and Contributions
 
 Feedback on **doobie** or this book is genuinely welcome. Please feel free to file a [pull request](https://github.com/tpolecat/doobie) if you have a contribution, or file an [issue](https://github.com/tpolecat/doobie/issues), or find and chat with **tpolecat** as mentioned above.
-
