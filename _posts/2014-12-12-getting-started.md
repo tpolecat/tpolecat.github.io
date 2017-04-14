@@ -46,7 +46,7 @@ Ok so let's set up a project. The idea here is that we have a `build.sbt` that d
 
 Make a **new directory** called `banjo` or something. It doesn't actually matter but it's common for this to match the project name. Now `cd` into that directory; everything we do from now on happens here.
 
-Create `build.sbt` with something like the following content. The order doesn't matter but **yes you need blank lines** between settings. This is a pretty minimal `build.sbt` file that provides enough information to identify the project and name the build artifact.
+Create `build.sbt` with something like the following content. The order doesn't matter. This is a pretty minimal `build.sbt` file that provides enough information to identify the project and name the build artifact.
 
 ```scala
 name := "banjo"
@@ -61,7 +61,7 @@ Create `project/build.properties` with the following content. This is weird, sor
 sbt.version=0.13.15
 ```
 
-Now create the directory `src/main/scala`. This is one of the places sbt will look for Scala source files. 
+Now create the directory `src/main/scala`. This is one of the places sbt will look for Scala source files.
 
 To review, our file structure now looks like this:
 
@@ -75,7 +75,7 @@ banjo/
       scala/
 ```
 
-Ok light a candle and type `sbt`. With some luck it will download the internet and then dump you at a prompt (this downloading only happens once; everything is cached globally in `~/.ivy2/`). 
+Ok light a candle and type `sbt`. With some luck it will download the internet and then dump you at a prompt (this downloading only happens once; everything is cached globally in `~/.ivy2/`).
 
 ## Write You a Scala
 
