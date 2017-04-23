@@ -52,7 +52,7 @@ Create `build.sbt` with something like the following content. The order doesn't 
 name := "banjo"
 organization := "org.chickenpants"
 version := "0.1-SNAPSHOT"
-scalaVersion := "2.12.1" // Scala is a dependency (!)
+scalaVersion := "2.12.2" // Scala is a dependency (!)
 ```
 
 Create `project/build.properties` with the following content. This is weird, sorry, but this is how to pick an sbt version (the `sbt` script you installed is really just a bootloader that downloads whichever version you specify here).
