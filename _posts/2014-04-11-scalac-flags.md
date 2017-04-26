@@ -4,6 +4,8 @@ title: Useful Scalac Flags
 tags: scala
 ---
 
+**Hello, this is old.** You probably want the [new list](/2017/04/25/scalac-flags.html).
+
 So, there have been some discussions and angry tweets recently about irritating Scala "features" (like value discarding and auto-tupling) that can actually be turned off by selecting the right compiler flag in conjunction with `-Xfatal-warnings`. I *highly* recommend a set of options something like those below.
 
 ```scala
@@ -41,7 +43,7 @@ I also recommend keeping an eye on [warteremover](https://github.com/puffnfresh/
 
 #### Updates
 
-Sukant Hajra has more energy than I do and finally got to the bottom of the `-Xlint` and `-Ywarn-all` flags and found that although they are not the same from version to version, they are identical, which is probably a copy/paste bug. Here's the relevant code from [2.9.3](https://github.com/scala/scala/blob/v2.9.3/src/compiler/scala/tools/nsc/settings/Warnings.scala#L22-L46) and [2.10.3](https://github.com/scala/scala/blob/v2.10.3/src/compiler/scala/tools/nsc/settings/Warnings.scala#L18-L44) if you want to see for yourself. 
+Sukant Hajra has more energy than I do and finally got to the bottom of the `-Xlint` and `-Ywarn-all` flags and found that although they are not the same from version to version, they are identical, which is probably a copy/paste bug. Here's the relevant code from [2.9.3](https://github.com/scala/scala/blob/v2.9.3/src/compiler/scala/tools/nsc/settings/Warnings.scala#L22-L46) and [2.10.3](https://github.com/scala/scala/blob/v2.10.3/src/compiler/scala/tools/nsc/settings/Warnings.scala#L18-L44) if you want to see for yourself.
 
 Brian McKenna points out that "only good things happen with `-Xfuture`" so it's now on the list above. Thanks for the tip.
 
