@@ -4,11 +4,13 @@ title: Recommended Scalac Flags for 2.12
 tags: scala
 ---
 
+[Updated 10-May-2017]
+
 Greetings fellow traveler.
 
 Here's a first stab at a set of `scalacOptions` for Scala 2.12. Let me know what you think … some of these options are new and I don't quite know what they do but they sound good so I included them. I will update this post to reflect further suggestions. Confidence high!
 
-This is current as of **Lightbend Scala 2.12.2** ... see below for needed and recommended modifications for **Typelevel Scala 2.12.1**.
+This is current as of **Lightbend Scala 2.12.2** and **Typelevel Scala 4** (see below).
 
 ```scala
 scalacOptions ++= Seq(
@@ -76,35 +78,18 @@ If you're like me and you find that the standard library gets in the way (especi
 "-Yno-imports"  // no automatic imports at all; all symbols must be imported explicitly
 ```
 
-### Modifications for Typelevel Scala 2.12.1
+### Modifications for Typelevel Scala 4
 
-Typelevel Scala isn't available for 2.12.2 yet so you need to remove some of the options above, and turn on the [Fabulous TLC Features](https://github.com/typelevel/scala/blob/typelevel-readme/notes/2.12.1.md).
-
-```scala
-scalacOptions ~= (_.filterNot(Set(
-  "-Ywarn-extra-implicit",
-  "-Ywarn-unused:implicits",
-  "-Ywarn-unused:imports",
-  "-Ywarn-unused:locals",
-  "-Ywarn-unused:params",
-  "-Ywarn-unused:patvars",
-  "-Ywarn-unused:privates"
-)) ++ Seq(
-  "-Ywarn-unused-import",
-  "-Yinduction-heuristics",
-  "-Ykind-polymorphism",
-  "-Yliteral-types",
-  "-Xstrict-patmat-analysis"
-))
-```
-
-You will need to change the REPL filter as well.
+[Typelevel Scala 4](https://github.com/typelevel/scala/blob/typelevel-readme/notes/typelevel-4.md) is **highly** recommended for the following additional options.
 
 ```scala
-scalacOptions in (Compile, console) ~= (_.filterNot(Set(
-  "-Ywarn-unused-imports",
-  "-Xfatal-warnings"
-)))
+scalacOptions ++ Seq(
+  "-Yinduction-heuristics",       // speeds up the compilation of inductive implicit resolution
+  "-Ykind-polymorphism",          // type and method definitions with type parameters of arbitrary kinds
+  "-Yliteral-types",              // literals can appear in type position
+  "-Xstrict-patmat-analysis",     // more accurate reporting of failures of match exhaustivity
+  "-Xlint:strict-unsealed-patmat" // warn on inexhaustive matches against unsealed traits
+)
 ```
 
-For a more general solution to the `-Yno-predef` business see the `-Ysysdef` and `-Ypredef` options at the link above.
+Typelevel Scala 4 offers a more general solution to the `-Yno-predef` business above. See the `-Ysysdef` and `-Ypredef` options at the link above.
