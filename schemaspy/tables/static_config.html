@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>gem Database</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.5 -->
+  <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="../plugins/datatables/dataTables.bootstrap.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.1.2/css/buttons.bootstrap.min.css">
+  <!-- Code Mirror -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.2/codemirror.min.css">
+  <!-- Fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
+  
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
+  <!-- Salvattore -->
+  <link rel="stylesheet" href="../plugins/salvattore/salvattore.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="../dist/css/skins/all-skins.min.css">
+  <!-- SchemaSpy -->
+  <link rel="stylesheet" href="../schemaSpy.css">
+  
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+<body class="hold-transition skin-blue layout-top-nav">
+<div class="wrapper">
+  <header class="main-header">
+    <nav class="navbar navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="../index.html" class="navbar-brand"><b>gem</b> Database</a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <i class="fa fa-bars"></i>
+          </button>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../index.html">Tables <span class="sr-only">(current)</span></a></li>            
+			<!--<li><a href="../components.html" title="List of system components">Components</a></li>-->
+			<li><a href="../columns.html" title="All of the columns in the schema">Columns</a></li>
+			<li><a href="../constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+			<li><a href="../relationships.html" title="Diagram of table relationships">Relationships</a></li>
+			<li><a href="../orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>				
+			<li><a href="../anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+        <!-- Navbar Right Menu -->
+
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
+  </header>
+  <!-- Main content -->
+  <!-- Full Width Column -->
+  <div class="content-wrapper">
+          <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>static_config</h1></br>
+		      </section>
+      <!-- Main content -->
+      <section class="content">
+		<div class="box box-primary">
+			<div class="box-header with-border">
+              <i class="fa fa-table"></i>
+              <h3 id="Columns" class="box-title">Columns</h3>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>	
+            <div class="box-body">
+				<table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+				<thead align='left'>
+				<tr>
+				  <th>Column</th>
+				  <th>Type</th>
+				  <th>Size</th>
+				  <th title='Are nulls allowed?'>Nulls</th>
+				  <th title='Is column automatically updated?'>Auto</th>
+				  <th title='Default value'>Default</th>
+				  <th title='Columns in tables that reference this column'>Children</th>
+				  <th title='Columns in tables that are referenced by this column'>Parents</th>
+				  <th title='Comments' class="toggle"><span>Comments</span></th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="static_id">static_id</span></td>
+				 <td>serial</td>
+				 <td>10</td>
+				 <td title=''></td>
+				 <td title='Automatically updated by the database'>√</td>
+				 <td>nextval(&#39;static_config_static_id_seq&#39;::regclass)</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td title="gmos_custom_roi.[static_id, instrument] references static_config.[static_id, instrument] via gmos_custom_roi_static_id_fkey">
+						<a href='gmos_custom_roi.html'>gmos_custom_roi</a><span class='relatedKey'>.static_id</span>
+					</td>
+					<td class="constraint detail">
+						gmos_custom_roi_static_id_fkey <span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span>
+					</td>
+				   </tr>
+				   <tr>
+					<td title="gmos_nod_and_shuffle.[static_id, instrument] references static_config.[static_id, instrument] via gmos_nod_and_shuffle_static_id_fkey">
+						<a href='gmos_nod_and_shuffle.html'>gmos_nod_and_shuffle</a><span class='relatedKey'>.static_id</span>
+					</td>
+					<td class="constraint detail">
+						gmos_nod_and_shuffle_static_id_fkey <span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span>
+					</td>
+				   </tr>
+				   <tr>
+					<td title="observation.[static_id, instrument] references static_config.[static_id, instrument] via observation_static_id_fkey">
+						<a href='observation.html'>observation</a><span class='relatedKey'>.static_id</span>
+					</td>
+					<td class="constraint detail">
+						observation_static_id_fkey <span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span>
+					</td>
+				   </tr>
+				   <tr>
+					<td title="static_f2.[static_id, instrument] references static_config.[static_id, instrument] via static_f2_static_id_fkey">
+						<a href='static_f2.html'>static_f2</a><span class='relatedKey'>.static_id</span>
+					</td>
+					<td class="constraint detail">
+						static_f2_static_id_fkey <span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span>
+					</td>
+				   </tr>
+				   <tr>
+					<td title="static_gmos_north.[static_id, instrument] references static_config.[static_id, instrument] via static_gmos_north_static_id_fkey">
+						<a href='static_gmos_north.html'>static_gmos_north</a><span class='relatedKey'>.static_id</span>
+					</td>
+					<td class="constraint detail">
+						static_gmos_north_static_id_fkey <span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span>
+					</td>
+				   </tr>
+				   <tr>
+					<td title="static_gmos_south.[static_id, instrument] references static_config.[static_id, instrument] via static_gmos_south_static_id_fkey">
+						<a href='static_gmos_south.html'>static_gmos_south</a><span class='relatedKey'>.static_id</span>
+					</td>
+					<td class="constraint detail">
+						static_gmos_south_static_id_fkey <span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				  </table>					 
+				 </td>
+				 <td></td>
+				</tr>
+				<tr>
+				 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="instrument">instrument</span></td>
+				 <td>identifier</td>
+				 <td>2147483647</td>
+				 <td title=''></td>
+				 <td title=''></td>
+				 <td>null</td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td title="gmos_custom_roi.[static_id, instrument] references static_config.[static_id, instrument] via gmos_custom_roi_static_id_fkey">
+						<a href='gmos_custom_roi.html'>gmos_custom_roi</a><span class='relatedKey'>.instrument</span>
+					</td>
+					<td class="constraint detail">
+						gmos_custom_roi_static_id_fkey <span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span>
+					</td>
+				   </tr>
+				   <tr>
+					<td title="gmos_nod_and_shuffle.[static_id, instrument] references static_config.[static_id, instrument] via gmos_nod_and_shuffle_static_id_fkey">
+						<a href='gmos_nod_and_shuffle.html'>gmos_nod_and_shuffle</a><span class='relatedKey'>.instrument</span>
+					</td>
+					<td class="constraint detail">
+						gmos_nod_and_shuffle_static_id_fkey <span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span>
+					</td>
+				   </tr>
+				   <tr>
+					<td title="observation.[static_id, instrument] references static_config.[static_id, instrument] via observation_static_id_fkey">
+						<a href='observation.html'>observation</a><span class='relatedKey'>.instrument</span>
+					</td>
+					<td class="constraint detail">
+						observation_static_id_fkey <span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span>
+					</td>
+				   </tr>
+				   <tr>
+					<td title="static_f2.[static_id, instrument] references static_config.[static_id, instrument] via static_f2_static_id_fkey">
+						<a href='static_f2.html'>static_f2</a><span class='relatedKey'>.instrument</span>
+					</td>
+					<td class="constraint detail">
+						static_f2_static_id_fkey <span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span>
+					</td>
+				   </tr>
+				   <tr>
+					<td title="static_gmos_north.[static_id, instrument] references static_config.[static_id, instrument] via static_gmos_north_static_id_fkey">
+						<a href='static_gmos_north.html'>static_gmos_north</a><span class='relatedKey'>.instrument</span>
+					</td>
+					<td class="constraint detail">
+						static_gmos_north_static_id_fkey <span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span>
+					</td>
+				   </tr>
+				   <tr>
+					<td title="static_gmos_south.[static_id, instrument] references static_config.[static_id, instrument] via static_gmos_south_static_id_fkey">
+						<a href='static_gmos_south.html'>static_gmos_south</a><span class='relatedKey'>.instrument</span>
+					</td>
+					<td class="constraint detail">
+						static_gmos_south_static_id_fkey <span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span>
+					</td>
+				   </tr>
+				  </table>				 
+				 </td>
+				 <td>
+				  <table border='0' cellspacing='0' cellpadding='0'>
+				   <tr>
+					<td title="static_config.instrument references e_instrument.id via static_config_instrument_fkey">
+						<a href='e_instrument.html'>e_instrument</a><span class='relatedKey'>.id</span>
+					</td>
+					<td class="constraint detail">
+						static_config_instrument_fkey <span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span>
+					</td>
+				   </tr>
+				  </table>					 
+				 </td>
+				 <td></td>
+				</tr>
+								</tbody>
+				</table>
+				<p title='2 columns'>Table contained <span id="recordNumber">0</span> rows<p/>
+			</div>
+		</div>
+		<div class="box box-primary">		
+			<div class="box-header with-border">
+              <i class="fa fa-sitemap"></i>
+
+              <h3 id="Indexes" class="box-title">Indexes</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>	
+			<div class="box-body">
+				<table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
+				<thead>
+				 <tr>
+				  <th>Constraint Name</th>
+				  <th>Type</th>
+				  <th>Sort</th>
+				  <th>Column(s)</th>
+				 </tr>
+				</thead>
+				<tbody>
+				 <tr>
+				  <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey'></i> static_config_pkey</td>
+				  <td>Primary key</td>
+				  <td><span title='Ascending'>Asc</span>/<span title='Ascending'>Asc</span></td>
+				  <td>static_id + instrument</td>
+				 </tr>				 
+				</tbody>
+				</table>   			  
+			</div><!-- /.box-body -->
+		</div>
+				<div class="box box-primary">		
+			<div class="box-header with-border">
+              <i class="fa fa-code-fork"></i>
+
+              <h3 id="Relationships" class="box-title">Relationships</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>	
+			<div class="box-body">	
+			<div class="nav-tabs-custom" style="cursor: move;">
+            <!-- Tabs within a box -->
+			<h5>Close relationships within degrees of separation</h5>
+            <ul class="nav nav-tabs pull-left ui-sortable-handle">
+			  			              <li class="active"><a href="#oneDegreeImg-chart" data-toggle="tab" aria-expanded="true">One</a></li>			  			 
+			  			              <li class=""><a href="#twodegreesDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two degrees</a></li>			  			 
+            </ul>
+            <div class="tab-content no-padding">            
+				<div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">					
+					<map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
+<area shape="rect" id="node1" href="gmos_custom_roi.html" title="gmos_custom_roi" alt="" coords="599,1053,807,1230">
+<area shape="rect" id="node2" href="static_config.html" title="static_config" alt="" coords="226,421,534,550">
+<area shape="rect" id="node5" href="e_instrument.html" title="e_instrument" alt="" coords="6,329,181,447">
+<area shape="rect" id="node3" href="gmos_nod_and_shuffle.html" title="gmos_nod_and_shuffle" alt="" coords="579,229,826,406">
+<area shape="rect" id="node4" href="observation.html" title="observation" alt="" coords="607,5,799,211">
+<area shape="rect" id="node6" href="static_f2.html" title="static_f2" alt="" coords="613,423,792,577">
+<area shape="rect" id="node7" href="static_gmos_north.html" title="static_gmos_north" alt="" coords="596,594,809,806">
+<area shape="rect" id="node8" href="static_gmos_south.html" title="static_gmos_south" alt="" coords="595,823,811,1035">
+</map>
+
+					<a name='diagram'><img id='oneDegreeImg' src='../diagrams/static_config.1degree.png' usemap='#oneDegreeRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
+				</div>
+				<div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">					
+					<map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
+<area shape="rect" id="node1" href="dataset.html" title="dataset" alt="" coords="1056,39,1189,129">
+<area shape="rect" id="node2" href="observation.html" title="observation" alt="" coords="607,41,799,247">
+<area shape="rect" id="node3" href="step.html" title="step" alt="" coords="871,5,1012,94">
+<area shape="rect" id="node5" href="static_config.html" title="static_config" alt="" coords="226,486,534,615">
+<area shape="rect" id="node8" href="e_instrument.html" title="e_instrument" alt="" coords="6,107,181,226">
+<area shape="rect" id="node9" href="program.html" title="program" alt="" coords="309,42,451,131">
+<area shape="rect" id="node4" href="gmos_custom_roi.html" title="gmos_custom_roi" alt="" coords="599,459,807,637">
+<area shape="rect" id="node6" href="gmos_nod_and_shuffle.html" title="gmos_nod_and_shuffle" alt="" coords="579,265,826,442">
+<area shape="rect" id="node7" href="e_gmos_e_offsetting.html" title="e_gmos_e_offsetting" alt="" coords="265,326,495,415">
+<area shape="rect" id="node10" href="static_f2.html" title="static_f2" alt="" coords="613,654,792,807">
+<area shape="rect" id="node11" href="e_mos_preimaging.html" title="e_mos_preimaging" alt="" coords="272,817,488,906">
+<area shape="rect" id="node12" href="static_gmos_north.html" title="static_gmos_north" alt="" coords="596,1054,809,1266">
+<area shape="rect" id="node13" href="e_gmos_detector.html" title="e_gmos_detector" alt="" coords="278,923,482,1013">
+<area shape="rect" id="node14" href="e_gmos_north_stage_mode.html" title="e_gmos_north_stage_mode" alt="" coords="241,1174,519,1263">
+<area shape="rect" id="node15" href="static_gmos_south.html" title="static_gmos_south" alt="" coords="595,825,811,1037">
+<area shape="rect" id="node16" href="e_gmos_south_stage_mode.html" title="e_gmos_south_stage_mode" alt="" coords="241,1030,519,1119">
+</map>
+
+					<a name='diagram'><img id='twodegreesDegreeImg' src='../diagrams/static_config.2degrees.png' usemap='#twoDegreesRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
+				</div>
+			  			</div>
+			</div>
+		  </div><!-- /.box-body -->
+		</div>
+	      </section>
+    
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <div>
+      <div class="pull-right hidden-xs">
+        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+      </div>
+      <strong>Generate by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemeSpy 6.0.0-rc1</a></strong>
+    </div>
+    <!-- /.container -->
+  </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.1.4 -->
+<script src="../plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<script src="../plugins/jQueryUI/jquery-ui.min.js"></script>
+<!-- Bootstrap 3.3.5 -->
+<script src="../bootstrap/js/bootstrap.min.js"></script>
+<!-- DataTables -->
+<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.colVis.min.js"></script>
+
+<!-- SlimScroll -->
+<script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="../plugins/fastclick/fastclick.js"></script>
+<!-- Salvattore -->
+<script src="../plugins/salvattore/salvattore.min.js"></script>
+<!-- AnchorJS -->
+<script src="../plugins/anchorjs/anchor.min.js"></script>
+<!-- CodeMirror -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.2/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.2/mode/sql/sql.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../dist/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../dist/js/demo.js"></script>
+<script src="table.js"></script>
+<script src="../schemaSpy.js"></script>
+</body>
+</html>

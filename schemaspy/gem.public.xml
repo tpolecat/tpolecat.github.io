@@ -1,0 +1,1120 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<database name="gem" schema="public" type="PostgreSQL - 9.5.3">
+   <tables>
+      <table name="dataset" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="dataset_label" nullable="false" remarks="" size="46" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="1" name="observation_id" nullable="true" remarks="" size="40" type="varchar">
+            <parent column="observation_id" foreignKey="dataset_observation_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="observation"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="dataset_index" nullable="false" remarks="" size="2147483647" type="id_index"/>
+         <column autoUpdated="false" digits="0" id="3" name="step_id" nullable="true" remarks="" size="10" type="int4">
+            <parent column="step_id" foreignKey="dataset_step_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="step"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="4" name="filename" nullable="false" remarks="" size="24" type="varchar"/>
+         <column autoUpdated="false" digits="5" id="5" name="timestamp" nullable="false" remarks="" size="34" type="timestamptz"/>
+         <primaryKey column="dataset_label" sequenceNumberInPK="1"/>
+         <index name="dataset_pkey" unique="true">
+            <column ascending="true" name="dataset_label"/>
+         </index>
+      </table>
+      <table name="e_ephemeris_type" numRows="5" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="key_type" foreignKey="ephemeris_key_type_fkey" implied="false" onDeleteCascade="true" schema="public" table="ephemeris"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="2147483647" type="text"/>
+         <column autoUpdated="false" digits="0" id="2" name="long_name" nullable="false" remarks="" size="2147483647" type="text"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_ephemeris_type_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_f2_disperser" numRows="3" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="disperser" foreignKey="smart_f2_disperser_fkey" implied="false" onDeleteCascade="true" schema="public" table="smart_f2"/>
+            <child column="disperser" foreignKey="step_f2_disperser_fkey" implied="false" onDeleteCascade="true" schema="public" table="step_f2"/>
+         </column>
+         <column autoUpdated="false" digits="3" id="1" name="wavelength" nullable="false" remarks="μm" size="4" type="numeric"/>
+         <column autoUpdated="false" digits="0" id="2" name="short_name" nullable="false" remarks="" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="long_name" nullable="false" remarks="" size="64" type="varchar"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_f2_disperser_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_f2_filter" numRows="14" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="filter" foreignKey="smart_f2_filter_fkey" implied="false" onDeleteCascade="true" schema="public" table="smart_f2"/>
+            <child column="filter" foreignKey="step_f2_filter_fkey" implied="false" onDeleteCascade="true" schema="public" table="step_f2"/>
+         </column>
+         <column autoUpdated="false" digits="3" id="1" name="wavelength" nullable="true" remarks="μm" size="4" type="numeric"/>
+         <column autoUpdated="false" digits="0" id="2" name="short_name" nullable="false" remarks="" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="long_name" nullable="false" remarks="" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="4" name="obsolete" nullable="false" remarks="" size="1" type="bool"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_f2_filter_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_f2_fpu" numRows="8" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="fpu" foreignKey="smart_f2_fpu_fkey" implied="false" onDeleteCascade="true" schema="public" table="smart_f2"/>
+            <child column="fpu" foreignKey="step_f2_fpu_fkey" implied="false" onDeleteCascade="true" schema="public" table="step_f2"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="slit_width" nullable="false" remarks="pixels" size="5" type="int2"/>
+         <column autoUpdated="false" digits="0" id="3" name="decker" nullable="false" remarks="" size="2147483647" type="f2_decker"/>
+         <column autoUpdated="false" digits="0" id="4" name="long_name" nullable="false" remarks="" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="5" name="obsolete" nullable="false" remarks="" size="1" type="bool"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_f2_fpunit_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_f2_lyot_wheel" numRows="8" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="lyot_wheel" foreignKey="step_f2_lyot_wheel_fkey" implied="false" onDeleteCascade="true" schema="public" table="step_f2"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="17" id="2" name="plate_scale" nullable="false" remarks="" size="17" type="float8"/>
+         <column autoUpdated="false" digits="17" id="3" name="pixel_scale" nullable="false" remarks="" size="17" type="float8"/>
+         <column autoUpdated="false" digits="0" id="4" name="obsolete" nullable="false" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" digits="0" id="5" name="long_name" nullable="false" remarks="" size="32" type="varchar"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_f2_lyot_wheel_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_f2_read_mode" numRows="3" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="read_mode" foreignKey="step_f2_read_mode_fkey" implied="false" onDeleteCascade="true" schema="public" table="step_f2"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="8" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="long_name" nullable="false" remarks="" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="description" nullable="false" remarks="" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="4" name="minimum_exposure_time" nullable="false" remarks="" size="2147483647" type="milliseconds"/>
+         <column autoUpdated="false" digits="0" id="5" name="recommended_exposure_time" nullable="false" remarks="" size="2147483647" type="milliseconds"/>
+         <column autoUpdated="false" digits="0" id="6" name="readout_time" nullable="false" remarks="" size="2147483647" type="milliseconds"/>
+         <column autoUpdated="false" digits="0" id="7" name="read_count" nullable="false" remarks="" size="5" type="int2"/>
+         <column autoUpdated="false" digits="17" id="8" name="read_noise" nullable="false" remarks="" size="17" type="float8"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_f2_read_mode_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_f2_window_cover" numRows="2" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="window_cover" foreignKey="step_f2_window_cover_fkey" implied="false" onDeleteCascade="true" schema="public" table="step_f2"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="long_name" nullable="false" remarks="" size="20" type="varchar"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_f2_window_cover_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_gcal_arc" numRows="4" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="long_name" nullable="false" remarks="" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="obsolete" nullable="false" remarks="" size="1" type="bool"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_gcal_arc_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_gcal_continuum" numRows="3" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="20" type="varchar">
+            <child column="continuum" foreignKey="gcal_continuum_fkey" implied="false" onDeleteCascade="true" schema="public" table="gcal"/>
+            <child column="continuum" foreignKey="step_gcal_continuum_fkey" implied="false" onDeleteCascade="true" schema="public" table="step_gcal"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="long_name" nullable="false" remarks="" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="obsolete" nullable="false" remarks="" size="1" type="bool"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_gcal_continuum_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_gcal_diffuser" numRows="2" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="20" type="varchar">
+            <child column="diffuser" foreignKey="gcal_diffuser_fkey" implied="false" onDeleteCascade="true" schema="public" table="gcal"/>
+            <child column="diffuser" foreignKey="step_gcal_diffuser_fkey" implied="false" onDeleteCascade="true" schema="public" table="step_gcal"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="obsolete" nullable="false" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" digits="0" id="3" name="long_name" nullable="false" remarks="" size="20" type="varchar"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_gcal_diffuser_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_gcal_filter" numRows="11" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="20" type="varchar">
+            <child column="filter" foreignKey="gcal_filter_fkey" implied="false" onDeleteCascade="true" schema="public" table="gcal"/>
+            <child column="filter" foreignKey="step_gcal_filter_fkey" implied="false" onDeleteCascade="true" schema="public" table="step_gcal"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="obsolete" nullable="false" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" digits="0" id="3" name="long_name" nullable="false" remarks="" size="20" type="varchar"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_gcal_filter_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_gcal_shutter" numRows="2" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="20" type="varchar">
+            <child column="shutter" foreignKey="gcal_shutter_fkey" implied="false" onDeleteCascade="true" schema="public" table="gcal"/>
+            <child column="shutter" foreignKey="step_gcal_shutter_fkey" implied="false" onDeleteCascade="true" schema="public" table="step_gcal"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="obsolete" nullable="false" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" digits="0" id="3" name="long_name" nullable="false" remarks="" size="20" type="varchar"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_gcal_shutter_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_gmos_adc" numRows="2" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier"/>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="11" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="long_name" nullable="false" remarks="" size="22" type="varchar"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_gmos_adc_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_gmos_amp_count" numRows="3" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="amp_count" foreignKey="step_gmos_common_amp_count_fkey" implied="false" onDeleteCascade="false" schema="public" table="step_gmos_common"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="10" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="long_name" nullable="false" remarks="" size="10" type="varchar"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_gmos_amp_count_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_gmos_amp_gain" numRows="2" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="amp_gain" foreignKey="smart_gmos_north_amp_gain_fkey" implied="false" onDeleteCascade="true" schema="public" table="smart_gmos_north"/>
+            <child column="amp_gain" foreignKey="smart_gmos_south_amp_gain_fkey" implied="false" onDeleteCascade="true" schema="public" table="smart_gmos_south"/>
+            <child column="amp_gain" foreignKey="step_gmos_common_amp_gain_fkey" implied="false" onDeleteCascade="false" schema="public" table="step_gmos_common"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="10" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="long_name" nullable="false" remarks="" size="10" type="varchar"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_gmos_amp_gain_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_gmos_amp_read_mode" numRows="2" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="amp_read_mode" foreignKey="step_gmos_common_amp_read_mode_fkey" implied="false" onDeleteCascade="false" schema="public" table="step_gmos_common"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="4" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="long_name" nullable="false" remarks="" size="4" type="varchar"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_gmos_amp_read_mode_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_gmos_binning" numRows="3" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="x_binning" foreignKey="smart_gmos_north_x_binning_fkey" implied="false" onDeleteCascade="true" schema="public" table="smart_gmos_north"/>
+            <child column="y_binning" foreignKey="smart_gmos_north_y_binning_fkey" implied="false" onDeleteCascade="true" schema="public" table="smart_gmos_north"/>
+            <child column="x_binning" foreignKey="smart_gmos_south_x_binning_fkey" implied="false" onDeleteCascade="true" schema="public" table="smart_gmos_south"/>
+            <child column="y_binning" foreignKey="smart_gmos_south_y_binning_fkey" implied="false" onDeleteCascade="true" schema="public" table="smart_gmos_south"/>
+            <child column="x_binning" foreignKey="step_gmos_common_x_binning_fkey" implied="false" onDeleteCascade="false" schema="public" table="step_gmos_common"/>
+            <child column="y_binning" foreignKey="step_gmos_common_y_binning_fkey" implied="false" onDeleteCascade="false" schema="public" table="step_gmos_common"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="4" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="long_name" nullable="false" remarks="" size="4" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="count" nullable="false" remarks="" size="5" type="int2"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_gmos_binning_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_gmos_custom_slit_width" numRows="7" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="custom_slit_width" foreignKey="step_gmos_north_custom_slit_width_fkey" implied="false" onDeleteCascade="false" schema="public" table="step_gmos_north"/>
+            <child column="custom_slit_width" foreignKey="step_gmos_south_custom_slit_width_fkey" implied="false" onDeleteCascade="false" schema="public" table="step_gmos_south"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="5" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="long_name" nullable="false" remarks="" size="11" type="varchar"/>
+         <column autoUpdated="false" digits="2" id="3" name="width" nullable="false" remarks="" size="3" type="numeric"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_gmos_custom_slit_width_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_gmos_detector" numRows="2" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="detector" foreignKey="static_gmos_north_detector_fkey" implied="false" onDeleteCascade="false" schema="public" table="static_gmos_north"/>
+            <child column="detector" foreignKey="static_gmos_south_detector_fkey" implied="false" onDeleteCascade="false" schema="public" table="static_gmos_south"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="10" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="long_name" nullable="false" remarks="" size="10" type="varchar"/>
+         <column autoUpdated="false" digits="4" id="3" name="north_pixel_size" nullable="false" remarks="" size="5" type="numeric"/>
+         <column autoUpdated="false" digits="4" id="4" name="south_pixel_size" nullable="false" remarks="" size="5" type="numeric"/>
+         <column autoUpdated="false" digits="0" id="5" name="shuffle_offset" nullable="false" remarks="" size="5" type="int2"/>
+         <column autoUpdated="false" digits="0" id="6" name="x_size" nullable="false" remarks="" size="5" type="int2"/>
+         <column autoUpdated="false" digits="0" id="7" name="y_size" nullable="false" remarks="" size="5" type="int2"/>
+         <column autoUpdated="false" digits="0" id="8" name="max_rois" nullable="false" remarks="" size="5" type="int2"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_gmos_detector_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_gmos_disperser_order" numRows="3" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="disperser_order" foreignKey="step_gmos_north_disperser_order_fkey" implied="false" onDeleteCascade="false" schema="public" table="step_gmos_north"/>
+            <child column="disperser_order" foreignKey="step_gmos_south_disperser_order_fkey" implied="false" onDeleteCascade="false" schema="public" table="step_gmos_south"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="10" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="long_name" nullable="false" remarks="" size="10" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="count" nullable="false" remarks="" size="5" type="int2"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_gmos_disperser_order_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_gmos_dtax" numRows="13" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="dtax" foreignKey="step_gmos_common_dtax_fkey" implied="false" onDeleteCascade="false" schema="public" table="step_gmos_common"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="2" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="long_name" nullable="false" remarks="" size="2" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="dtax" nullable="false" remarks="" size="5" type="int2"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_gmos_dtax_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_gmos_e_offsetting" numRows="2" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="e_offset" foreignKey="gmos_nod_and_shuffle_e_offset_fkey" implied="false" onDeleteCascade="true" schema="public" table="gmos_nod_and_shuffle"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="description" nullable="false" remarks="" size="33" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="to_boolean" nullable="false" remarks="" size="1" type="bool"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_gmos_e_offsetting_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="e_gmos_e_offsetting_to_boolean_key" unique="true">
+            <column ascending="true" name="to_boolean"/>
+         </index>
+      </table>
+      <table name="e_gmos_north_disperser" numRows="8" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="disperser" foreignKey="smart_gmos_north_disperser_fkey" implied="false" onDeleteCascade="true" schema="public" table="smart_gmos_north"/>
+            <child column="disperser" foreignKey="step_gmos_north_disperser_fkey" implied="false" onDeleteCascade="false" schema="public" table="step_gmos_north"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="10" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="long_name" nullable="false" remarks="" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="ruling_density" nullable="false" remarks="" size="5" type="int2"/>
+         <column autoUpdated="false" digits="0" id="4" name="obsolete" nullable="false" remarks="" size="1" type="bool"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_gmos_north_disperser_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_gmos_north_filter" numRows="26" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="filter" foreignKey="smart_gmos_north_filter_fkey" implied="false" onDeleteCascade="true" schema="public" table="smart_gmos_north"/>
+            <child column="filter" foreignKey="step_gmos_north_filter_fkey" implied="false" onDeleteCascade="false" schema="public" table="step_gmos_north"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="10" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="long_name" nullable="false" remarks="" size="30" type="varchar"/>
+         <column autoUpdated="false" digits="3" id="3" name="wavelength" nullable="false" remarks="" size="4" type="numeric"/>
+         <column autoUpdated="false" digits="0" id="4" name="obsolete" nullable="false" remarks="" size="1" type="bool"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_gmos_north_filter_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_gmos_north_fpu" numRows="16" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="fpu" foreignKey="smart_gmos_north_fpu_fkey" implied="false" onDeleteCascade="true" schema="public" table="smart_gmos_north"/>
+            <child column="fpu" foreignKey="step_gmos_north_fpu_fkey" implied="false" onDeleteCascade="false" schema="public" table="step_gmos_north"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="12" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="long_name" nullable="false" remarks="" size="30" type="varchar"/>
+         <column autoUpdated="false" digits="2" id="3" name="slit_width" nullable="true" remarks="" size="3" type="numeric"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_gmos_north_fpu_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_gmos_north_stage_mode" numRows="4" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="stage_mode" foreignKey="static_gmos_north_stage_mode_fkey" implied="false" onDeleteCascade="false" schema="public" table="static_gmos_north"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="10" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="long_name" nullable="false" remarks="" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="obsolete" nullable="false" remarks="" size="1" type="bool"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_gmos_north_stage_mode_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_gmos_roi" numRows="7" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="roi" foreignKey="step_gmos_common_roi_fkey" implied="false" onDeleteCascade="true" schema="public" table="step_gmos_common"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="33" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="long_name" nullable="false" remarks="" size="44" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="obsolete" nullable="false" remarks="" size="1" type="bool"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_gmos_roi_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_gmos_south_disperser" numRows="6" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="disperser" foreignKey="smart_gmos_south_disperser_fkey" implied="false" onDeleteCascade="true" schema="public" table="smart_gmos_south"/>
+            <child column="disperser" foreignKey="step_gmos_south_disperser_fkey" implied="false" onDeleteCascade="false" schema="public" table="step_gmos_south"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="10" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="long_name" nullable="false" remarks="" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="ruling_density" nullable="false" remarks="" size="5" type="int2"/>
+         <column autoUpdated="false" digits="0" id="4" name="obsolete" nullable="false" remarks="" size="1" type="bool"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_gmos_south_disperser_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_gmos_south_filter" numRows="28" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="filter" foreignKey="smart_gmos_south_filter_fkey" implied="false" onDeleteCascade="true" schema="public" table="smart_gmos_south"/>
+            <child column="filter" foreignKey="step_gmos_south_filter_fkey" implied="false" onDeleteCascade="false" schema="public" table="step_gmos_south"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="10" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="long_name" nullable="false" remarks="" size="30" type="varchar"/>
+         <column autoUpdated="false" digits="3" id="3" name="wavelength" nullable="false" remarks="" size="4" type="numeric"/>
+         <column autoUpdated="false" digits="0" id="4" name="obsolete" nullable="false" remarks="" size="1" type="bool"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_gmos_south_filter_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_gmos_south_fpu" numRows="19" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="fpu" foreignKey="smart_gmos_south_fpu_fkey" implied="false" onDeleteCascade="true" schema="public" table="smart_gmos_south"/>
+            <child column="fpu" foreignKey="step_gmos_south_fpu_fkey" implied="false" onDeleteCascade="false" schema="public" table="step_gmos_south"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="12" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="long_name" nullable="false" remarks="" size="30" type="varchar"/>
+         <column autoUpdated="false" digits="2" id="3" name="slit_width" nullable="true" remarks="" size="3" type="numeric"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_gmos_south_fpu_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_gmos_south_stage_mode" numRows="4" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="stage_mode" foreignKey="static_gmos_south_stage_mode_fkey" implied="false" onDeleteCascade="false" schema="public" table="static_gmos_south"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="12" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="long_name" nullable="false" remarks="" size="30" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="obsolete" nullable="false" remarks="" size="1" type="bool"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_gmos_south_stage_mode_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_instrument" numRows="15" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="instrument" foreignKey="observation_instrument_fkey" implied="false" onDeleteCascade="false" schema="public" table="observation"/>
+            <child column="instrument" foreignKey="static_config_instrument_fkey" implied="false" onDeleteCascade="false" schema="public" table="static_config"/>
+            <child column="instrument" foreignKey="step_instrument_fkey" implied="false" onDeleteCascade="false" schema="public" table="step"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="long_name" nullable="false" remarks="" size="64" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="obsolete" nullable="false" remarks="" size="1" type="bool"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_instrument_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_mos_preimaging" numRows="2" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="mos_preimaging" foreignKey="fk_e_mos_preimaging_id" implied="false" onDeleteCascade="false" schema="public" table="static_f2"/>
+            <child column="mos_preimaging" foreignKey="fk_e_mos_preimaging_id" implied="false" onDeleteCascade="false" schema="public" table="static_gmos_north"/>
+            <child column="mos_preimaging" foreignKey="fk_e_mos_preimaging_id" implied="false" onDeleteCascade="false" schema="public" table="static_gmos_south"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="description" nullable="false" remarks="" size="22" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="to_boolean" nullable="false" remarks="" size="1" type="bool"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_mos_preimaging_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="e_mos_preimaging_to_boolean_key" unique="true">
+            <column ascending="true" name="to_boolean"/>
+         </index>
+      </table>
+      <table name="e_program_role" numRows="3" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="program_role" foreignKey="FK_gen_user_program_3" implied="false" onDeleteCascade="false" schema="public" table="gem_user_program"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="true" remarks="" size="32" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="long_name" nullable="true" remarks="" size="64" type="varchar"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_program_role_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="e_program_role_short_name_key" unique="true">
+            <column ascending="true" name="short_name"/>
+         </index>
+      </table>
+      <table name="e_program_type" numRows="9" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="enum identifier" size="2147483647" type="identifier"/>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="short name, 'SV'" size="32" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="long_name" nullable="false" remarks="long name, 'Classical'" size="64" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="obsolete" nullable="false" remarks="true if no longer available" size="1" type="bool"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_program_type_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_site" numRows="2" remarks="Lookup table for site information." schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="enum identifier" size="2147483647" type="identifier">
+            <child column="site" foreignKey="ephemeris_site_fkey" implied="false" onDeleteCascade="true" schema="public" table="ephemeris"/>
+            <child column="site" foreignKey="program_site_fkey" implied="false" onDeleteCascade="false" schema="public" table="program"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="long_name" nullable="false" remarks="long name, 'Gemini South'" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="mountain" nullable="false" remarks="name of mountain, 'Mauna Kea'" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="8" id="3" name="longitude" nullable="false" remarks="longitude in degrees" size="8" type="float4"/>
+         <column autoUpdated="false" digits="8" id="4" name="latitude" nullable="false" remarks="latitude in degrees" size="8" type="float4"/>
+         <column autoUpdated="false" digits="0" id="5" name="altitude" nullable="false" remarks="altitude in meters" size="5" type="int2"/>
+         <column autoUpdated="false" digits="0" id="6" name="timezone" nullable="false" remarks="key for java.util.TimeZone.getTimeZone" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="7" name="short_name" nullable="false" remarks="short name, 'GS'" size="20" type="varchar"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="e_site_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="e_template" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="identifier"/>
+         <column autoUpdated="false" digits="0" id="1" name="short_name" nullable="false" remarks="" size="32" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="long_name" nullable="false" remarks="" size="64" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="obsolete" nullable="false" remarks="" size="1" type="bool"/>
+      </table>
+      <table name="ephemeris" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="key_type" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="ephemeris_key_type_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_ephemeris_type"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="key" nullable="false" remarks="" size="2147483647" type="text"/>
+         <column autoUpdated="false" digits="6" id="2" name="timestamp" nullable="false" remarks="" size="35" type="timestamptz"/>
+         <column autoUpdated="false" digits="0" id="3" name="ra" nullable="false" remarks="µs" size="19" type="int8"/>
+         <column autoUpdated="false" digits="0" id="4" name="dec" nullable="false" remarks="µas" size="19" type="int8"/>
+         <column autoUpdated="false" digits="0" id="5" name="ra_str" nullable="false" remarks="HH:MM:SS.µµµµµµ" size="15" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="6" name="dec_str" nullable="false" remarks="[+-]DD:MM:SS.µµµµµµ" size="16" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="7" name="site" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="ephemeris_site_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_site"/>
+         </column>
+         <primaryKey column="key_type" sequenceNumberInPK="1"/>
+         <primaryKey column="key" sequenceNumberInPK="2"/>
+         <primaryKey column="site" sequenceNumberInPK="3"/>
+         <primaryKey column="timestamp" sequenceNumberInPK="4"/>
+         <index name="ephemeris_pkey" unique="true">
+            <column ascending="true" name="key_type"/>
+            <column ascending="true" name="key"/>
+            <column ascending="true" name="site"/>
+            <column ascending="true" name="timestamp"/>
+         </index>
+      </table>
+      <table name="gcal" numRows="102" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('gcal_gcal_id_seq'::regclass)" digits="0" id="0" name="gcal_id" nullable="false" remarks="" size="10" type="serial">
+            <child column="gcal_id" foreignKey="smart_f2_gcal_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="smart_f2"/>
+            <child column="gcal_id" foreignKey="smart_gmos_north_gcal_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="smart_gmos_north"/>
+            <child column="gcal_id" foreignKey="smart_gmos_south_gcal_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="smart_gmos_south"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="continuum" nullable="true" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="gcal_continuum_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_gcal_continuum"/>
+         </column>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="2" name="ar_arc" nullable="false" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="3" name="cuar_arc" nullable="false" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="4" name="thar_arc" nullable="false" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="5" name="xe_arc" nullable="false" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" digits="0" id="6" name="filter" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="gcal_filter_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_gcal_filter"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="7" name="diffuser" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="gcal_diffuser_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_gcal_diffuser"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="8" name="shutter" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="gcal_shutter_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_gcal_shutter"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="9" name="exposure_time" nullable="false" remarks="" size="19" type="int8"/>
+         <column autoUpdated="false" digits="0" id="10" name="coadds" nullable="false" remarks="" size="2147483647" type="coadds"/>
+         <primaryKey column="gcal_id" sequenceNumberInPK="1"/>
+         <index name="gcal_pkey" unique="true">
+            <column ascending="true" name="gcal_id"/>
+         </index>
+      </table>
+      <table name="gem_user" numRows="1" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="id" nullable="false" remarks="" size="20" type="varchar">
+            <child column="user_id" foreignKey="FK_gen_user_program_1" implied="false" onDeleteCascade="false" schema="public" table="gem_user_program"/>
+            <child column="user_id" foreignKey="log_user_id_fkey" implied="false" onDeleteCascade="false" schema="public" table="log"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="first" nullable="false" remarks="" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="last" nullable="false" remarks="" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="hash" nullable="false" remarks="" size="2147483647" type="text"/>
+         <column autoUpdated="false" digits="0" id="4" name="email" nullable="false" remarks="" size="40" type="varchar"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="5" name="staff" nullable="false" remarks="" size="1" type="bool"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="user_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="gem_user_program" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="user_id" nullable="false" remarks="" size="20" type="varchar">
+            <parent column="id" foreignKey="FK_gen_user_program_1" implied="false" onDeleteCascade="false" schema="public" table="gem_user"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="program_id" nullable="false" remarks="" size="32" type="varchar">
+            <parent column="program_id" foreignKey="FK_gen_user_program_2" implied="false" onDeleteCascade="false" schema="public" table="program"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="program_role" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="FK_gen_user_program_3" implied="false" onDeleteCascade="false" schema="public" table="e_program_role"/>
+         </column>
+         <primaryKey column="user_id" sequenceNumberInPK="1"/>
+         <primaryKey column="program_id" sequenceNumberInPK="2"/>
+         <primaryKey column="program_role" sequenceNumberInPK="3"/>
+         <index name="gen_user_program_pkey" unique="true">
+            <column ascending="true" name="user_id"/>
+            <column ascending="true" name="program_id"/>
+            <column ascending="true" name="program_role"/>
+         </index>
+      </table>
+      <table name="gmos_custom_roi" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('gmos_custom_roi_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial"/>
+         <column autoUpdated="false" digits="0" id="1" name="static_id" nullable="true" remarks="" size="10" type="int4">
+            <parent column="static_id" foreignKey="gmos_custom_roi_static_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="static_config"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="instrument" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="instrument" foreignKey="gmos_custom_roi_static_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="static_config"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="3" name="x_min" nullable="false" remarks="" size="5" type="int2"/>
+         <column autoUpdated="false" digits="0" id="4" name="y_min" nullable="false" remarks="" size="5" type="int2"/>
+         <column autoUpdated="false" digits="0" id="5" name="x_range" nullable="false" remarks="" size="5" type="int2"/>
+         <column autoUpdated="false" digits="0" id="6" name="y_range" nullable="false" remarks="" size="5" type="int2"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="gmos_custom_roi_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="gmos_nod_and_shuffle" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="static_id" nullable="false" remarks="" size="10" type="int4">
+            <parent column="static_id" foreignKey="gmos_nod_and_shuffle_static_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="static_config"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="instrument" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="instrument" foreignKey="gmos_nod_and_shuffle_static_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="static_config"/>
+         </column>
+         <column autoUpdated="false" digits="3" id="2" name="a_offset_p" nullable="false" remarks="" size="9" type="numeric"/>
+         <column autoUpdated="false" digits="3" id="3" name="a_offset_q" nullable="false" remarks="" size="9" type="numeric"/>
+         <column autoUpdated="false" digits="3" id="4" name="b_offset_p" nullable="false" remarks="" size="9" type="numeric"/>
+         <column autoUpdated="false" digits="3" id="5" name="b_offset_q" nullable="false" remarks="" size="9" type="numeric"/>
+         <column autoUpdated="false" digits="0" id="6" name="e_offset" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="gmos_nod_and_shuffle_e_offset_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_gmos_e_offsetting"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="7" name="offset_rows" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="8" name="cycles" nullable="false" remarks="" size="10" type="int4"/>
+         <primaryKey column="static_id" sequenceNumberInPK="1"/>
+         <primaryKey column="instrument" sequenceNumberInPK="2"/>
+         <index name="gmos_nod_and_shuffle_pkey" unique="true">
+            <column ascending="true" name="static_id"/>
+            <column ascending="true" name="instrument"/>
+         </index>
+      </table>
+      <table name="log" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="5" id="0" name="timestamp" nullable="false" remarks="" size="34" type="timestamptz"/>
+         <column autoUpdated="false" digits="0" id="1" name="level" nullable="false" remarks="" size="2147483647" type="log_level"/>
+         <column autoUpdated="false" digits="0" id="2" name="program" nullable="true" remarks="" size="32" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="message" nullable="false" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="4" name="stacktrace" nullable="true" remarks="" size="2147483647" type="text"/>
+         <column autoUpdated="false" digits="0" id="5" name="elapsed" nullable="true" remarks="" size="19" type="int8"/>
+         <column autoUpdated="false" digits="0" id="6" name="user_id" nullable="true" remarks="" size="2147483647" type="varchar">
+            <parent column="id" foreignKey="log_user_id_fkey" implied="false" onDeleteCascade="false" schema="public" table="gem_user"/>
+         </column>
+         <index name="ix_timestamp" unique="false">
+            <column ascending="false" name="timestamp"/>
+         </index>
+      </table>
+      <table name="log_observe_event" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('log_observe_event_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial"/>
+         <column autoUpdated="false" defaultValue="now()" digits="5" id="1" name="timestamp" nullable="false" remarks="" size="34" type="timestamptz"/>
+         <column autoUpdated="false" digits="0" id="2" name="event" nullable="false" remarks="" size="2147483647" type="evt_type"/>
+         <column autoUpdated="false" digits="0" id="3" name="observation_id" nullable="false" remarks="" size="2147483647" type="text"/>
+         <column autoUpdated="false" digits="0" id="4" name="step" nullable="true" remarks="" size="10" type="int4"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="log_observe_event_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="ix_log_observe_event_timestamp" unique="false">
+            <column ascending="false" name="timestamp"/>
+         </index>
+      </table>
+      <table name="observation" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="program_id" nullable="false" remarks="" size="32" type="varchar">
+            <parent column="program_id" foreignKey="FK_observation_1" implied="false" onDeleteCascade="true" schema="public" table="program"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="observation_index" nullable="false" remarks="" size="2147483647" type="id_index"/>
+         <column autoUpdated="false" digits="0" id="2" name="title" nullable="false" remarks="" size="255" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="observation_id" nullable="false" remarks="" size="40" type="varchar">
+            <child column="observation_id" foreignKey="dataset_observation_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="dataset"/>
+            <child column="observation_id" foreignKey="step_observation_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="step"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="4" name="instrument" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="observation_instrument_fkey" implied="false" onDeleteCascade="false" schema="public" table="e_instrument"/>
+            <parent column="instrument" foreignKey="observation_static_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="static_config"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="5" name="static_id" nullable="false" remarks="" size="10" type="int4">
+            <parent column="static_id" foreignKey="observation_static_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="static_config"/>
+         </column>
+         <primaryKey column="observation_id" sequenceNumberInPK="1"/>
+         <index name="observation_pkey" unique="true">
+            <column ascending="true" name="observation_id"/>
+         </index>
+         <index name="ix_observation_instrument" unique="false">
+            <column ascending="true" name="instrument"/>
+         </index>
+         <index name="ix_observation_program_id" unique="false">
+            <column ascending="true" name="program_id"/>
+         </index>
+         <index name="observation_instrument_observation_id_key" unique="true">
+            <column ascending="true" name="instrument"/>
+            <column ascending="true" name="observation_id"/>
+         </index>
+         <index name="unique_static_per_obs" unique="true">
+            <column ascending="true" name="static_id"/>
+         </index>
+      </table>
+      <table name="program" numRows="0" remarks="TODO: constraint that requires structured data to be consistent with the program id, when present" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="program_id" nullable="false" remarks="" size="32" type="varchar">
+            <child column="program_id" foreignKey="FK_gen_user_program_2" implied="false" onDeleteCascade="false" schema="public" table="gem_user_program"/>
+            <child column="program_id" foreignKey="FK_observation_1" implied="false" onDeleteCascade="true" schema="public" table="observation"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="semester_id" nullable="true" remarks="" size="20" type="varchar">
+            <parent column="semester_id" foreignKey="FK_program_1" implied="false" onDeleteCascade="false" schema="public" table="semester"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="site" nullable="true" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="program_site_fkey" implied="false" onDeleteCascade="false" schema="public" table="e_site"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="3" name="program_type" nullable="true" remarks="" size="2147483647" type="identifier"/>
+         <column autoUpdated="false" digits="0" id="4" name="index" nullable="true" remarks="" size="2147483647" type="id_index"/>
+         <column autoUpdated="false" digits="0" id="5" name="day" nullable="true" remarks="" size="13" type="date"/>
+         <column autoUpdated="false" defaultValue="'«Untitled»'::character varying" digits="0" id="6" name="title" nullable="false" remarks="" size="255" type="varchar"/>
+         <primaryKey column="program_id" sequenceNumberInPK="1"/>
+         <index name="program_pkey" unique="true">
+            <column ascending="true" name="program_id"/>
+         </index>
+         <index name="ix_program_id" unique="false">
+            <column ascending="true" name="program_id"/>
+         </index>
+      </table>
+      <table name="schema_version" numRows="27" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="installed_rank" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="1" name="version" nullable="true" remarks="" size="50" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="description" nullable="false" remarks="" size="200" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="type" nullable="false" remarks="" size="20" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="4" name="script" nullable="false" remarks="" size="1000" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="5" name="checksum" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="6" name="installed_by" nullable="false" remarks="" size="100" type="varchar"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="7" name="installed_on" nullable="false" remarks="" size="29" type="timestamp"/>
+         <column autoUpdated="false" digits="0" id="8" name="execution_time" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="9" name="success" nullable="false" remarks="" size="1" type="bool"/>
+         <primaryKey column="installed_rank" sequenceNumberInPK="1"/>
+         <index name="schema_version_pk" unique="true">
+            <column ascending="true" name="installed_rank"/>
+         </index>
+         <index name="schema_version_s_idx" unique="false">
+            <column ascending="true" name="success"/>
+         </index>
+      </table>
+      <table name="semester" numRows="4" remarks="// TODO: start/end dates for site" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="semester_id" nullable="false" remarks="" size="20" type="varchar">
+            <child column="semester_id" foreignKey="FK_program_1" implied="false" onDeleteCascade="false" schema="public" table="program"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="year" nullable="false" remarks="" size="5" type="int2"/>
+         <column autoUpdated="false" digits="0" id="2" name="half" nullable="false" remarks="" size="2147483647" type="half"/>
+         <primaryKey column="semester_id" sequenceNumberInPK="1"/>
+         <index name="semester_pkey" unique="true">
+            <column ascending="true" name="semester_id"/>
+         </index>
+      </table>
+      <table name="smart_f2" numRows="90" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="lamp" nullable="false" remarks="" size="2147483647" type="gcal_lamp_type"/>
+         <column autoUpdated="false" digits="0" id="1" name="baseline" nullable="false" remarks="" size="2147483647" type="gcal_baseline_type"/>
+         <column autoUpdated="false" digits="0" id="2" name="disperser" nullable="true" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="smart_f2_disperser_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_f2_disperser"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="3" name="filter" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="smart_f2_filter_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_f2_filter"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="4" name="fpu" nullable="true" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="smart_f2_fpu_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_f2_fpu"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="5" name="gcal_id" nullable="false" remarks="" size="10" type="int4">
+            <parent column="gcal_id" foreignKey="smart_f2_gcal_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="gcal"/>
+         </column>
+      </table>
+      <table name="smart_gmos_north" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="lamp" nullable="false" remarks="" size="2147483647" type="gcal_lamp_type"/>
+         <column autoUpdated="false" digits="0" id="1" name="baseline" nullable="false" remarks="" size="2147483647" type="gcal_baseline_type"/>
+         <column autoUpdated="false" digits="0" id="2" name="disperser" nullable="true" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="smart_gmos_north_disperser_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_gmos_north_disperser"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="3" name="filter" nullable="true" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="smart_gmos_north_filter_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_gmos_north_filter"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="4" name="fpu" nullable="true" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="smart_gmos_north_fpu_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_gmos_north_fpu"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="5" name="x_binning" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="smart_gmos_north_x_binning_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_gmos_binning"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="6" name="y_binning" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="smart_gmos_north_y_binning_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_gmos_binning"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="7" name="min_wavelength" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="8" name="max_wavelength" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="9" name="amp_gain" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="smart_gmos_north_amp_gain_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_gmos_amp_gain"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="10" name="gcal_id" nullable="false" remarks="" size="10" type="int4">
+            <parent column="gcal_id" foreignKey="smart_gmos_north_gcal_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="gcal"/>
+         </column>
+      </table>
+      <table name="smart_gmos_south" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="lamp" nullable="false" remarks="" size="2147483647" type="gcal_lamp_type"/>
+         <column autoUpdated="false" digits="0" id="1" name="baseline" nullable="false" remarks="" size="2147483647" type="gcal_baseline_type"/>
+         <column autoUpdated="false" digits="0" id="2" name="disperser" nullable="true" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="smart_gmos_south_disperser_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_gmos_south_disperser"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="3" name="filter" nullable="true" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="smart_gmos_south_filter_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_gmos_south_filter"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="4" name="fpu" nullable="true" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="smart_gmos_south_fpu_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_gmos_south_fpu"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="5" name="x_binning" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="smart_gmos_south_x_binning_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_gmos_binning"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="6" name="y_binning" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="smart_gmos_south_y_binning_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_gmos_binning"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="7" name="min_wavelength" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="8" name="max_wavelength" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="9" name="amp_gain" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="smart_gmos_south_amp_gain_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_gmos_amp_gain"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="10" name="gcal_id" nullable="false" remarks="" size="10" type="int4">
+            <parent column="gcal_id" foreignKey="smart_gmos_south_gcal_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="gcal"/>
+         </column>
+      </table>
+      <table name="static_config" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('static_config_static_id_seq'::regclass)" digits="0" id="0" name="static_id" nullable="false" remarks="" size="10" type="serial">
+            <child column="static_id" foreignKey="gmos_custom_roi_static_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="gmos_custom_roi"/>
+            <child column="static_id" foreignKey="gmos_nod_and_shuffle_static_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="gmos_nod_and_shuffle"/>
+            <child column="static_id" foreignKey="observation_static_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="observation"/>
+            <child column="static_id" foreignKey="static_f2_static_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="static_f2"/>
+            <child column="static_id" foreignKey="static_gmos_north_static_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="static_gmos_north"/>
+            <child column="static_id" foreignKey="static_gmos_south_static_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="static_gmos_south"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="instrument" nullable="false" remarks="" size="2147483647" type="identifier">
+            <child column="instrument" foreignKey="gmos_custom_roi_static_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="gmos_custom_roi"/>
+            <child column="instrument" foreignKey="gmos_nod_and_shuffle_static_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="gmos_nod_and_shuffle"/>
+            <child column="instrument" foreignKey="observation_static_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="observation"/>
+            <child column="instrument" foreignKey="static_f2_static_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="static_f2"/>
+            <child column="instrument" foreignKey="static_gmos_north_static_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="static_gmos_north"/>
+            <child column="instrument" foreignKey="static_gmos_south_static_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="static_gmos_south"/>
+            <parent column="id" foreignKey="static_config_instrument_fkey" implied="false" onDeleteCascade="false" schema="public" table="e_instrument"/>
+         </column>
+         <primaryKey column="static_id" sequenceNumberInPK="1"/>
+         <primaryKey column="instrument" sequenceNumberInPK="2"/>
+         <index name="static_config_pkey" unique="true">
+            <column ascending="true" name="static_id"/>
+            <column ascending="true" name="instrument"/>
+         </index>
+      </table>
+      <table name="static_f2" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="static_id" nullable="false" remarks="" size="10" type="int4">
+            <parent column="static_id" foreignKey="static_f2_static_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="static_config"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="instrument" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="instrument" foreignKey="static_f2_static_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="static_config"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="mos_preimaging" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="fk_e_mos_preimaging_id" implied="false" onDeleteCascade="false" schema="public" table="e_mos_preimaging"/>
+         </column>
+         <primaryKey column="static_id" sequenceNumberInPK="1"/>
+         <primaryKey column="instrument" sequenceNumberInPK="2"/>
+         <index name="static_f2_pkey" unique="true">
+            <column ascending="true" name="static_id"/>
+            <column ascending="true" name="instrument"/>
+         </index>
+      </table>
+      <table name="static_gmos_north" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="static_id" nullable="false" remarks="" size="10" type="int4">
+            <parent column="static_id" foreignKey="static_gmos_north_static_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="static_config"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="instrument" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="instrument" foreignKey="static_gmos_north_static_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="static_config"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="detector" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="static_gmos_north_detector_fkey" implied="false" onDeleteCascade="false" schema="public" table="e_gmos_detector"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="3" name="mos_preimaging" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="fk_e_mos_preimaging_id" implied="false" onDeleteCascade="false" schema="public" table="e_mos_preimaging"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="4" name="stage_mode" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="static_gmos_north_stage_mode_fkey" implied="false" onDeleteCascade="false" schema="public" table="e_gmos_north_stage_mode"/>
+         </column>
+         <primaryKey column="static_id" sequenceNumberInPK="1"/>
+         <primaryKey column="instrument" sequenceNumberInPK="2"/>
+         <index name="static_gmos_north_pkey" unique="true">
+            <column ascending="true" name="static_id"/>
+            <column ascending="true" name="instrument"/>
+         </index>
+      </table>
+      <table name="static_gmos_south" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="static_id" nullable="false" remarks="" size="10" type="int4">
+            <parent column="static_id" foreignKey="static_gmos_south_static_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="static_config"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="instrument" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="instrument" foreignKey="static_gmos_south_static_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="static_config"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="detector" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="static_gmos_south_detector_fkey" implied="false" onDeleteCascade="false" schema="public" table="e_gmos_detector"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="3" name="mos_preimaging" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="fk_e_mos_preimaging_id" implied="false" onDeleteCascade="false" schema="public" table="e_mos_preimaging"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="4" name="stage_mode" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="static_gmos_south_stage_mode_fkey" implied="false" onDeleteCascade="false" schema="public" table="e_gmos_south_stage_mode"/>
+         </column>
+         <primaryKey column="static_id" sequenceNumberInPK="1"/>
+         <primaryKey column="instrument" sequenceNumberInPK="2"/>
+         <index name="static_gmos_south_pkey" unique="true">
+            <column ascending="true" name="static_id"/>
+            <column ascending="true" name="instrument"/>
+         </index>
+      </table>
+      <table name="step" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('step_step_id_seq'::regclass)" digits="0" id="0" name="step_id" nullable="false" remarks="" size="10" type="serial">
+            <child column="step_id" foreignKey="dataset_step_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="dataset"/>
+            <child column="step_bias_id" foreignKey="step_bias_step_bias_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="step_bias"/>
+            <child column="step_dark_id" foreignKey="step_dark_step_dark_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="step_dark"/>
+            <child column="step_f2_id" foreignKey="step_f2_step_f2_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="step_f2"/>
+            <child column="step_gcal_id" foreignKey="step_gcal_step_gcal_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="step_gcal"/>
+            <child column="step_id" foreignKey="step_gmos_common_step_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="step_gmos_common"/>
+            <child column="step_id" foreignKey="step_gmos_north_step_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="step_gmos_north"/>
+            <child column="step_id" foreignKey="step_gmos_south_step_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="step_gmos_south"/>
+            <child column="step_science_id" foreignKey="step_science_step_science_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="step_science"/>
+            <child column="step_smart_gcal_id" foreignKey="step_smart_gcal_step_smart_gcal_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="step_smart_gcal"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="observation_id" nullable="false" remarks="" size="40" type="varchar">
+            <parent column="observation_id" foreignKey="step_observation_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="observation"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="location" nullable="false" remarks="" size="10" type="_int4"/>
+         <column autoUpdated="false" digits="0" id="3" name="instrument" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_instrument_fkey" implied="false" onDeleteCascade="false" schema="public" table="e_instrument"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="4" name="step_type" nullable="false" remarks="" size="2147483647" type="step_type"/>
+         <primaryKey column="step_id" sequenceNumberInPK="1"/>
+         <index name="step_pkey" unique="true">
+            <column ascending="true" name="step_id"/>
+         </index>
+         <index name="ix_step" unique="false">
+            <column ascending="true" name="observation_id"/>
+            <column ascending="true" name="location"/>
+         </index>
+         <index name="ix_step_oid" unique="false">
+            <column ascending="true" name="observation_id"/>
+         </index>
+         <index name="step_observation_id_location_key" unique="true">
+            <column ascending="true" name="observation_id"/>
+            <column ascending="true" name="location"/>
+         </index>
+      </table>
+      <table name="step_bias" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="step_bias_id" nullable="false" remarks="" size="10" type="int4">
+            <parent column="step_id" foreignKey="step_bias_step_bias_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="step"/>
+         </column>
+         <primaryKey column="step_bias_id" sequenceNumberInPK="1"/>
+         <index name="step_bias_pkey" unique="true">
+            <column ascending="true" name="step_bias_id"/>
+         </index>
+      </table>
+      <table name="step_dark" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="step_dark_id" nullable="false" remarks="" size="10" type="int4">
+            <parent column="step_id" foreignKey="step_dark_step_dark_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="step"/>
+         </column>
+         <primaryKey column="step_dark_id" sequenceNumberInPK="1"/>
+         <index name="step_dark_pkey" unique="true">
+            <column ascending="true" name="step_dark_id"/>
+         </index>
+      </table>
+      <table name="step_f2" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="step_f2_id" nullable="false" remarks="" size="10" type="int4">
+            <parent column="step_id" foreignKey="step_f2_step_f2_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="step"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="disperser" nullable="true" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_f2_disperser_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_f2_disperser"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="exposure_time" nullable="false" remarks="" size="19" type="int8"/>
+         <column autoUpdated="false" digits="0" id="3" name="filter" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_f2_filter_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_f2_filter"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="4" name="fpu" nullable="true" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_f2_fpu_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_f2_fpu"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="5" name="lyot_wheel" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_f2_lyot_wheel_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_f2_lyot_wheel"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="6" name="read_mode" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_f2_read_mode_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_f2_read_mode"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="7" name="window_cover" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_f2_window_cover_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_f2_window_cover"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="8" name="custom_mask" nullable="false" remarks="" size="1" type="bool"/>
+         <primaryKey column="step_f2_id" sequenceNumberInPK="1"/>
+         <index name="step_f2_pkey" unique="true">
+            <column ascending="true" name="step_f2_id"/>
+         </index>
+      </table>
+      <table name="step_gcal" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="step_gcal_id" nullable="false" remarks="" size="10" type="int4">
+            <parent column="step_id" foreignKey="step_gcal_step_gcal_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="step"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="continuum" nullable="true" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_gcal_continuum_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_gcal_continuum"/>
+         </column>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="2" name="ar_arc" nullable="false" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="3" name="cuar_arc" nullable="false" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="4" name="thar_arc" nullable="false" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="5" name="xe_arc" nullable="false" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" digits="0" id="6" name="filter" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_gcal_filter_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_gcal_filter"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="7" name="diffuser" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_gcal_diffuser_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_gcal_diffuser"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="8" name="shutter" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_gcal_shutter_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_gcal_shutter"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="9" name="exposure_time" nullable="false" remarks="" size="19" type="int8"/>
+         <column autoUpdated="false" digits="0" id="10" name="coadds" nullable="false" remarks="" size="2147483647" type="coadds"/>
+         <primaryKey column="step_gcal_id" sequenceNumberInPK="1"/>
+         <index name="step_gcal_pkey" unique="true">
+            <column ascending="true" name="step_gcal_id"/>
+         </index>
+      </table>
+      <table name="step_gmos_common" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="step_id" nullable="false" remarks="" size="10" type="int4">
+            <parent column="step_id" foreignKey="step_gmos_common_step_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="step"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="x_binning" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_gmos_common_x_binning_fkey" implied="false" onDeleteCascade="false" schema="public" table="e_gmos_binning"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="y_binning" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_gmos_common_y_binning_fkey" implied="false" onDeleteCascade="false" schema="public" table="e_gmos_binning"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="3" name="amp_count" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_gmos_common_amp_count_fkey" implied="false" onDeleteCascade="false" schema="public" table="e_gmos_amp_count"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="4" name="amp_gain" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_gmos_common_amp_gain_fkey" implied="false" onDeleteCascade="false" schema="public" table="e_gmos_amp_gain"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="5" name="amp_read_mode" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_gmos_common_amp_read_mode_fkey" implied="false" onDeleteCascade="false" schema="public" table="e_gmos_amp_read_mode"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="6" name="dtax" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_gmos_common_dtax_fkey" implied="false" onDeleteCascade="false" schema="public" table="e_gmos_dtax"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="7" name="exposure_time" nullable="false" remarks="" size="19" type="int8"/>
+         <column autoUpdated="false" digits="0" id="8" name="roi" nullable="false" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_gmos_common_roi_fkey" implied="false" onDeleteCascade="true" schema="public" table="e_gmos_roi"/>
+         </column>
+         <primaryKey column="step_id" sequenceNumberInPK="1"/>
+         <index name="step_gmos_common_pkey" unique="true">
+            <column ascending="true" name="step_id"/>
+         </index>
+      </table>
+      <table name="step_gmos_north" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="step_id" nullable="false" remarks="" size="10" type="int4">
+            <parent column="step_id" foreignKey="step_gmos_north_step_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="step"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="disperser" nullable="true" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_gmos_north_disperser_fkey" implied="false" onDeleteCascade="false" schema="public" table="e_gmos_north_disperser"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="disperser_order" nullable="true" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_gmos_north_disperser_order_fkey" implied="false" onDeleteCascade="false" schema="public" table="e_gmos_disperser_order"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="3" name="wavelength" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="4" name="filter" nullable="true" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_gmos_north_filter_fkey" implied="false" onDeleteCascade="false" schema="public" table="e_gmos_north_filter"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="5" name="mdf_file_name" nullable="true" remarks="" size="32" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="6" name="custom_slit_width" nullable="true" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_gmos_north_custom_slit_width_fkey" implied="false" onDeleteCascade="false" schema="public" table="e_gmos_custom_slit_width"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="7" name="fpu" nullable="true" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_gmos_north_fpu_fkey" implied="false" onDeleteCascade="false" schema="public" table="e_gmos_north_fpu"/>
+         </column>
+         <primaryKey column="step_id" sequenceNumberInPK="1"/>
+         <index name="step_gmos_north_pkey" unique="true">
+            <column ascending="true" name="step_id"/>
+         </index>
+      </table>
+      <table name="step_gmos_south" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="step_id" nullable="false" remarks="" size="10" type="int4">
+            <parent column="step_id" foreignKey="step_gmos_south_step_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="step"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="disperser" nullable="true" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_gmos_south_disperser_fkey" implied="false" onDeleteCascade="false" schema="public" table="e_gmos_south_disperser"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="disperser_order" nullable="true" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_gmos_south_disperser_order_fkey" implied="false" onDeleteCascade="false" schema="public" table="e_gmos_disperser_order"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="3" name="wavelength" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="4" name="filter" nullable="true" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_gmos_south_filter_fkey" implied="false" onDeleteCascade="false" schema="public" table="e_gmos_south_filter"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="5" name="mdf_file_name" nullable="true" remarks="" size="32" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="6" name="custom_slit_width" nullable="true" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_gmos_south_custom_slit_width_fkey" implied="false" onDeleteCascade="false" schema="public" table="e_gmos_custom_slit_width"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="7" name="fpu" nullable="true" remarks="" size="2147483647" type="identifier">
+            <parent column="id" foreignKey="step_gmos_south_fpu_fkey" implied="false" onDeleteCascade="false" schema="public" table="e_gmos_south_fpu"/>
+         </column>
+         <primaryKey column="step_id" sequenceNumberInPK="1"/>
+         <index name="step_gmos_south_pkey" unique="true">
+            <column ascending="true" name="step_id"/>
+         </index>
+      </table>
+      <table name="step_science" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="step_science_id" nullable="false" remarks="" size="10" type="int4">
+            <parent column="step_id" foreignKey="step_science_step_science_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="step"/>
+         </column>
+         <column autoUpdated="false" digits="3" id="1" name="offset_p" nullable="false" remarks="" size="9" type="numeric"/>
+         <column autoUpdated="false" digits="3" id="2" name="offset_q" nullable="false" remarks="" size="9" type="numeric"/>
+         <primaryKey column="step_science_id" sequenceNumberInPK="1"/>
+         <index name="step_science_pkey" unique="true">
+            <column ascending="true" name="step_science_id"/>
+         </index>
+      </table>
+      <table name="step_smart_gcal" numRows="0" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="step_smart_gcal_id" nullable="false" remarks="" size="10" type="int4">
+            <parent column="step_id" foreignKey="step_smart_gcal_step_smart_gcal_id_fkey" implied="false" onDeleteCascade="true" schema="public" table="step"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="type" nullable="false" remarks="" size="2147483647" type="smart_gcal_type"/>
+         <primaryKey column="step_smart_gcal_id" sequenceNumberInPK="1"/>
+         <index name="step_smart_gcal_pkey" unique="true">
+            <column ascending="true" name="step_smart_gcal_id"/>
+         </index>
+      </table>
+   </tables>
+</database>

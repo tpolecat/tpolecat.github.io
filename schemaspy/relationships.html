@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>gem Database</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.5 -->
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.1.2/css/buttons.bootstrap.min.css">
+  <!-- Code Mirror -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.2/codemirror.min.css">
+  <!-- Fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
+  
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+  <!-- Salvattore -->
+  <link rel="stylesheet" href="plugins/salvattore/salvattore.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="dist/css/skins/all-skins.min.css">
+  <!-- SchemaSpy -->
+  <link rel="stylesheet" href="schemaSpy.css">
+  
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+<body class="hold-transition skin-blue layout-top-nav">
+<div class="wrapper">
+  <header class="main-header">
+    <nav class="navbar navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="index.html" class="navbar-brand"><b>gem</b> Database</a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <i class="fa fa-bars"></i>
+          </button>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="index.html">Tables <span class="sr-only">(current)</span></a></li>            
+			<!--<li><a href="components.html" title="List of system components">Components</a></li>-->
+			<li><a href="columns.html" title="All of the columns in the schema">Columns</a></li>
+			<li><a href="constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+			<li><a href="relationships.html" title="Diagram of table relationships">Relationships</a></li>
+			<li><a href="orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>				
+			<li><a href="anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+        <!-- Navbar Right Menu -->
+
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
+  </header>
+  <!-- Main content -->
+  <!-- Full Width Column -->
+  <div class="content-wrapper">
+          <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>All Relationships</h1>
+      </section>
+      <!-- Main content -->
+      <section class="content">
+				<div class="box box-primary">		
+			<div class="box-header with-border">
+              <i class="fa fa-code-fork"></i>
+              <h3 class="box-title">Diagrams</h3>
+            </div>	
+			<div class="box-body">	
+			<div class="nav-tabs-custom" style="cursor: move;">
+            <!-- Tabs within a box -->
+			<h5>By default only columns that are primary keys, foreign keys or indexes are shown.</h5>
+            <ul class="nav nav-tabs pull-left ui-sortable-handle">
+			  			              <li class="active"><a href="#compactDegreeImg-chart" data-toggle="tab" aria-expanded="true">Compact</a></li>			  			 
+			  			              <li class=""><a href="#largeDegreeImg-chart" data-toggle="tab" aria-expanded="true">Large</a></li>			  			 
+            </ul>
+            <div class="tab-content no-padding">            
+				<div class="chart tab-pane active" id="compactDegreeImg-chart" style="position: relative; overflow-x:auto;">
+																					<map id="compactRelationshipsDiagram" name="compactRelationshipsDiagram">
+<area shape="rect" id="node1" href="tables/dataset.html" title="dataset" alt="" coords="1235,99,1399,276">
+<area shape="rect" id="node42" href="tables/observation.html" title="observation" alt="" coords="612,503,804,709">
+<area shape="rect" id="node52" href="tables/step.html" title="step" alt="" coords="935,429,1099,636">
+<area shape="rect" id="node2" href="tables/e_ephemeris_type.html" title="e_ephemeris_type" alt="" coords="5,1643,216,1761">
+<area shape="rect" id="node3" href="tables/e_f2_disperser.html" title="e_f2_disperser" alt="" coords="925,653,1110,772">
+<area shape="rect" id="node4" href="tables/e_f2_filter.html" title="e_f2_filter" alt="" coords="942,1197,1093,1316">
+<area shape="rect" id="node5" href="tables/e_f2_fpu.html" title="e_f2_fpu" alt="" coords="946,1333,1089,1452">
+<area shape="rect" id="node6" href="tables/e_f2_lyot_wheel.html" title="e_f2_lyot_wheel" alt="" coords="920,789,1115,908">
+<area shape="rect" id="node7" href="tables/e_f2_read_mode.html" title="e_f2_read_mode" alt="" coords="877,925,1158,1044">
+<area shape="rect" id="node8" href="tables/e_f2_window_cover.html" title="e_f2_window_cover" alt="" coords="907,1061,1127,1180">
+<area shape="rect" id="node9" href="tables/e_gcal_continuum.html" title="e_gcal_continuum" alt="" coords="603,1428,813,1547">
+<area shape="rect" id="node10" href="tables/e_gcal_diffuser.html" title="e_gcal_diffuser" alt="" coords="613,1700,803,1819">
+<area shape="rect" id="node11" href="tables/e_gcal_filter.html" title="e_gcal_filter" alt="" coords="624,1564,792,1683">
+<area shape="rect" id="node12" href="tables/e_gcal_shutter.html" title="e_gcal_shutter" alt="" coords="615,1836,801,1955">
+<area shape="rect" id="node13" href="tables/e_gmos_amp_count.html" title="e_gmos_amp_count" alt="" coords="905,1615,1129,1733">
+<area shape="rect" id="node14" href="tables/e_gmos_amp_gain.html" title="e_gmos_amp_gain" alt="" coords="910,2295,1125,2413">
+<area shape="rect" id="node15" href="tables/e_gmos_amp_read_mode.html" title="e_gmos_amp_read_mode" alt="" coords="886,1751,1149,1869">
+<area shape="rect" id="node16" href="tables/e_gmos_binning.html" title="e_gmos_binning" alt="" coords="918,2159,1117,2277">
+<area shape="rect" id="node17" href="tables/e_gmos_custom_slit_width.html" title="e_gmos_custom_slit_width" alt="" coords="881,3636,1154,3755">
+<area shape="rect" id="node18" href="tables/e_gmos_detector.html" title="e_gmos_detector" alt="" coords="298,1151,502,1269">
+<area shape="rect" id="node19" href="tables/e_gmos_disperser_order.html" title="e_gmos_disperser_order" alt="" coords="889,3228,1146,3347">
+<area shape="rect" id="node20" href="tables/e_gmos_dtax.html" title="e_gmos_dtax" alt="" coords="929,1887,1105,2005">
+<area shape="rect" id="node21" href="tables/e_gmos_e_offsetting.html" title="e_gmos_e_offsetting" alt="" coords="285,172,515,320">
+<area shape="rect" id="node22" href="tables/e_gmos_north_disperser.html" title="e_gmos_north_disperser" alt="" coords="889,2684,1146,2803">
+<area shape="rect" id="node23" href="tables/e_gmos_north_filter.html" title="e_gmos_north_filter" alt="" coords="906,2820,1129,2939">
+<area shape="rect" id="node24" href="tables/e_gmos_north_fpu.html" title="e_gmos_north_fpu" alt="" coords="910,2956,1125,3075">
+<area shape="rect" id="node25" href="tables/e_gmos_north_stage_mode.html" title="e_gmos_north_stage_mode" alt="" coords="261,1015,539,1133">
+<area shape="rect" id="node26" href="tables/e_gmos_roi.html" title="e_gmos_roi" alt="" coords="935,2023,1099,2141">
+<area shape="rect" id="node27" href="tables/e_gmos_south_disperser.html" title="e_gmos_south_disperser" alt="" coords="887,3092,1147,3211">
+<area shape="rect" id="node28" href="tables/e_gmos_south_filter.html" title="e_gmos_south_filter" alt="" coords="905,3364,1130,3483">
+<area shape="rect" id="node29" href="tables/e_gmos_south_fpu.html" title="e_gmos_south_fpu" alt="" coords="909,3500,1125,3619">
+<area shape="rect" id="node30" href="tables/e_gmos_south_stage_mode.html" title="e_gmos_south_stage_mode" alt="" coords="261,1287,539,1405">
+<area shape="rect" id="node31" href="tables/e_instrument.html" title="e_instrument" alt="" coords="23,537,198,656">
+<area shape="rect" id="node32" href="tables/e_mos_preimaging.html" title="e_mos_preimaging" alt="" coords="292,849,508,997">
+<area shape="rect" id="node33" href="tables/e_program_role.html" title="e_program_role" alt="" coords="303,2108,497,2256">
+<area shape="rect" id="node34" href="tables/e_site.html" title="e_site" alt="" coords="40,1779,181,1897">
+<area shape="rect" id="node35" href="tables/ephemeris.html" title="ephemeris" alt="" coords="322,1687,478,1893">
+<area shape="rect" id="node36" href="tables/gcal.html" title="gcal" alt="" coords="936,2431,1099,2667">
+<area shape="rect" id="node37" href="tables/gem_user.html" title="gem_user" alt="" coords="325,1972,475,2091">
+<area shape="rect" id="node38" href="tables/gem_user_program.html" title="gem_user_program" alt="" coords="599,1972,817,2125">
+<area shape="rect" id="node43" href="tables/program.html" title="program" alt="" coords="321,1483,479,1660">
+<area shape="rect" id="node39" href="tables/gmos_custom_roi.html" title="gmos_custom_roi" alt="" coords="604,308,812,485">
+<area shape="rect" id="node48" href="tables/static_config.html" title="static_config" alt="" coords="314,616,486,740">
+<area shape="rect" id="node40" href="tables/gmos_nod_and_shuffle.html" title="gmos_nod_and_shuffle" alt="" coords="585,113,831,291">
+<area shape="rect" id="node41" href="tables/log.html" title="log" alt="" coords="643,2143,773,2291">
+<area shape="rect" id="node44" href="tables/semester.html" title="semester" alt="" coords="37,1507,184,1625">
+<area shape="rect" id="node45" href="tables/smart_f2.html" title="smart_f2" alt="" coords="1246,1175,1389,1381">
+<area shape="rect" id="node46" href="tables/smart_gmos_north.html" title="smart_gmos_north" alt="" coords="1210,2160,1425,2455">
+<area shape="rect" id="node47" href="tables/smart_gmos_south.html" title="smart_gmos_south" alt="" coords="1209,2472,1426,2767">
+<area shape="rect" id="node49" href="tables/static_f2.html" title="static_f2" alt="" coords="619,727,797,880">
+<area shape="rect" id="node50" href="tables/static_gmos_north.html" title="static_gmos_north" alt="" coords="601,897,815,1109">
+<area shape="rect" id="node51" href="tables/static_gmos_south.html" title="static_gmos_south" alt="" coords="600,1127,816,1339">
+<area shape="rect" id="node53" href="tables/step_bias.html" title="step_bias" alt="" coords="1243,429,1392,524">
+<area shape="rect" id="node54" href="tables/step_dark.html" title="step_dark" alt="" coords="1242,541,1393,636">
+<area shape="rect" id="node55" href="tables/step_f2.html" title="step_f2" alt="" coords="1236,789,1399,1084">
+<area shape="rect" id="node56" href="tables/step_gcal.html" title="step_gcal" alt="" coords="1236,1405,1399,1641">
+<area shape="rect" id="node57" href="tables/step_gmos_common.html" title="step_gmos_common" alt="" coords="1203,1805,1432,2129">
+<area shape="rect" id="node58" href="tables/step_gmos_north.html" title="step_gmos_north" alt="" coords="1215,2797,1420,3063">
+<area shape="rect" id="node59" href="tables/step_gmos_south.html" title="step_gmos_south" alt="" coords="1213,3223,1421,3488">
+<area shape="rect" id="node60" href="tables/step_science.html" title="step_science" alt="" coords="1230,653,1405,772">
+<area shape="rect" id="node61" href="tables/step_smart_gcal.html" title="step_smart_gcal" alt="" coords="1217,293,1417,412">
+</map>
+
+					<a name='diagram'><img id='compactDegreeImg' src='diagrams/summary/relationships.real.compact.png' usemap='#compactRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
+				</div>
+				<div class="chart tab-pane " id="largeDegreeImg-chart" style="position: relative; overflow-x:auto;">
+																					<map id="largeRelationshipsDiagram" name="largeRelationshipsDiagram">
+<area shape="rect" id="node1" href="tables/dataset.html" title="dataset" alt="" coords="1235,244,1399,485">
+<area shape="rect" id="node42" href="tables/observation.html" title="observation" alt="" coords="612,688,804,929">
+<area shape="rect" id="node52" href="tables/step.html" title="step" alt="" coords="935,585,1099,797">
+<area shape="rect" id="node2" href="tables/e_ephemeris_type.html" title="e_ephemeris_type" alt="" coords="5,2400,216,2553">
+<area shape="rect" id="node3" href="tables/e_f2_disperser.html" title="e_f2_disperser" alt="" coords="925,814,1110,997">
+<area shape="rect" id="node4" href="tables/e_f2_filter.html" title="e_f2_filter" alt="" coords="942,1790,1093,2002">
+<area shape="rect" id="node5" href="tables/e_f2_fpu.html" title="e_f2_fpu" alt="" coords="946,2020,1089,2261">
+<area shape="rect" id="node6" href="tables/e_f2_lyot_wheel.html" title="e_f2_lyot_wheel" alt="" coords="920,1014,1115,1256">
+<area shape="rect" id="node7" href="tables/e_f2_read_mode.html" title="e_f2_read_mode" alt="" coords="877,1273,1158,1602">
+<area shape="rect" id="node8" href="tables/e_f2_window_cover.html" title="e_f2_window_cover" alt="" coords="907,1620,1127,1773">
+<area shape="rect" id="node9" href="tables/e_gcal_continuum.html" title="e_gcal_continuum" alt="" coords="603,2237,813,2420">
+<area shape="rect" id="node10" href="tables/e_gcal_diffuser.html" title="e_gcal_diffuser" alt="" coords="613,2637,803,2820">
+<area shape="rect" id="node11" href="tables/e_gcal_filter.html" title="e_gcal_filter" alt="" coords="624,2437,792,2620">
+<area shape="rect" id="node12" href="tables/e_gcal_shutter.html" title="e_gcal_shutter" alt="" coords="615,2837,801,3020">
+<area shape="rect" id="node13" href="tables/e_gmos_amp_count.html" title="e_gmos_amp_count" alt="" coords="905,2424,1129,2577">
+<area shape="rect" id="node14" href="tables/e_gmos_amp_gain.html" title="e_gmos_amp_gain" alt="" coords="910,3365,1125,3518">
+<area shape="rect" id="node15" href="tables/e_gmos_amp_read_mode.html" title="e_gmos_amp_read_mode" alt="" coords="886,2594,1149,2748">
+<area shape="rect" id="node16" href="tables/e_gmos_binning.html" title="e_gmos_binning" alt="" coords="918,3165,1117,3348">
+<area shape="rect" id="node17" href="tables/e_gmos_custom_slit_width.html" title="e_gmos_custom_slit_width" alt="" coords="881,5458,1154,5641">
+<area shape="rect" id="node18" href="tables/e_gmos_detector.html" title="e_gmos_detector" alt="" coords="298,1405,502,1734">
+<area shape="rect" id="node19" href="tables/e_gmos_disperser_order.html" title="e_gmos_disperser_order" alt="" coords="889,4829,1146,5012">
+<area shape="rect" id="node20" href="tables/e_gmos_dtax.html" title="e_gmos_dtax" alt="" coords="929,2765,1105,2948">
+<area shape="rect" id="node21" href="tables/e_gmos_e_offsetting.html" title="e_gmos_e_offsetting" alt="" coords="285,229,515,382">
+<area shape="rect" id="node22" href="tables/e_gmos_north_disperser.html" title="e_gmos_north_disperser" alt="" coords="889,3941,1146,4153">
+<area shape="rect" id="node23" href="tables/e_gmos_north_filter.html" title="e_gmos_north_filter" alt="" coords="906,4170,1129,4382">
+<area shape="rect" id="node24" href="tables/e_gmos_north_fpu.html" title="e_gmos_north_fpu" alt="" coords="910,4400,1125,4582">
+<area shape="rect" id="node25" href="tables/e_gmos_north_stage_mode.html" title="e_gmos_north_stage_mode" alt="" coords="261,1205,539,1388">
+<area shape="rect" id="node26" href="tables/e_gmos_roi.html" title="e_gmos_roi" alt="" coords="935,2965,1099,3148">
+<area shape="rect" id="node27" href="tables/e_gmos_south_disperser.html" title="e_gmos_south_disperser" alt="" coords="887,4600,1147,4812">
+<area shape="rect" id="node28" href="tables/e_gmos_south_filter.html" title="e_gmos_south_filter" alt="" coords="905,5029,1130,5241">
+<area shape="rect" id="node29" href="tables/e_gmos_south_fpu.html" title="e_gmos_south_fpu" alt="" coords="909,5258,1125,5441">
+<area shape="rect" id="node30" href="tables/e_gmos_south_stage_mode.html" title="e_gmos_south_stage_mode" alt="" coords="261,1752,539,1934">
+<area shape="rect" id="node31" href="tables/e_instrument.html" title="e_instrument" alt="" coords="23,781,198,964">
+<area shape="rect" id="node32" href="tables/e_mos_preimaging.html" title="e_mos_preimaging" alt="" coords="292,1034,508,1188">
+<area shape="rect" id="node33" href="tables/e_program_role.html" title="e_program_role" alt="" coords="303,3296,497,3449">
+<area shape="rect" id="node34" href="tables/e_site.html" title="e_site" alt="" coords="40,2588,181,2888">
+<area shape="rect" id="node35" href="tables/ephemeris.html" title="ephemeris" alt="" coords="322,2400,478,2700">
+<area shape="rect" id="node36" href="tables/gcal.html" title="gcal" alt="" coords="936,3536,1099,3924">
+<area shape="rect" id="node37" href="tables/gem_user.html" title="gem_user" alt="" coords="325,3037,475,3278">
+<area shape="rect" id="node38" href="tables/gem_user_program.html" title="gem_user_program" alt="" coords="599,3037,817,3190">
+<area shape="rect" id="node43" href="tables/program.html" title="program" alt="" coords="321,2112,479,2382">
+<area shape="rect" id="node39" href="tables/gmos_custom_roi.html" title="gmos_custom_roi" alt="" coords="604,400,812,670">
+<area shape="rect" id="node48" href="tables/static_config.html" title="static_config" alt="" coords="314,860,486,984">
+<area shape="rect" id="node40" href="tables/gmos_nod_and_shuffle.html" title="gmos_nod_and_shuffle" alt="" coords="585,53,831,382">
+<area shape="rect" id="node41" href="tables/log.html" title="log" alt="" coords="643,3208,773,3478">
+<area shape="rect" id="node44" href="tables/semester.html" title="semester" alt="" coords="37,2141,184,2294">
+<area shape="rect" id="node45" href="tables/smart_f2.html" title="smart_f2" alt="" coords="1246,1773,1389,2014">
+<area shape="rect" id="node46" href="tables/smart_gmos_north.html" title="smart_gmos_north" alt="" coords="1210,3172,1425,3560">
+<area shape="rect" id="node47" href="tables/smart_gmos_south.html" title="smart_gmos_south" alt="" coords="1209,3577,1426,3965">
+<area shape="rect" id="node49" href="tables/static_f2.html" title="static_f2" alt="" coords="619,946,797,1100">
+<area shape="rect" id="node50" href="tables/static_gmos_north.html" title="static_gmos_north" alt="" coords="601,1117,815,1329">
+<area shape="rect" id="node51" href="tables/static_gmos_south.html" title="static_gmos_south" alt="" coords="600,1346,816,1558">
+<area shape="rect" id="node53" href="tables/step_bias.html" title="step_bias" alt="" coords="1243,644,1392,738">
+<area shape="rect" id="node54" href="tables/step_dark.html" title="step_dark" alt="" coords="1242,756,1393,850">
+<area shape="rect" id="node55" href="tables/step_f2.html" title="step_f2" alt="" coords="1236,1097,1399,1426">
+<area shape="rect" id="node56" href="tables/step_gcal.html" title="step_gcal" alt="" coords="1236,2104,1399,2492">
+<area shape="rect" id="node57" href="tables/step_gmos_common.html" title="step_gmos_common" alt="" coords="1203,2660,1432,2989">
+<area shape="rect" id="node58" href="tables/step_gmos_north.html" title="step_gmos_north" alt="" coords="1215,4124,1420,4424">
+<area shape="rect" id="node59" href="tables/step_gmos_south.html" title="step_gmos_south" alt="" coords="1213,4841,1421,5141">
+<area shape="rect" id="node60" href="tables/step_science.html" title="step_science" alt="" coords="1230,868,1405,1021">
+<area shape="rect" id="node61" href="tables/step_smart_gcal.html" title="step_smart_gcal" alt="" coords="1217,502,1417,626">
+</map>
+
+					<a name='diagram'><img id='largeDegreeImg' src='diagrams/summary/relationships.real.large.png' usemap='#largeRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>							
+				</div>
+			  			</div>
+			</div>
+		  </div><!-- /.box-body -->
+		</div>
+		      </section>    
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <div>
+      <div class="pull-right hidden-xs">
+        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+      </div>
+      <strong>Generate by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemeSpy 6.0.0-rc1</a></strong>
+    </div>
+    <!-- /.container -->
+  </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.1.4 -->
+<script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<script src="plugins/jQueryUI/jquery-ui.min.js"></script>
+<!-- Bootstrap 3.3.5 -->
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<!-- DataTables -->
+<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.colVis.min.js"></script>
+
+<!-- SlimScroll -->
+<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="plugins/fastclick/fastclick.js"></script>
+<!-- Salvattore -->
+<script src="plugins/salvattore/salvattore.min.js"></script>
+<!-- AnchorJS -->
+<script src="plugins/anchorjs/anchor.min.js"></script>
+<!-- CodeMirror -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.2/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.2/mode/sql/sql.min.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
+<script src="relationships.js"></script>
+<script src="schemaSpy.js"></script>
+</body>
+</html>
