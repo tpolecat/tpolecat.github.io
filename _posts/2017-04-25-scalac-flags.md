@@ -65,10 +65,7 @@ scalacOptions ++= Seq(
 Note that the REPL can't really cope with `-Ywarn-unused:imports` or `-Xfatal-warnings` so you should turn them off for the console.
 
 ```scala
-scalacOptions in (Compile, console) ~= (_.filterNot(Set(
-  "-Ywarn-unused:imports",
-  "-Xfatal-warnings"
-)))
+scalacOptions in (Compile, console) --= Seq("-Ywarn-unused:imports", "-Xfatal-warnings")
 ```
 
 If you're like me and you find that the standard library gets in the way (especially `Predef` implicits) you might consider one of these (you don't need both):
