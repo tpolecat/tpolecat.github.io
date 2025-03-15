@@ -1,6 +1,9 @@
 ---
 layout: blog
 ---
-<p>{{ page.date | date: "%B %d, %Y" }}</p>
+<time datetime={{ page.date | date_to_xmlschema }}>{{ page.date | date: "%B %d, %Y" }}</time>
 <h2>{{ page.title }}</h2>
+{% if page.updated_date %}
+<p>[Updated <time datetime={{ page.updated_date | date_to_xmlschema }}>{{ page.updated_date | date: "%d-%b-%Y" }}</time>]</p>
+{% endif %}
 <div>{{ content }}</div>
