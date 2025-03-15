@@ -1,6 +1,6 @@
 ---
 layout: blog
 ---
-<p>{{ page.date | date: "%B %d, %Y" }}</p>
+<time datetime={{ page.date | date_to_xmlschema }}>{{ page.date | date: "%B %d, %Y" }}</time>
 <h2>{{ page.title }}</h2>
 <div>{{ content }}</div>
