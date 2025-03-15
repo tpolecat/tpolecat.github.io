@@ -2,9 +2,8 @@
 layout: post
 title: Recommended Scalac Flags for 2.12
 tags: scala
+updated_date: 2017-05-10
 ---
-
-[Updated 10-May-2017]
 
 Greetings fellow traveler.
 
